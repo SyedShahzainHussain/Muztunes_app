@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muztunes_app/view/about/about_screen.dart';
+import 'package:muztunes_app/view/concert/concert_screen.dart';
 import 'package:muztunes_app/view/contact/contact_screen.dart';
 import 'package:muztunes_app/view/auth/login_screen.dart';
 import 'package:muztunes_app/view/auth/sign_up_screen.dart';
@@ -30,6 +31,7 @@ class BottomNavigationProvider with ChangeNotifier {
       _isLogin ? const LoginScreen() : const SignUpScreen(),
       const CartScreen(),
       const ContactScreen(),
+      const ConcertScreen(),
     ];
   }
 }

@@ -111,7 +111,9 @@ class _DrawerScreenState extends State<DrawerScreen>
               child: Column(
                 children: muztunesPlatform
                     .map((data) => InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                           child: Container(
                             decoration: const BoxDecoration(
                               color: Colors.black,
@@ -151,11 +153,26 @@ class _DrawerScreenState extends State<DrawerScreen>
   }
 
   List<Map<String, dynamic>> muztunesPlatform = [
-    {"title": "MUZCHAT"},
-    {"title": "MUZCOM"},
-    {"title": "MUZNEWS"},
-    {"title": "MUZRADIO"},
-    {"title": "MUZTUBE"},
+    {
+      "title": "MUZCHAT",
+      "url": "https://chat.muztunes.co/#",
+    },
+    {
+      "title": "MUZCOM",
+      "url": "https://social.muztunes.co/",
+    },
+    {
+      "title": "MUZNEWS",
+      "url": "https://muztunes.co/news/",
+    },
+    {
+      "title": "MUZRADIO",
+      "url": "https://muztunes.co/muz-radio",
+    },
+    {
+      "title": "MUZTUBE",
+      "url": "https://muztunes.co/muz-radio",
+    },
     {"title": "CORPORATE SPONSORSHIP"},
   ];
 }

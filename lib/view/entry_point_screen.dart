@@ -43,6 +43,8 @@ class EntryPointScreen extends StatelessWidget {
                   BottomNavigationBarItem(
                       icon: Icon(Icons.perm_contact_cal_rounded),
                       label: "Contact"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.festival_rounded), label: "Concert"),
                 ],
               ),
             ),

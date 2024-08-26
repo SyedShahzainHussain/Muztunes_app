@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
     _controller = AnimationController(
       vsync: this,
       duration:
-          const Duration(seconds: 2), // Increased duration for slower animation
+          const Duration(seconds: 1), // Increased duration for slower animation
     );
 
     _slideAnimation = Tween<Offset>(
