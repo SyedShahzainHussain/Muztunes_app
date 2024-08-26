@@ -151,6 +151,7 @@ class _DrawerScreenState extends State<DrawerScreen>
       ),
     );
   }
+}
 
   List<Map<String, dynamic>> muztunesPlatform = [
     {
@@ -175,4 +176,3 @@ class _DrawerScreenState extends State<DrawerScreen>
     },
     {"title": "CORPORATE SPONSORSHIP"},
   ];
-}

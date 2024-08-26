@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/view/about/about_screen.dart';
-import 'package:muztunes_app/view/concert/concert_screen.dart';
-import 'package:muztunes_app/view/contact/contact_screen.dart';
-import 'package:muztunes_app/view/auth/login_screen.dart';
-import 'package:muztunes_app/view/auth/sign_up_screen.dart';
-import 'package:muztunes_app/view/cart/cart_screen.dart';
-import 'package:muztunes_app/view/home/home_screen.dart';
 
 class BottomNavigationProvider with ChangeNotifier {
   int _currentIndex = 0;
@@ -24,14 +17,5 @@ class BottomNavigationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Widget> get pages {
-    return [
-      const HomeScreen(),
-      const AboutScreen(),
-      _isLogin ? const LoginScreen() : const SignUpScreen(),
-      const CartScreen(),
-      const ContactScreen(),
-      const ConcertScreen(),
-    ];
-  }
+ 
 }

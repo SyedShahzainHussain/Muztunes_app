@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  floating_bottom_bar:
+    dependency: "direct main"
+    description:
+      name: floating_bottom_bar
+      sha256: "4ab9b54d06d2d8502338e989adad3c75f5812fe9ecc0af00879ebfac11e9e0de"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   flutter:
     dependency: "direct main"
     description: flutter

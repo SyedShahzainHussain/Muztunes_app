@@ -21,11 +21,10 @@ class CartScreen extends StatelessWidget {
       ),
       body: const Padding(
         padding: EdgeInsets.only(
-          left: 16,
-          right: 16,
-          top: 16,
-          bottom: 8,
-        ),
+            left: 16,
+            right: 16,
+            top: 16,
+            bottom: kBottomNavigationBarHeight + 10),
         child: CartListItem(),
       ),
     );

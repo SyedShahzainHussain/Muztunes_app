@@ -10,6 +10,7 @@ class CartListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      padding: EdgeInsets.zero,
       separatorBuilder: (context, index) => const SizedBox(
         height: 24,
       ),
