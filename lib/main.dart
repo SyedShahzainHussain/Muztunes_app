@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:muztunes_app/providers/bottomnavigation/bottom_navigation_provider.dart';
 import 'package:muztunes_app/view/entry_point_screen.dart';
+import 'package:muztunes_app/view/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
             textTheme: GoogleFonts.poppinsTextTheme()),
-        home: const EntryPointScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

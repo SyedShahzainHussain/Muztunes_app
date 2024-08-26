@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muztunes_app/common/heading.dart';
+import 'package:muztunes_app/view/drawer/drawer_screen.dart';
 import 'package:muztunes_app/view/home/all_merch_artists_screen.dart';
 import 'package:muztunes_app/view/home/all_product_screen.dart';
 import 'package:muztunes_app/view/home/widget/home/home_banner_widget.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // endDrawer: const Drawer(),
+      endDrawer: const DrawerScreen(),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,

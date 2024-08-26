@@ -13,7 +13,7 @@ class ShopScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 1.0,
-        title: Text("All Featured Prodcuts",
+        title: Text("Shop",
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!
