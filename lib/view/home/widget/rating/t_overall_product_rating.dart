@@ -1,7 +1,5 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/view/home/widget/rating/t_rating_indicator.dart';
+import 'package:muztunes_apps/view/home/widget/rating/t_rating_indicator.dart';
 
 class OverAllProductRating extends StatelessWidget {
   const OverAllProductRating({
@@ -23,11 +21,26 @@ class OverAllProductRating extends StatelessWidget {
           flex: 7,
           child: Column(
             children: [
-              TRatingIndicator(value: 1.0,text: "5",),
-              TRatingIndicator(value: 0.8,text: "4",),
-              TRatingIndicator(value: 0.6,text: "3",),
-              TRatingIndicator(value: 0.4,text: "2",),
-              TRatingIndicator(value: 0.2,text: "1",),
+              TRatingIndicator(
+                value: 1.0,
+                text: "5",
+              ),
+              TRatingIndicator(
+                value: 0.8,
+                text: "4",
+              ),
+              TRatingIndicator(
+                value: 0.6,
+                text: "3",
+              ),
+              TRatingIndicator(
+                value: 0.4,
+                text: "2",
+              ),
+              TRatingIndicator(
+                value: 0.2,
+                text: "1",
+              ),
             ],
           ),
         )

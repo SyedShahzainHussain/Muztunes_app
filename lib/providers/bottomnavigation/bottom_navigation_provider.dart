@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/common/bottom_navigation_widget.dart';
+import 'package:muztunes_apps/common/bottom_navigation_widget.dart';
 
 class BottomNavigationProvider with ChangeNotifier {
   Menus _currentIndex = Menus.home;
@@ -17,6 +17,4 @@ class BottomNavigationProvider with ChangeNotifier {
     _currentIndex = currentIndex;
     notifyListeners();
   }
-
- 
 }

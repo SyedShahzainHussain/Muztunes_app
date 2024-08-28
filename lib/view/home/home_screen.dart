@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/common/heading.dart';
-import 'package:muztunes_app/view/drawer/drawer_screen.dart';
-import 'package:muztunes_app/view/home/all_merch_artists_screen.dart';
-import 'package:muztunes_app/view/home/all_product_screen.dart';
-import 'package:muztunes_app/view/home/widget/home/home_banner_widget.dart';
-import 'package:muztunes_app/view/home/widget/home/home_grid_product_widget.dart';
-import 'package:muztunes_app/view/home/widget/home/merch_product_widget.dart';
-import 'package:muztunes_app/view/home/widget/products/featured_product_widget.dart';
+import 'package:muztunes_apps/common/heading.dart';
+import 'package:muztunes_apps/view/drawer/drawer_screen.dart';
+import 'package:muztunes_apps/view/home/all_merch_artists_screen.dart';
+import 'package:muztunes_apps/view/home/all_product_screen.dart';
+import 'package:muztunes_apps/view/home/widget/home/home_banner_widget.dart';
+import 'package:muztunes_apps/view/home/widget/home/home_grid_product_widget.dart';
+import 'package:muztunes_apps/view/home/widget/home/merch_product_widget.dart';
+import 'package:muztunes_apps/view/home/widget/products/featured_product_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

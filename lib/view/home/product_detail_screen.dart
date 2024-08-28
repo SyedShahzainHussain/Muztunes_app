@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:muztunes_app/common/button.dart';
-import 'package:muztunes_app/common/t_rounded_container.dart';
-import 'package:muztunes_app/config/colors.dart';
-import 'package:muztunes_app/extension/media_query_extension.dart';
-import 'package:muztunes_app/view/home/product_rating.dart';
-import 'package:muztunes_app/view/home/widget/products/product_image_slider_widget.dart';
-import 'package:muztunes_app/view/home/widget/products/t_bottom_navigation_card_widget.dart';
+import 'package:muztunes_apps/common/button.dart';
+import 'package:muztunes_apps/common/t_rounded_container.dart';
+import 'package:muztunes_apps/config/colors.dart';
+import 'package:muztunes_apps/extension/media_query_extension.dart';
+import 'package:muztunes_apps/view/home/product_rating.dart';
+import 'package:muztunes_apps/view/home/widget/products/product_image_slider_widget.dart';
+import 'package:muztunes_apps/view/home/widget/products/t_bottom_navigation_card_widget.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key});

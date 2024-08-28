@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/config/colors.dart';
-import 'package:muztunes_app/extension/media_query_extension.dart';
+import 'package:muztunes_apps/config/colors.dart';
+import 'package:muztunes_apps/extension/media_query_extension.dart';
 
 class TRatingIndicator extends StatelessWidget {
   const TRatingIndicator({

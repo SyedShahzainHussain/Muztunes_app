@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/common/rating.dart';
-import 'package:muztunes_app/common/t_rounded_container.dart';
-import 'package:muztunes_app/config/colors.dart';
+import 'package:muztunes_apps/common/rating.dart';
+import 'package:muztunes_apps/common/t_rounded_container.dart';
+import 'package:muztunes_apps/config/colors.dart';
 import 'package:readmore/readmore.dart';
 
 class UserRating extends StatelessWidget {

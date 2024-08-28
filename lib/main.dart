@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:muztunes_app/providers/bottomnavigation/bottom_navigation_provider.dart';
-import 'package:muztunes_app/view/entry_point_screen.dart';
-import 'package:muztunes_app/view/splash/splash_screen.dart';
+import 'package:muztunes_apps/environment/environment.dart';
+import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes_apps/view/splash/splash_screen.dart';
+import 'package:muztunes_apps/viewModel/auth/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -13,6 +14,13 @@ void main() async {
   };
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+
+  const String enviroment = String.fromEnvironment(
+    'ENVIRONMENT',
+    defaultValue: Environment.Dev,
+  );
+
+  Environment().initConfig(enviroment);
   runApp(const MyApp());
 }
 
@@ -21,8 +29,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => BottomNavigationProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => BottomNavigationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthViewModel(),
+        ),
+      ],
       child: MaterialApp(
         title: 'MUZTUNES',
         debugShowCheckedModeBanner: false,

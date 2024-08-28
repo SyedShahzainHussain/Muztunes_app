@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/view/cart/widget/cart_item.dart';
-import 'package:muztunes_app/view/cart/widget/product_cart_and_remove.dart';
-import 'package:muztunes_app/view/cart/widget/t_product_price_text.dart';
+import 'package:muztunes_apps/view/cart/widget/cart_item.dart';
+import 'package:muztunes_apps/view/cart/widget/product_cart_and_remove.dart';
+import 'package:muztunes_apps/view/cart/widget/t_product_price_text.dart';
 
 class CartListItem extends StatelessWidget {
   final bool isShowAddOrRemove;

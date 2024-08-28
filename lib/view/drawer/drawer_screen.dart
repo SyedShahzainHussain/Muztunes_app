@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/extension/media_query_extension.dart';
-import 'package:muztunes_app/view/shop/shop_screen.dart';
+import 'package:muztunes_apps/extension/media_query_extension.dart';
+import 'package:muztunes_apps/view/shop/shop_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -153,26 +153,26 @@ class _DrawerScreenState extends State<DrawerScreen>
   }
 }
 
-  List<Map<String, dynamic>> muztunesPlatform = [
-    {
-      "title": "MUZCHAT",
-      "url": "https://chat.muztunes.co/#",
-    },
-    {
-      "title": "MUZCOM",
-      "url": "https://social.muztunes.co/",
-    },
-    {
-      "title": "MUZNEWS",
-      "url": "https://muztunes.co/news/",
-    },
-    {
-      "title": "MUZRADIO",
-      "url": "https://muztunes.co/muz-radio",
-    },
-    {
-      "title": "MUZTUBE",
-      "url": "https://muztunes.co/muz-radio",
-    },
-    {"title": "CORPORATE SPONSORSHIP"},
-  ];
+List<Map<String, dynamic>> muztunesPlatform = [
+  {
+    "title": "MUZCHAT",
+    "url": "https://chat.muztunes.co/#",
+  },
+  {
+    "title": "MUZCOM",
+    "url": "https://social.muztunes.co/",
+  },
+  {
+    "title": "MUZNEWS",
+    "url": "https://muztunes.co/news/",
+  },
+  {
+    "title": "MUZRADIO",
+    "url": "https://muztunes.co/muz-radio",
+  },
+  {
+    "title": "MUZTUBE",
+    "url": "https://muztunes.co/muz-radio",
+  },
+  {"title": "CORPORATE SPONSORSHIP"},
+];

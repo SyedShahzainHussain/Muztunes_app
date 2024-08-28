@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/extension/media_query_extension.dart';
-import 'package:muztunes_app/view/entry_point_screen.dart';
+import 'package:muztunes_apps/extension/media_query_extension.dart';
+import 'package:muztunes_apps/view/entry_point_screen.dart';
+import 'package:muztunes_apps/viewModel/services/splash_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,6 +14,12 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    SplashServices().checkAuthentication(context);
+  }
 
   @override
   void didChangeDependencies() {

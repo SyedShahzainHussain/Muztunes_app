@@ -1,4 +1,4 @@
-package com.example.muztunes_app
+package com.example.muztunes_apps
 
 import io.flutter.embedding.android.FlutterActivity
 

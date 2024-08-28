@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/common/curved_widget.dart';
-import 'package:muztunes_app/common/custom_app_bar.dart';
-import 'package:muztunes_app/common/t_rounded_image.dart';
-import 'package:muztunes_app/config/colors.dart';
+import 'package:muztunes_apps/common/curved_widget.dart';
+import 'package:muztunes_apps/common/custom_app_bar.dart';
+import 'package:muztunes_apps/common/t_rounded_image.dart';
+import 'package:muztunes_apps/config/colors.dart';
 
 class ProductImageSlider extends StatefulWidget {
   const ProductImageSlider({

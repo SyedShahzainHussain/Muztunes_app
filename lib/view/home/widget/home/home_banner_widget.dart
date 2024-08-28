@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/common/button.dart';
-import 'package:muztunes_app/extension/media_query_extension.dart';
+import 'package:muztunes_apps/common/button.dart';
+import 'package:muztunes_apps/extension/media_query_extension.dart';
 
 class HomeBanner extends StatelessWidget {
   const HomeBanner({

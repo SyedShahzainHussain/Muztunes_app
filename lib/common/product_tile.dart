@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/config/colors.dart';
-import 'package:muztunes_app/extension/media_query_extension.dart';
-import 'package:muztunes_app/view/home/product_detail_screen.dart';
+import 'package:muztunes_apps/config/colors.dart';
+import 'package:muztunes_apps/extension/media_query_extension.dart';
+import 'package:muztunes_apps/view/home/product_detail_screen.dart';
 
 class ProductTile extends StatelessWidget {
   final String imageUrl;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/common/t_rounded_image.dart';
-import 'package:muztunes_app/config/colors.dart';
-import 'package:muztunes_app/view/cart/widget/t_product_title.dart';
+import 'package:muztunes_apps/common/t_rounded_image.dart';
+import 'package:muztunes_apps/config/colors.dart';
+import 'package:muztunes_apps/view/cart/widget/t_product_title.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({
@@ -40,8 +40,6 @@ class CartItem extends StatelessWidget {
             ],
           ),
         ),
-
-
       ],
     );
   }

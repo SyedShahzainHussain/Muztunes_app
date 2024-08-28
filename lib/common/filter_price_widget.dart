@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:muztunes_app/view/filter/filter_screen.dart';
-import 'package:muztunes_app/view/filter/sort_by_screen.dart';
+import 'package:muztunes_apps/view/filter/filter_screen.dart';
+import 'package:muztunes_apps/view/filter/sort_by_screen.dart';
 
 class FilterPriceWidget extends StatelessWidget {
   const FilterPriceWidget({

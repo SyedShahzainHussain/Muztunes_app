@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:muztunes_app/common/button.dart';
-import 'package:muztunes_app/common/t_circular_icon.dart';
-import 'package:muztunes_app/config/colors.dart';
+import 'package:muztunes_apps/common/button.dart';
+import 'package:muztunes_apps/common/t_circular_icon.dart';
+import 'package:muztunes_apps/config/colors.dart';
 
 class TBottomNavigationCardWidget extends StatelessWidget {
   const TBottomNavigationCardWidget({super.key});

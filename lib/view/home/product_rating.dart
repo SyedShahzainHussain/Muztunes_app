@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/common/custom_app_bar.dart';
-import 'package:muztunes_app/common/rating.dart';
-import 'package:muztunes_app/view/home/widget/rating/t_overall_product_rating.dart';
-import 'package:muztunes_app/view/home/widget/rating/t_user_rating.dart';
+import 'package:muztunes_apps/common/custom_app_bar.dart';
+import 'package:muztunes_apps/common/rating.dart';
+import 'package:muztunes_apps/view/home/widget/rating/t_overall_product_rating.dart';
+import 'package:muztunes_apps/view/home/widget/rating/t_user_rating.dart';
 
 class ProductRating extends StatelessWidget {
   const ProductRating({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/view/cart/widget/cart_item_list.dart';
+import 'package:muztunes_apps/view/cart/widget/cart_item_list.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});

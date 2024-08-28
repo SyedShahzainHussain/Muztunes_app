@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_app/view/home/widget/products/featured_product_widget.dart';
+import 'package:muztunes_apps/view/home/widget/products/featured_product_widget.dart';
 
 import '../../common/filter_price_widget.dart';
 
