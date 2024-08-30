@@ -1,7 +1,7 @@
-import 'package:muztunes_apps/config/urls.dart';
-import 'package:muztunes_apps/data/network/base_api_services.dart';
-import 'package:muztunes_apps/data/network/network_api_services.dart';
-import 'package:muztunes_apps/repository/auth/auth_repository.dart';
+import 'package:muztunes/config/urls.dart';
+import 'package:muztunes/data/network/base_api_services.dart';
+import 'package:muztunes/data/network/network_api_services.dart';
+import 'package:muztunes/repository/auth/auth_repository.dart';
 
 class AuthHttpRepository extends AuthRepository {
   final BaseApiServices baseApiServices = NetworkApiServices();
@@ -26,21 +26,21 @@ class AuthHttpRepository extends AuthRepository {
       rethrow;
     }
   }
-  
+
   @override
-  Future forgetPassword(body)async  {
-   try {
-      final response =
-          await baseApiServices.getPostApiResponse(Urls.forgotPasswordUrl, body);
+  Future forgetPassword(body) async {
+    try {
+      final response = await baseApiServices.getPostApiResponse(
+          Urls.forgotPasswordUrl, body);
       return response;
     } catch (_) {
       rethrow;
     }
   }
-  
+
   @override
-  Future resetPassword(body) async  {
-   try {
+  Future resetPassword(body) async {
+    try {
       final response =
           await baseApiServices.getPostApiResponse(Urls.resetPasswordUrl, body);
       return response;

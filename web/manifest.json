@@ -1,6 +1,6 @@
 {
-    "name": "muztunes_apps",
-    "short_name": "muztunes_apps",
+    "name": "muztunes",
+    "short_name": "muztunes",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

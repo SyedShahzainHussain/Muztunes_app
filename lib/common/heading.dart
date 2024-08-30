@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:muztunes_apps/config/colors.dart';
+import 'package:muztunes/config/colors.dart';
 
 class Heading extends StatelessWidget {
   final String title;

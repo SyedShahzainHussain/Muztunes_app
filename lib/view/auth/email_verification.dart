@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:muztunes_apps/common/button.dart';
-import 'package:muztunes_apps/config/colors.dart';
-import 'package:muztunes_apps/extension/flushbar_extension.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
-import 'package:muztunes_apps/view/auth/reset_password_screen.dart';
-import 'package:muztunes_apps/viewModel/auth/auth_view_model.dart';
-import 'package:muztunes_apps/viewModel/services/session_controller/session_controller.dart';
+import 'package:muztunes/common/button.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/extension/flushbar_extension.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/view/auth/reset_password_screen.dart';
+import 'package:muztunes/viewModel/auth/auth_view_model.dart';
+import 'package:muztunes/viewModel/services/session_controller/session_controller.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class EmailVerificationScreen extends StatefulWidget {

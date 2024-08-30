@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/extension/flushbar_extension.dart';
-import 'package:muztunes_apps/model/cart_model.dart';
-import 'package:muztunes_apps/viewModel/storage/local_storage.dart';
+import 'package:muztunes/extension/flushbar_extension.dart';
+import 'package:muztunes/model/cart_model.dart';
+import 'package:muztunes/repository/cart/cart_http_repository.dart';
+import 'package:muztunes/repository/cart/cart_repository.dart';
+import 'package:muztunes/utils/utils.dart';
+import 'package:muztunes/viewModel/storage/local_storage.dart';
 
 class CartViewModel with ChangeNotifier {
   List<CartItemModel> cartList = [];
@@ -9,13 +14,15 @@ class CartViewModel with ChangeNotifier {
   int noOfCartItem = 0;
   double calculatedTotalPrice = 0.0;
   increaseCount() {
-    noOfCartItem++;
+    int newCount = noOfCartItem + 1;
+    noOfCartItem = newCount;
     notifyListeners();
   }
 
   decreaseCount() {
     if (noOfCartItem > 0) {
-      noOfCartItem--;
+      int newCount = noOfCartItem - 1;
+      noOfCartItem = newCount;
       notifyListeners();
     }
   }
@@ -25,17 +32,23 @@ class CartViewModel with ChangeNotifier {
         (cartItem) => cartItem.productId == cartItemModel.productId);
     if (index >= 0) {
       if (cartList[index].quantity == cartItemModel.quantity) {
-        context.flushBarSuccessMessage(
+        Utils.showToaster(
+            context: context,
             message:
-                "This Product Quantity is already in the cart.\nPlease increase quantity");
+                "This Product Quantity is already in the cart. \nPlease increase quantity");
+        return;
       } else {
         cartList[index].quantity += 1;
+        Utils.showToaster(
+            context: context, message: "Product quantity increased!");
       }
     } else {
       cartList.add(cartItemModel);
-      context.flushBarSuccessMessage(message: "Product Added!");
+      Utils.showToaster(context: context, message: "Product Added!");
     }
     saveCartItem(cartList);
+    updateCartTotal(cartList);
+    noOfCartItem = 0;
     notifyListeners();
   }
 
@@ -46,12 +59,13 @@ class CartViewModel with ChangeNotifier {
     if (index >= 0) {
       // Product is already in the cart, increment quantity by 1
       cartList[index].quantity += 1;
-      context.flushBarSuccessMessage(message: "Product quantity increased!");
+      // Utils.showToaster(
+      //     context: context, message: "Product quantity increased!");
     } else {
       // Product is not in the cart, add it with initial quantity of 1
       cartItemModel.quantity = 1; // Ensure initial quantity is set to 1
       cartList.add(cartItemModel);
-      context.flushBarSuccessMessage(message: "Product Added!");
+      // Utils.showToaster(context: context, message: "Product Added!");
     }
     updateCartTotal(cartList);
     saveCartItem(cartList);
@@ -65,11 +79,13 @@ class CartViewModel with ChangeNotifier {
       if (cartList[index].quantity > 1) {
         // Decrease the quantity of the item
         cartList[index].quantity -= 1;
-        context.flushBarSuccessMessage(message: "Product quantity decreased!");
+        // Utils.showToaster(
+        //     context: context, message: "Product quantity decreased!");
       } else {
         // Remove the item from the cart if quantity is 1
         cartList.removeAt(index);
-        context.flushBarSuccessMessage(message: "Product removed from cart!");
+        // Utils.showToaster(
+        //     context: context, message: "Product removed from cart!");
       }
     } else {
       context.flushBarErrorMessage(message: "Product not found in cart!");
@@ -93,20 +109,86 @@ class CartViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  saveCartItem(List<CartItemModel> cartItem) async {
-    final cartItemString = cartItem.map((data) => data.toMap()).toList();
-    await LocalStorage().setValue("cartItems", cartItemString.toString());
+  Future<void> saveCartItem(List<CartItemModel> cartItem) async {
+    final cartItemJson =
+        jsonEncode(cartItem.map((data) => data.toMap()).toList());
+    await LocalStorage().setValue("cartItems", cartItemJson);
   }
 
-  loadCartItem() async {
-    final List<dynamic>? cartItem = await LocalStorage().realValue("cartItems");
-    print(cartItem);
-    if (cartItem != null) {
-      cartList.clear();
-      cartList.addAll(cartItem.map((e) => CartItemModel.fromMap(e)).toList());
-      updateCartTotal(cartList);
+  Future<void> loadCartItem() async {
+    final String? cartItemJson = await LocalStorage().realValue("cartItems");
+    if (cartItemJson != null) {
+      try {
+        final List<dynamic> cartItem = jsonDecode(cartItemJson);
+        cartList.clear();
+        cartList.addAll(cartItem.map((e) => CartItemModel.fromMap(e)).toList());
+        updateCartTotal(cartList);
+      } catch (e) {
+        print("Failed to parse cart items: $e");
+      }
     } else {
-      print("error");
+      print("No cart items found");
     }
+  }
+
+  // ! getPrdouctQuantityCart
+  int getProductQuantityInCart(String productId) {
+    return cartList
+        .where((item) => item.productId == productId)
+        .fold(0, (previousValue, element) => previousValue + element.quantity);
+  }
+
+// Method to get the total quantity of all items in the cart
+  int getTotalQuantity() {
+    return cartList.length;
+  }
+
+  void updateAlreadyAddedProductCount(String productID) {
+    final quantity = getProductQuantityInCart(productID);
+
+    // Update `noOfCartItem` based on the quantity
+    noOfCartItem = quantity;
+
+    // Notify listeners after updating the value
+    notifyListeners();
+  }
+
+  bool cartLoading = false;
+  setCartLoading(bool cartLoading) {
+    this.cartLoading = cartLoading;
+    notifyListeners();
+  }
+
+  final CartRepository cartRepository = CartHttpRepository();
+
+  placeOrder(BuildContext context) async {
+    setCartLoading(true);
+    final orderData = {
+      "cart": cartList.map((item) {
+        return {
+          "product": item.productId,
+          "count": item.quantity,
+        };
+      }).toList(),
+    };
+
+    await cartRepository.addToCart(jsonEncode(orderData)).then((data) {
+      clearCart();
+      setCartLoading(false);
+      if (context.mounted) {
+        context.flushBarSuccessMessage(message: "Your order has been placed");
+      }
+    }).onError((error, _) {
+      print(error);
+      setCartLoading(false);
+    });
+  }
+
+  void clearCart() {
+    cartList.clear();
+    noOfCartItem = 0;
+    calculatedTotalPrice = 0.0;
+    saveCartItem(cartList);
+    notifyListeners();
   }
 }

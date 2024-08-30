@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:muztunes_apps/common/button.dart';
-import 'package:muztunes_apps/common/t_circular_icon.dart';
-import 'package:muztunes_apps/common/t_rounded_container.dart';
-import 'package:muztunes_apps/config/colors.dart';
-import 'package:muztunes_apps/extension/flushbar_extension.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
-import 'package:muztunes_apps/model/cart_model.dart';
-import 'package:muztunes_apps/model/product_model.dart';
-import 'package:muztunes_apps/view/home/product_rating.dart';
-import 'package:muztunes_apps/view/home/widget/products/product_image_slider_widget.dart';
-import 'package:muztunes_apps/viewModel/cart/cart_view_model.dart';
-import 'package:muztunes_apps/viewModel/products/product_view_model.dart';
+import 'package:muztunes/common/button.dart';
+import 'package:muztunes/common/t_circular_icon.dart';
+import 'package:muztunes/common/t_rounded_container.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/model/cart_model.dart';
+import 'package:muztunes/model/product_model.dart';
+import 'package:muztunes/utils/utils.dart';
+import 'package:muztunes/view/home/product_rating.dart';
+import 'package:muztunes/view/home/widget/products/product_image_slider_widget.dart';
+import 'package:muztunes/viewModel/cart/cart_view_model.dart';
+import 'package:muztunes/viewModel/products/product_view_model.dart';
 import 'package:provider/provider.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   final String productId;
   final List<Images> images;
   final String title;
@@ -35,6 +35,21 @@ class ProductDetailScreen extends StatelessWidget {
   });
 
   @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<CartViewModel>()
+          .updateAlreadyAddedProductCount(widget.productId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final testData = [
       "Solid colors: 100% Cotton; Heather Grey: 90% Cotton, 10% Polyester; All Other Heathers: 50% Cotton, 50% Polyester",
@@ -52,7 +67,7 @@ class ProductDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             ProductImageSlider(
-              images: images,
+              images: widget.images,
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -79,7 +94,7 @@ class ProductDetailScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(title,
+                  Text(widget.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -98,7 +113,7 @@ class ProductDetailScreen extends StatelessWidget {
                           decoration: TextDecoration.lineThrough),
                     ),
                     TextSpan(
-                      text: " \$$price",
+                      text: " \$${widget.price}",
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -122,21 +137,22 @@ class ProductDetailScreen extends StatelessWidget {
                       child: Button(
                         onTap: () {
                           if (context.read<CartViewModel>().noOfCartItem == 0) {
-                            context.flushBarSuccessMessage(
+                            Utils.showToaster(
+                                context: context,
                                 message: "Selected the quantity");
                           } else {
                             final cartItemModel = CartItemModel(
-                              productId: productId,
-                              description: description,
-                              title: title,
-                              category: category,
-                              price: double.parse(price),
+                              productId: widget.productId,
+                              description: widget.description,
+                              title: widget.title,
+                              category: widget.category,
+                              price: double.parse(widget.price),
                               quantity:
                                   context.read<CartViewModel>().noOfCartItem,
                               image: context
                                   .read<ProductViewModel>()
                                   .selectedImage,
-                              tags: tags,
+                              tags: widget.tags,
                             );
                             context
                                 .read<CartViewModel>()
@@ -177,7 +193,7 @@ class ProductDetailScreen extends StatelessWidget {
                                   .copyWith(color: const Color(0xff453E3E)),
                             ),
                             Text(
-                              category,
+                              widget.category,
                               style: Theme.of(context)
                                   .textTheme
                                   .labelSmall!
@@ -229,7 +245,7 @@ class ProductDetailScreen extends StatelessWidget {
                                   .copyWith(color: const Color(0xff453E3E)),
                             ),
                             // Map over the tags list and create a Text widget for each tag
-                            ...tags.map((tag) => Padding(
+                            ...widget.tags.map((tag) => Padding(
                                   padding: const EdgeInsets.only(
                                       right:
                                           4.0), // Add some spacing between tags
@@ -382,18 +398,18 @@ class ProductDetailScreen extends StatelessWidget {
             Button(
               onTap: () {
                 if (context.read<CartViewModel>().noOfCartItem == 0) {
-                  context.flushBarSuccessMessage(
-                      message: "Selected the quantity");
+                  Utils.showToaster(
+                      context: context, message: "Selected the quantity");
                 } else {
                   final cartItemModel = CartItemModel(
-                    productId: productId,
-                    description: description,
+                    productId: widget.productId,
+                    description: widget.description,
                     quantity: context.read<CartViewModel>().noOfCartItem,
                     image: context.read<ProductViewModel>().selectedImage,
-                    tags: tags,
-                    title: title,
-                    category: category,
-                    price: double.parse(price),
+                    tags: widget.tags,
+                    title: widget.title,
+                    category: widget.category,
+                    price: double.parse(widget.price),
                   );
                   context
                       .read<CartViewModel>()

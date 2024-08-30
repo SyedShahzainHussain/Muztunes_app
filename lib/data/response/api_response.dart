@@ -1,4 +1,4 @@
-import 'package:muztunes_apps/data/response/status.dart';
+import 'package:muztunes/data/response/status.dart';
 
 class ApiResponse<T> {
   Status status;

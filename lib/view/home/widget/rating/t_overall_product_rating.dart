@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/view/home/widget/rating/t_rating_indicator.dart';
+import 'package:muztunes/view/home/widget/rating/t_rating_indicator.dart';
 
 class OverAllProductRating extends StatelessWidget {
   const OverAllProductRating({

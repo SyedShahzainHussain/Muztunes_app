@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/common/bottom_navigation_widget.dart';
-import 'package:muztunes_apps/config/colors.dart';
-import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
-import 'package:muztunes_apps/view/splash/splash_screen.dart';
-import 'package:muztunes_apps/viewModel/services/session_controller/session_controller.dart';
+import 'package:muztunes/common/bottom_navigation_widget.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes/view/splash/splash_screen.dart';
+import 'package:muztunes/viewModel/services/session_controller/session_controller.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/common/button.dart';
-import 'package:muztunes_apps/config/colors.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
+import 'package:muztunes/common/button.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
 
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});

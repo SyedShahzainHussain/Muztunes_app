@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/model/cart_model.dart';
-import 'package:muztunes_apps/view/cart/widget/cart_item.dart';
-import 'package:muztunes_apps/view/cart/widget/product_cart_and_remove.dart';
-import 'package:muztunes_apps/view/cart/widget/t_product_price_text.dart';
-import 'package:muztunes_apps/viewModel/cart/cart_view_model.dart';
-import 'package:muztunes_apps/viewModel/products/product_view_model.dart';
+import 'package:muztunes/common/bottom_navigation_widget.dart';
+import 'package:muztunes/common/button.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/model/cart_model.dart';
+import 'package:muztunes/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes/view/cart/widget/cart_item.dart';
+import 'package:muztunes/view/cart/widget/product_cart_and_remove.dart';
+import 'package:muztunes/view/cart/widget/t_product_price_text.dart';
+import 'package:muztunes/viewModel/cart/cart_view_model.dart';
+import 'package:muztunes/viewModel/products/product_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CartListItem extends StatelessWidget {
@@ -15,7 +20,47 @@ class CartListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CartViewModel>(builder: (context, data, _) {
       return data.cartList.isEmpty
-          ? const Center(child: Text("No Cart Found"))
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/cart.png",
+                    width: context.screenWidth * 0.5,
+                    height: context.screenWidth * 0.5,
+                  ),
+                  Text(
+                    "Good Food is Always Cookings",
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  Text(
+                    "Your Cart is Empty.",
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelSmall!
+                        .copyWith(color: Colors.grey),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: context.screenWidth * .5,
+                    child: Button(
+                      title: "Shop Now",
+                      color: AppColors.redColor,
+                      onTap: () {
+                        context
+                            .read<BottomNavigationProvider>()
+                            .setIndex(Menus.home);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
           : ListView.separated(
               padding: EdgeInsets.zero,
               separatorBuilder: (context, index) => const SizedBox(
@@ -49,9 +94,8 @@ class CartListItem extends StatelessWidget {
                               // ! Add Remove Buttons
                               Consumer<CartViewModel>(
                                   builder: (context, data, _) {
-                        
                                 return ProductCartAddAndRemoveButton(
-                                  quantity: data.noOfCartItem,
+                                  quantity: data.cartList[index].quantity,
                                   add: () {
                                     final cartItemModel = CartItemModel(
                                       productId: cart.productId,

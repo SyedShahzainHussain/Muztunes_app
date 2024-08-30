@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:muztunes_apps/environment/environment.dart';
-import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
-import 'package:muztunes_apps/view/splash/splash_screen.dart';
-import 'package:muztunes_apps/viewModel/auth/auth_view_model.dart';
-import 'package:muztunes_apps/viewModel/cart/cart_view_model.dart';
-import 'package:muztunes_apps/viewModel/products/product_view_model.dart';
+import 'package:muztunes/environment/environment.dart';
+import 'package:muztunes/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes/view/splash/splash_screen.dart';
+import 'package:muztunes/viewModel/auth/auth_view_model.dart';
+import 'package:muztunes/viewModel/cart/cart_view_model.dart';
+import 'package:muztunes/viewModel/category/category_view_model.dart';
+import 'package:muztunes/viewModel/products/product_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -14,8 +15,10 @@ void main() async {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
   };
-  await SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
 
   const String enviroment = String.fromEnvironment(
     'ENVIRONMENT',
@@ -44,6 +47,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => CartViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CategoryViewModel(),
         ),
       ],
       child: MaterialApp(

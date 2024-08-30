@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:muztunes_apps/common/button.dart';
-import 'package:muztunes_apps/config/colors.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
-import 'package:muztunes_apps/viewModel/auth/auth_view_model.dart';
+import 'package:muztunes/common/button.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/viewModel/auth/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ForgotScreen extends StatefulWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
-import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
-import 'package:muztunes_apps/utils/utils.dart';
-import 'package:muztunes_apps/view/auth/forgot_screen.dart';
-import 'package:muztunes_apps/viewModel/auth/auth_view_model.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes/utils/utils.dart';
+import 'package:muztunes/view/auth/forgot_screen.dart';
+import 'package:muztunes/viewModel/auth/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {

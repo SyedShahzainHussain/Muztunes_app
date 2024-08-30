@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/common/heading.dart';
-import 'package:muztunes_apps/view/drawer/drawer_screen.dart';
-import 'package:muztunes_apps/view/home/all_merch_artists_screen.dart';
-import 'package:muztunes_apps/view/home/all_product_screen.dart';
-import 'package:muztunes_apps/view/home/widget/home/home_banner_widget.dart';
-import 'package:muztunes_apps/view/home/widget/home/home_grid_product_widget.dart';
-import 'package:muztunes_apps/view/home/widget/home/merch_product_widget.dart';
-import 'package:muztunes_apps/view/home/widget/products/featured_product_widget.dart';
+import 'package:muztunes/common/heading.dart';
+import 'package:muztunes/main.dart';
+import 'package:muztunes/view/drawer/drawer_screen.dart';
+import 'package:muztunes/view/home/all_merch_artists_screen.dart';
+import 'package:muztunes/view/home/all_product_screen.dart';
+import 'package:muztunes/view/home/widget/home/home_banner_widget.dart';
+import 'package:muztunes/view/home/widget/home/home_grid_product_widget.dart';
+import 'package:muztunes/view/home/widget/products/featured_product_widget.dart';
+import 'package:muztunes/viewModel/cart/cart_view_model.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<CartViewModel>().loadCartItem();
+  }
 
   @override
   Widget build(BuildContext context) {

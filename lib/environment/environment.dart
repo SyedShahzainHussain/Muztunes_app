@@ -1,6 +1,6 @@
-import 'package:muztunes_apps/abstract/base_config_class.dart';
-import 'package:muztunes_apps/config_class/dev_config.dart';
-import 'package:muztunes_apps/config_class/prod_config.dart';
+import 'package:muztunes/abstract/base_config_class.dart';
+import 'package:muztunes/config_class/dev_config.dart';
+import 'package:muztunes/config_class/prod_config.dart';
 
 class Environment {
   static final Environment _singleton = Environment._internal();

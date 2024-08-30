@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/data/response/status.dart';
-import 'package:muztunes_apps/shimmers/home_grid_shimmer.dart';
-import 'package:muztunes_apps/view/home/product_detail_screen.dart';
-import 'package:muztunes_apps/viewModel/products/product_view_model.dart';
+import 'package:muztunes/data/response/status.dart';
+import 'package:muztunes/shimmers/home_grid_shimmer.dart';
+import 'package:muztunes/view/home/product_detail_screen.dart';
+import 'package:muztunes/viewModel/products/product_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeGridProduct extends StatefulWidget {

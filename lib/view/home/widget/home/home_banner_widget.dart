@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/common/bottom_navigation_widget.dart';
-import 'package:muztunes_apps/common/button.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
-import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
-import 'package:muztunes_apps/view/shop/shop_screen.dart';
+import 'package:muztunes/common/bottom_navigation_widget.dart';
+import 'package:muztunes/common/button.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes/view/shop/shop_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeBanner extends StatelessWidget {

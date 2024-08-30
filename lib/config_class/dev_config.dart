@@ -1,4 +1,4 @@
-import 'package:muztunes_apps/abstract/base_config_class.dart';
+import 'package:muztunes/abstract/base_config_class.dart';
 
 class DevConfig extends BaseConfig {
   @override

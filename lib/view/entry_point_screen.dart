@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/common/bottom_navigation_widget.dart';
-import 'package:muztunes_apps/config/colors.dart';
-import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
-import 'package:muztunes_apps/view/about/about_screen.dart';
-import 'package:muztunes_apps/view/auth/login_screen.dart';
-import 'package:muztunes_apps/view/auth/sign_up_screen.dart';
-import 'package:muztunes_apps/view/cart/cart_screen.dart';
-import 'package:muztunes_apps/view/concert/concert_screen.dart';
-import 'package:muztunes_apps/view/contact/contact_screen.dart';
-import 'package:muztunes_apps/view/drawer/drawer_screen.dart';
-import 'package:muztunes_apps/view/home/home_screen.dart';
-import 'package:muztunes_apps/view/profile_screen/profile_screen.dart';
-import 'package:muztunes_apps/viewModel/services/session_controller/session_controller.dart';
+import 'package:muztunes/common/badge.dart';
+import 'package:muztunes/common/bottom_navigation_widget.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes/view/about/about_screen.dart';
+import 'package:muztunes/view/auth/login_screen.dart';
+import 'package:muztunes/view/auth/sign_up_screen.dart';
+import 'package:muztunes/view/cart/cart_screen.dart';
+import 'package:muztunes/view/concert/concert_screen.dart';
+import 'package:muztunes/view/contact/contact_screen.dart';
+import 'package:muztunes/view/drawer/drawer_screen.dart';
+import 'package:muztunes/view/home/home_screen.dart';
+import 'package:muztunes/view/profile_screen/profile_screen.dart';
+import 'package:muztunes/viewModel/cart/cart_view_model.dart';
+import 'package:muztunes/viewModel/services/session_controller/session_controller.dart';
 import 'package:provider/provider.dart';
 
 class EntryPointScreen extends StatefulWidget {
@@ -212,12 +214,18 @@ class MyBottomNavigation extends StatelessWidget {
                         name: Menus.auth),
                   ),
                   const Spacer(),
-                  Expanded(
-                    child: BottomNavigationItem(
-                        onPressed: () => onTap(Menus.cart),
-                        icon: Icons.shopping_cart_sharp,
-                        current: currentIndex,
-                        name: Menus.cart),
+                  Consumer<CartViewModel>(
+                    builder: (context, data, _) => Expanded(
+                      child: BadgeWidget(
+                        badgeCount: data.getTotalQuantity(),
+                        child: BottomNavigationItem(
+                          onPressed: () => onTap(Menus.cart),
+                          icon: Icons.shopping_cart_sharp,
+                          current: currentIndex,
+                          name: Menus.cart,
+                        ), // Pass cart item count to badge
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: BottomNavigationItem(

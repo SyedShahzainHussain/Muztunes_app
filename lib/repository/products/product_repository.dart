@@ -1,5 +1,5 @@
-import 'package:muztunes_apps/model/product_model.dart';
+import 'package:muztunes/model/product_model.dart';
 
 abstract class ProductRepository {
-  Future<ProductModel> fetchAllProduct();
+  Future<ProductModel> fetchAllProduct( [Map<String, dynamic>? queryParameters]);
 }

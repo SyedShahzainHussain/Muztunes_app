@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/utils/shimmer/shimmer.dart';
+import 'package:muztunes/utils/shimmer/shimmer.dart';
 
 class TRoundedImage extends StatelessWidget {
   final String imageUrl;

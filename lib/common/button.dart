@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/utils/utils.dart';
+import 'package:muztunes/utils/utils.dart';
 
 class Button extends StatelessWidget {
   final Color? color;
@@ -34,13 +34,16 @@ class Button extends StatelessWidget {
             borderRadius:
                 showRadius == true ? BorderRadius.circular(8.0) : null),
         child: Center(
-            child: loading? Utils.showLoadingSpinner(): FittedBox(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontWeight: FontWeight.w800, color: titleColor ?? Colors.white),
-          ),
-        )),
+            child: loading
+                ? Utils.showLoadingSpinner()
+                : FittedBox(
+                    child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: titleColor ?? Colors.white),
+                    ),
+                  )),
       ),
     );
   }

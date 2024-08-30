@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/common/curved_widget.dart';
-import 'package:muztunes_apps/common/custom_app_bar.dart';
-import 'package:muztunes_apps/common/t_rounded_image.dart';
-import 'package:muztunes_apps/config/colors.dart';
-import 'package:muztunes_apps/model/product_model.dart';
-import 'package:muztunes_apps/viewModel/products/product_view_model.dart';
+import 'package:muztunes/common/curved_widget.dart';
+import 'package:muztunes/common/custom_app_bar.dart';
+import 'package:muztunes/common/t_rounded_image.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/model/product_model.dart';
+import 'package:muztunes/viewModel/products/product_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ProductImageSlider extends StatefulWidget {
@@ -98,9 +98,7 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
               // ! Appbar Icons
               const CustomAppBar(
                 showBackArrow: true,
-                actions: [
-                 
-                ],
+                actions: [],
               )
             ],
           ),

@@ -1,4 +1,4 @@
-import 'package:muztunes_apps/environment/environment.dart';
+import 'package:muztunes/environment/environment.dart';
 
 class Urls {
   static get https => 'https://';
@@ -15,8 +15,10 @@ class Urls {
   static String forgotPasswordUrl = "$baseUrl/forgot-password";
   static String resetPasswordUrl = "$baseUrl/reset-password";
 
-
   // Todo Products Urls
   static String allProductsUrl = "$baseUrl/product";
-
+  // Todo Cart Urls
+  static String cartPostUrl = "$baseUrl/cart";
+  // Todo Category Urls
+  static String categoryUrl = "$baseUrl/category";
 }

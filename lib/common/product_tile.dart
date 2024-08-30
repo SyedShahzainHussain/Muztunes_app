@@ -1,9 +1,9 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/config/colors.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
-import 'package:muztunes_apps/model/product_model.dart';
-import 'package:muztunes_apps/view/home/product_detail_screen.dart';
+import 'package:muztunes/config/colors.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/model/product_model.dart';
+import 'package:muztunes/view/home/product_detail_screen.dart';
 
 class ProductTile extends StatelessWidget {
   final String productId;
@@ -37,7 +37,7 @@ class ProductTile extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (_) => ProductDetailScreen(
-                  productId: productId,
+                      productId: productId,
                       images: images,
                       category: category,
                       description: subTitle,

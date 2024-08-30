@@ -1,5 +1,5 @@
 // import 'package:flutter/material.dart';
-// import 'package:muztunes_apps/common/product_tile.dart';
+// import 'package:muztunes/common/product_tile.dart';
 
 // class MerchProductWidget extends StatelessWidget {
 //   const MerchProductWidget({

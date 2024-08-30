@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/common/clip_behaviour.dart';
+import 'package:muztunes/common/clip_behaviour.dart';
 
 class CurvedWidget extends StatelessWidget {
   final Widget child;

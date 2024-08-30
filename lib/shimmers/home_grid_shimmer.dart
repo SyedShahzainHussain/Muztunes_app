@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/utils/shimmer/shimmer.dart';
+import 'package:muztunes/utils/shimmer/shimmer.dart';
 
 class HomeGridShimmer extends StatelessWidget {
   const HomeGridShimmer({

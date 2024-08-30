@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/common/bottom_navigation_widget.dart';
-import 'package:muztunes_apps/extension/flushbar_extension.dart';
-import 'package:muztunes_apps/model/user_model.dart';
-import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
-import 'package:muztunes_apps/repository/auth/auth_http_repository.dart';
-import 'package:muztunes_apps/repository/auth/auth_repository.dart';
-import 'package:muztunes_apps/view/auth/email_verification.dart';
-import 'package:muztunes_apps/view/splash/splash_screen.dart';
-import 'package:muztunes_apps/viewModel/services/session_controller/session_controller.dart';
+import 'package:muztunes/common/bottom_navigation_widget.dart';
+import 'package:muztunes/extension/flushbar_extension.dart';
+import 'package:muztunes/model/user_model.dart';
+import 'package:muztunes/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes/repository/auth/auth_http_repository.dart';
+import 'package:muztunes/repository/auth/auth_repository.dart';
+import 'package:muztunes/view/auth/email_verification.dart';
+import 'package:muztunes/view/splash/splash_screen.dart';
+import 'package:muztunes/viewModel/services/session_controller/session_controller.dart';
 import 'package:provider/provider.dart';
 
 class AuthViewModel with ChangeNotifier {

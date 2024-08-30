@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
-import 'package:muztunes_apps/view/shop/shop_screen.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/view/shop/shop_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});

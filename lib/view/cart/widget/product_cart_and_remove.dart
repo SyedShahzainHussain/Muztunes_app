@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:muztunes_apps/common/t_circular_icon.dart';
-import 'package:muztunes_apps/config/colors.dart';
+import 'package:muztunes/common/t_circular_icon.dart';
+import 'package:muztunes/config/colors.dart';
 
 class ProductCartAddAndRemoveButton extends StatelessWidget {
   final int quantity;

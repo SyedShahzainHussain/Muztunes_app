@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/model/user_model.dart';
-import 'package:muztunes_apps/viewModel/storage/local_storage.dart';
+import 'package:muztunes/model/user_model.dart';
+import 'package:muztunes/viewModel/storage/local_storage.dart';
 
 class SessionController {
   static final SessionController _sessionController =

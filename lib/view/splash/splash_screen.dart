@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/extension/media_query_extension.dart';
-import 'package:muztunes_apps/view/entry_point_screen.dart';
-import 'package:muztunes_apps/viewModel/services/splash_services.dart';
+import 'package:muztunes/extension/media_query_extension.dart';
+import 'package:muztunes/view/entry_point_screen.dart';
+import 'package:muztunes/viewModel/services/splash_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

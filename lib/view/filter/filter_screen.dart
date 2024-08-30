@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muztunes_apps/config/colors.dart';
+import 'package:muztunes/config/colors.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});

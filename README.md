@@ -1,4 +1,4 @@
-# muztunes_apps
+# muztunes
 
 A new Flutter project.
 
