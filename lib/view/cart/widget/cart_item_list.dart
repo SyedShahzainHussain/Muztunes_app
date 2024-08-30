@@ -49,7 +49,7 @@ class CartListItem extends StatelessWidget {
                               // ! Add Remove Buttons
                               Consumer<CartViewModel>(
                                   builder: (context, data, _) {
-                                print(data.calculatedTotalPrice);
+                        
                                 return ProductCartAddAndRemoveButton(
                                   quantity: data.noOfCartItem,
                                   add: () {

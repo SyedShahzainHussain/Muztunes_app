@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muztunes_apps/extension/flushbar_extension.dart';
 import 'package:muztunes_apps/model/cart_model.dart';
+import 'package:muztunes_apps/viewModel/storage/local_storage.dart';
 
 class CartViewModel with ChangeNotifier {
   List<CartItemModel> cartList = [];
@@ -34,7 +35,7 @@ class CartViewModel with ChangeNotifier {
       cartList.add(cartItemModel);
       context.flushBarSuccessMessage(message: "Product Added!");
     }
-
+    saveCartItem(cartList);
     notifyListeners();
   }
 
@@ -53,6 +54,7 @@ class CartViewModel with ChangeNotifier {
       context.flushBarSuccessMessage(message: "Product Added!");
     }
     updateCartTotal(cartList);
+    saveCartItem(cartList);
     notifyListeners();
   }
 
@@ -73,6 +75,7 @@ class CartViewModel with ChangeNotifier {
       context.flushBarErrorMessage(message: "Product not found in cart!");
     }
     updateCartTotal(cartList);
+    saveCartItem(cartList);
     notifyListeners();
   }
 
@@ -88,5 +91,22 @@ class CartViewModel with ChangeNotifier {
     noOfCartItem = calculatedNoItem;
     this.calculatedTotalPrice = calculatedTotalPrice;
     notifyListeners();
+  }
+
+  saveCartItem(List<CartItemModel> cartItem) async {
+    final cartItemString = cartItem.map((data) => data.toMap()).toList();
+    await LocalStorage().setValue("cartItems", cartItemString.toString());
+  }
+
+  loadCartItem() async {
+    final List<dynamic>? cartItem = await LocalStorage().realValue("cartItems");
+    print(cartItem);
+    if (cartItem != null) {
+      cartList.clear();
+      cartList.addAll(cartItem.map((e) => CartItemModel.fromMap(e)).toList());
+      updateCartTotal(cartList);
+    } else {
+      print("error");
+    }
   }
 }
