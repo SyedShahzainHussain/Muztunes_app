@@ -1,7 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:muztunes_apps/common/bottom_navigation_widget.dart';
 import 'package:muztunes_apps/common/button.dart';
 import 'package:muztunes_apps/extension/media_query_extension.dart';
+import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
+import 'package:muztunes_apps/view/shop/shop_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeBanner extends StatelessWidget {
   const HomeBanner({
@@ -79,9 +83,13 @@ class HomeBanner extends StatelessWidget {
               SizedBox(
                 height: context.screenHeight * 0.03,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Button(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const ShopScreen()));
+                  },
                   borderColor: Colors.white,
                   color: Colors.white,
                   titleColor: Colors.black,
@@ -91,9 +99,14 @@ class HomeBanner extends StatelessWidget {
               SizedBox(
                 height: context.screenHeight * 0.025,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Button(
+                  onTap: () {
+                    context
+                        .read<BottomNavigationProvider>()
+                        .setIndex(Menus.about);
+                  },
                   borderColor: Colors.white,
                   title: "ABOUT US",
                 ),

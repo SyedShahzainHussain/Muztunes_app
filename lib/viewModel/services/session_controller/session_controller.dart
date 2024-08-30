@@ -17,8 +17,6 @@ class SessionController {
   LocalStorage localStorage = LocalStorage();
   int? otpCode;
 
-  
-
   SessionController._interval() {
     isLogin = false;
   }
@@ -32,7 +30,6 @@ class SessionController {
     try {
       var userData = await localStorage.realValue("token");
       var isLogin = await localStorage.realValue("isLogin");
-
       if (userData != null) {
         SessionController().userModel =
             UserModel.fromJson(jsonDecode(userData));
@@ -41,5 +38,11 @@ class SessionController {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  Future<void> logout() async {
+    await localStorage.clearValue("token");
+    await localStorage.clearValue("isLogin");
+    userModel = UserModel();
   }
 }

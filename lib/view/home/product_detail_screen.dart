@@ -1,15 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:muztunes_apps/common/button.dart';
+import 'package:muztunes_apps/common/t_circular_icon.dart';
 import 'package:muztunes_apps/common/t_rounded_container.dart';
 import 'package:muztunes_apps/config/colors.dart';
+import 'package:muztunes_apps/extension/flushbar_extension.dart';
 import 'package:muztunes_apps/extension/media_query_extension.dart';
+import 'package:muztunes_apps/model/cart_model.dart';
+import 'package:muztunes_apps/model/product_model.dart';
 import 'package:muztunes_apps/view/home/product_rating.dart';
 import 'package:muztunes_apps/view/home/widget/products/product_image_slider_widget.dart';
-import 'package:muztunes_apps/view/home/widget/products/t_bottom_navigation_card_widget.dart';
+import 'package:muztunes_apps/viewModel/cart/cart_view_model.dart';
+import 'package:muztunes_apps/viewModel/products/product_view_model.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+  final String productId;
+  final List<Images> images;
+  final String title;
+  final String description;
+  final String category;
+  final String price;
+  final List<String> tags;
+  const ProductDetailScreen({
+    super.key,
+    required this.images,
+    required this.title,
+    required this.description,
+    required this.category,
+    required this.tags,
+    required this.price,
+    required this.productId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +51,9 @@ class ProductDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const ProductImageSlider(),
+            ProductImageSlider(
+              images: images,
+            ),
             Padding(
               padding: const EdgeInsets.only(
                 right: 8.0,
@@ -54,7 +79,7 @@ class ProductDetailScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text("Aerosmith – Dream On Portrait T-Shirt",
+                  Text(title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -73,7 +98,7 @@ class ProductDetailScreen extends StatelessWidget {
                           decoration: TextDecoration.lineThrough),
                     ),
                     TextSpan(
-                      text: " \$29.99",
+                      text: " \$$price",
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -94,7 +119,30 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                   SizedBox(
                       width: context.screenWidth * .25,
-                      child: const Button(
+                      child: Button(
+                        onTap: () {
+                          if (context.read<CartViewModel>().noOfCartItem == 0) {
+                            context.flushBarSuccessMessage(
+                                message: "Selected the quantity");
+                          } else {
+                            final cartItemModel = CartItemModel(
+                              productId: productId,
+                              description: description,
+                              title: title,
+                              category: category,
+                              price: double.parse(price),
+                              quantity:
+                                  context.read<CartViewModel>().noOfCartItem,
+                              image: context
+                                  .read<ProductViewModel>()
+                                  .selectedImage,
+                              tags: tags,
+                            );
+                            context
+                                .read<CartViewModel>()
+                                .addToCart(cartItemModel, context);
+                          }
+                        },
                         showRadius: true,
                         title: "Add To Cart",
                         color: AppColors.redColor,
@@ -129,7 +177,7 @@ class ProductDetailScreen extends StatelessWidget {
                                   .copyWith(color: const Color(0xff453E3E)),
                             ),
                             Text(
-                              "Men,",
+                              category,
                               style: Theme.of(context)
                                   .textTheme
                                   .labelSmall!
@@ -137,24 +185,24 @@ class ProductDetailScreen extends StatelessWidget {
                                       color: const Color(0xff2B161B),
                                       fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              " T-Shirts,",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(
-                                      color: const Color(0xff2B161B),
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              " Shoes",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(
-                                      color: const Color(0xff2B161B),
-                                      fontWeight: FontWeight.bold),
-                            ),
+                            // Text(
+                            //   " T-Shirts,",
+                            //   style: Theme.of(context)
+                            //       .textTheme
+                            //       .labelSmall!
+                            //       .copyWith(
+                            //           color: const Color(0xff2B161B),
+                            //           fontWeight: FontWeight.bold),
+                            // ),
+                            // Text(
+                            //   " Shoes",
+                            //   style: Theme.of(context)
+                            //       .textTheme
+                            //       .labelSmall!
+                            //       .copyWith(
+                            //           color: const Color(0xff2B161B),
+                            //           fontWeight: FontWeight.bold),
+                            // ),
                           ],
                         )),
                   ),
@@ -180,33 +228,22 @@ class ProductDetailScreen extends StatelessWidget {
                                   .labelMedium!
                                   .copyWith(color: const Color(0xff453E3E)),
                             ),
-                            Text(
-                              "Men,",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(
-                                      color: const Color(0xff2B161B),
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              " T-Shirts,",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(
-                                      color: const Color(0xff2B161B),
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              " Shoes",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(
-                                      color: const Color(0xff2B161B),
-                                      fontWeight: FontWeight.bold),
-                            ),
+                            // Map over the tags list and create a Text widget for each tag
+                            ...tags.map((tag) => Padding(
+                                  padding: const EdgeInsets.only(
+                                      right:
+                                          4.0), // Add some spacing between tags
+                                  child: Text(
+                                    "$tag,",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .copyWith(
+                                          color: const Color(0xff2B161B),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                )),
                           ],
                         )),
                   ),
@@ -292,7 +329,85 @@ class ProductDetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const TBottomNavigationCardWidget(),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24 / 2),
+        decoration: const BoxDecoration(
+          color: Color(0xFF4F4F4F),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                TCircularIcons(
+                  icon: Iconsax.minus,
+                  backgroundColor: AppColors.redColor,
+                  width: 40,
+                  height: 40,
+                  color: Colors.white,
+                  onPressed: () {
+                    context.read<CartViewModel>().decreaseCount();
+                  },
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                Consumer<CartViewModel>(
+                  builder: (context, data, _) => Text(
+                    data.noOfCartItem.toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                TCircularIcons(
+                    icon: Iconsax.add,
+                    backgroundColor: AppColors.redColor,
+                    width: 40,
+                    height: 40,
+                    color: Colors.white,
+                    onPressed: () {
+                      context.read<CartViewModel>().increaseCount();
+                    }),
+              ],
+            ),
+            Button(
+              onTap: () {
+                if (context.read<CartViewModel>().noOfCartItem == 0) {
+                  context.flushBarSuccessMessage(
+                      message: "Selected the quantity");
+                } else {
+                  final cartItemModel = CartItemModel(
+                    productId: productId,
+                    description: description,
+                    quantity: context.read<CartViewModel>().noOfCartItem,
+                    image: context.read<ProductViewModel>().selectedImage,
+                    tags: tags,
+                    title: title,
+                    category: category,
+                    price: double.parse(price),
+                  );
+                  context
+                      .read<CartViewModel>()
+                      .addToCart(cartItemModel, context);
+                }
+              },
+              showRadius: true,
+              title: "Add To Cart",
+              color: AppColors.redColor,
+              borderColor: AppColors.redColor,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

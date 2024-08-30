@@ -10,6 +10,7 @@ import 'package:muztunes_apps/view/concert/concert_screen.dart';
 import 'package:muztunes_apps/view/contact/contact_screen.dart';
 import 'package:muztunes_apps/view/drawer/drawer_screen.dart';
 import 'package:muztunes_apps/view/home/home_screen.dart';
+import 'package:muztunes_apps/view/profile_screen/profile_screen.dart';
 import 'package:muztunes_apps/viewModel/services/session_controller/session_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -62,13 +63,11 @@ class _EntryPointScreenState extends State<EntryPointScreen>
       const SizedBox(),
       const HomeScreen(),
       const AboutScreen(),
-      SessionController().userModel.token != null
+      SessionController().userModel.token == null
           ? context.read<BottomNavigationProvider>().isLogin
               ? const LoginScreen()
               : const SignUpScreen()
-          : const Center(
-              child: Text("Login"),
-            ),
+          : const ProfileScreen(),
       const CartScreen(),
       const ContactScreen(),
       const ConcertScreen(),

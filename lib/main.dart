@@ -5,6 +5,8 @@ import 'package:muztunes_apps/environment/environment.dart';
 import 'package:muztunes_apps/providers/bottomnavigation/bottom_navigation_provider.dart';
 import 'package:muztunes_apps/view/splash/splash_screen.dart';
 import 'package:muztunes_apps/viewModel/auth/auth_view_model.dart';
+import 'package:muztunes_apps/viewModel/cart/cart_view_model.dart';
+import 'package:muztunes_apps/viewModel/products/product_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -36,6 +38,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AuthViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProductViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartViewModel(),
         ),
       ],
       child: MaterialApp(

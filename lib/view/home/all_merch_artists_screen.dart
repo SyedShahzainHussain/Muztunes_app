@@ -30,7 +30,7 @@ class AllMerchArtistsScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            MerchProductWidget(),
+            // MerchProductWidget(),
           ],
         ),
       ),

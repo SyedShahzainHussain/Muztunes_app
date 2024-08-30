@@ -4,25 +4,32 @@ import 'package:muztunes_apps/config/colors.dart';
 import 'package:muztunes_apps/view/cart/widget/t_product_title.dart';
 
 class CartItem extends StatelessWidget {
+  final String image;
+  final String title;
+  final String description;
+  final String category;
   const CartItem({
     super.key,
+    required this.image,
+    required this.title,
+    required this.description,
+    required this.category,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
         // ! Image
         TRoundedImage(
-          imageUrl:
-              "https://shop.muztunes.co/wp-content/uploads/2023/01/Madonna-Black-300x300.jpg",
+          imageUrl: image,
           width: 60,
           isNetworkImage: true,
           height: 60,
-          padding: EdgeInsets.all(4),
+          padding: const EdgeInsets.all(4),
           backgroundColor: AppColors.redColor,
         ),
-        SizedBox(
+        const SizedBox(
           width: 24,
         ),
         // ! Title , Price & Size
@@ -33,7 +40,19 @@ class CartItem extends StatelessWidget {
             children: [
               Flexible(
                 child: TProductTitle(
-                  title: "Shirts",
+                  title: title,
+                  maxLines: 1,
+                ),
+              ),
+              Flexible(
+                child: TProductTitle(
+                  title: description,
+                  maxLines: 1,
+                ),
+              ),
+              Flexible(
+                child: TProductTitle(
+                  title: category,
                   maxLines: 1,
                 ),
               ),

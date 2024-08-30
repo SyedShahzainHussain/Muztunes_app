@@ -23,7 +23,7 @@ class ShimmerEffect extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           color: color ?? (dark ? Colors.grey : Colors.white),
-          borderRadius: BorderRadius.circular(radius),
+          // borderRadius: BorderRadius.circular(radius),
         ),
       ),
     );

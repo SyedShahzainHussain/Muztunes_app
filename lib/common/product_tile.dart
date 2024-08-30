@@ -1,30 +1,50 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:muztunes_apps/config/colors.dart';
 import 'package:muztunes_apps/extension/media_query_extension.dart';
+import 'package:muztunes_apps/model/product_model.dart';
 import 'package:muztunes_apps/view/home/product_detail_screen.dart';
 
 class ProductTile extends StatelessWidget {
+  final String productId;
   final String imageUrl;
   final String title;
   final String subTitle;
   final double price;
   final bool isSale;
+  final List<Images> images;
+  final List<String> tags;
+  final String category;
 
   const ProductTile({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.subTitle,
+    required this.tags,
     required this.price,
     this.isSale = false,
+    required this.category,
+    required this.images,
+    required this.productId,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => const ProductDetailScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => ProductDetailScreen(
+                  productId: productId,
+                      images: images,
+                      category: category,
+                      description: subTitle,
+                      tags: tags,
+                      title: title,
+                      price: price.toString(),
+                    )));
       },
       child: Material(
         elevation: 5,
@@ -59,10 +79,14 @@ class ProductTile extends StatelessWidget {
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12.0),
-                        child: Image.network(
-                          imageUrl,
-                          fit: BoxFit.contain,
+                        child: FancyShimmerImage(
+                          imageUrl: imageUrl,
+                          boxFit: BoxFit.contain,
                           width: double.infinity,
+                          height: context.screenHeight * 0.13,
+                          shimmerBaseColor: Colors.grey[300]!,
+                          shimmerHighlightColor: Colors.grey[100]!,
+                          errorWidget: const Center(child: Icon(Icons.error)),
                         ),
                       ),
                       SizedBox(

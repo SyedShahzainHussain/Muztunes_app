@@ -14,4 +14,9 @@ class Urls {
   static String registerUrl = "$baseUrl/register";
   static String forgotPasswordUrl = "$baseUrl/forgot-password";
   static String resetPasswordUrl = "$baseUrl/reset-password";
+
+
+  // Todo Products Urls
+  static String allProductsUrl = "$baseUrl/product";
+
 }
