@@ -356,7 +356,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Reviews (${widget.totalRating})",
+                      Text("Reviews",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style:

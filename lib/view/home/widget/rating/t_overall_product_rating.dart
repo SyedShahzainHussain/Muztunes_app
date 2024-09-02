@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:muztune/view/home/widget/rating/t_rating_indicator.dart';
 
 class OverAllProductRating extends StatelessWidget {
+  final String rating;
   const OverAllProductRating({
     super.key,
+    required this.rating
   });
 
   @override
@@ -13,7 +15,7 @@ class OverAllProductRating extends StatelessWidget {
         Expanded(
           flex: 3,
           child: Text(
-            "4.8",
+            rating,
             style: Theme.of(context).textTheme.displayLarge,
           ),
         ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:muztune/extension/media_query_extension.dart';
 import 'package:muztune/utils/utils.dart';
-import 'package:muztune/view/admin/admin_screen.dart';
+import 'package:muztune/view/admin/create_article_screen.dart';
+import 'package:muztune/view/admin/create_product_screen.dart';
 import 'package:muztune/view/orders/order_screen.dart';
 import 'package:muztune/view/shop/shop_screen.dart';
 import 'package:muztune/viewModel/services/session_controller/session_controller.dart';
@@ -128,8 +129,13 @@ class _DrawerScreenState extends State<DrawerScreen>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const AdminScreen()),
+                              builder: (_) => const CreateProductScreen()),
                         );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (_) => const CreateArticleScreen()),
+                        // );
                       },
                       title: Text(
                         "Admin",

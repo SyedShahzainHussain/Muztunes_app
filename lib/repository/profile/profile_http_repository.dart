@@ -19,7 +19,7 @@ class ProfileHttpRepository extends ProfileRepository {
     bool isSingleFile = true, // Default value provided here
   }) async {
     try {
-      dynamic response = await baseApiServices.getPostFormApiResponse(
+      dynamic response = await baseApiServices.getPutFormApiResponse(
         url: url,
         fields: fields,
         file: file!,

@@ -70,7 +70,7 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
                 tags: product.tags!,
                 image: product.image!,
                 isProduct: false,
-                totalrating: product.totalrating??"0",
+                totalrating: product.totalrating ?? "0",
               );
             },
             itemCount: displayedItems.length,

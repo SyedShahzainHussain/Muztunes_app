@@ -30,6 +30,9 @@ class Urls {
   static String orderUrls = "getorders";
   // Todo Profile Urls
   static String profileDetailsUrls = "user-details";
-  // Todo  Urls
+  // Todo Rating  Urls
   static String postRatingUrl = "rating";
+  // Todo Create Product  Urls
+  static String createProduct = "product";
+ 
 }

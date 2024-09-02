@@ -39,7 +39,10 @@ class _AddRatingScreenState extends State<AddRatingScreen> {
         "comment": messageController.text,
         "type": widget.type
       };
-      context.read<RatingViewModel>().putRatingApi(body, context);
+      context.read<RatingViewModel>().putRatingApi(body, context).then((data) {
+        final body = {"Id": widget.productId, "type": widget.type};
+        context.read<RatingViewModel>().getAllRating(body);
+      });
     }
   }
 

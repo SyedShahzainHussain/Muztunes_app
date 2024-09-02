@@ -53,7 +53,6 @@ class ProfileViewModel with ChangeNotifier {
     BuildContext context,
   ) async {
     setProfileLoading(true);
-    print(Urls.updatedProfileUrl);
     profileRepository
         .postFormData(
       url: Urls.updatedProfileUrl,

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:muztune/environment/environment.dart';
 import 'package:muztune/providers/bottomnavigation/bottom_navigation_provider.dart';
 import 'package:muztune/utils/global_context.dart';
+import 'package:muztune/view/admin/viewmodel/create_product_view_model.dart';
 import 'package:muztune/view/splash/splash_screen.dart';
 import 'package:muztune/viewModel/article/article_view_model.dart';
 import 'package:muztune/viewModel/auth/auth_view_model.dart';
@@ -71,6 +72,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => RatingViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CreateProductViewModel(),
         ),
       ],
       child: MaterialApp(

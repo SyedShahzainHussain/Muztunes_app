@@ -131,7 +131,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               productId: product.sId!,
                               images: product.images ?? [],
                               image: product.images?[0],
-                              totalrating: product.totalrating??"0",
+                              totalrating: product.totalrating ?? "0",
                             );
                           },
                           itemCount: queryProduct.data!.data!.length,

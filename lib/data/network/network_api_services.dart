@@ -15,11 +15,15 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
-  Future getGetApiResponse(String url,
-      [Map<String, dynamic>? queryParameters,
-      Map<String, dynamic>? headers]) async {
+  Future getGetApiResponse(
+    String url, [
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+    dynamic body,
+  ]) async {
     try {
       final response = await _dio.get(
+        data: body,
         url,
         queryParameters: queryParameters,
       );
@@ -48,35 +52,99 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
-  Future<dynamic> getPostFormApiResponse({
+  Future<dynamic> getPutFormApiResponse({
     required String url,
     Map<String, dynamic>? fields,
-    required File file,
+    File? file, // Optional single file
     bool isSingleFile = true,
-    List<File>? files,
+    List<File>? files, // Optional multiple files
     Map<String, dynamic>? headers,
   }) async {
     try {
       var formData = FormData();
 
+      // Add fields to form data
       if (fields != null) {
         fields.forEach((key, value) {
           formData.fields.add(MapEntry(key, value.toString()));
         });
       }
 
-      String contentType =
-          lookupMimeType(file.path) ?? 'image/jpeg'; // Adjust as needed
+      // Add single file
+      if (isSingleFile == true && file != null) {
+        String contentType = lookupMimeType(file.path) ?? 'image/jpeg';
+        formData.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(file.path,
+              contentType: MediaType.parse(contentType)),
+        ));
+      }
 
-      formData.files.add(MapEntry(
-        'image',
-        MultipartFile.fromFileSync(file.path,
-            contentType: MediaType.parse(contentType)),
-      ));
+      // Add multiple files
+      if (!isSingleFile && files != null) {
+        for (var file in files) {
+          String contentType = lookupMimeType(file.path) ?? 'image/jpeg';
+          formData.files.add(MapEntry(
+            'images[]', // Use the same key if you want to handle multiple files with the same field name
+            MultipartFile.fromFileSync(file.path,
+                contentType: MediaType.parse(contentType)),
+          ));
+        }
+      }
 
+      // Send the request
       final response = await _dio.put(
         url,
         data: formData,
+      );
+
+      return _handleResponse(response);
+    } on DioException catch (_) {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<dynamic> getPostFormApiResponse({
+    required String url,
+    Map<String, dynamic>? fields,
+    List<File>? files, // List of multiple files
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      var formData = FormData();
+
+      // Add fields to form data
+      if (fields != null) {
+        fields.forEach((key, value) {
+          formData.fields.add(MapEntry(key, value.toString()));
+        });
+      }
+
+      // Add multiple files
+      if (files != null) {
+        for (var file in files) {
+          String contentType = lookupMimeType(file.path) ?? 'image/jpeg';
+          formData.files.add(MapEntry(
+            'images', // Adjust this field name as needed
+            MultipartFile.fromFileSync(file.path,
+                contentType: MediaType.parse(contentType)),
+          ));
+        }
+      }
+
+      // Optional: add headers if provided
+      Options options = Options(
+        headers: headers,
+      );
+
+      // Send the request
+      final response = await _dio.post(
+        url,
+        data: formData,
+        options: options,
       );
 
       return _handleResponse(response);
@@ -131,6 +199,44 @@ class NetworkApiServices extends BaseApiServices {
       return _handleResponse(response);
     } on DioException catch (_) {
       throw FetchDataException("No Internet Connection");
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future getPostSingleImageFormApiResponse(
+      {required String url,
+      Map<String, dynamic>? fields,
+      File? files,
+      Map<String, dynamic>? headers}) async {
+    try {
+      var formData = FormData();
+
+      // Add fields to form data
+      if (fields != null) {
+        fields.forEach((key, value) {
+          formData.fields.add(MapEntry(key, value.toString()));
+        });
+      }
+
+      // Add single file
+      String contentType = lookupMimeType(files!.path) ?? 'image/jpeg';
+      formData.files.add(MapEntry(
+        'image',
+        MultipartFile.fromFileSync(files.path,
+            contentType: MediaType.parse(contentType)),
+      ));
+
+      // Send the request
+      final response = await _dio.post(
+        url,
+        data: formData,
+      );
+
+      return _handleResponse(response);
+    } on DioException catch (_) {
+      rethrow;
     } catch (e) {
       rethrow;
     }
