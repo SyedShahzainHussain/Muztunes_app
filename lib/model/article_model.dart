@@ -39,7 +39,8 @@ class Data {
   List<String>? tags;
   String? totalrating;
   String? type;
-  List<dynamic>? ratings;  // Changed to List<dynamic> to accommodate any type of rating
+  List<dynamic>?
+      ratings; // Changed to List<dynamic> to accommodate any type of rating
   String? createdAt;
   String? updatedAt;
 
@@ -65,7 +66,14 @@ class Data {
     title = json['title'];
     slug = json['slug'];
     description = json['description'];
-    price = json['price'];
+    final priceValue = json['price'];
+    if (priceValue is int) {
+      price = priceValue;
+    } else if (priceValue is double) {
+      price = priceValue.toInt();
+    } else {
+      price = int.tryParse(priceValue.toString()) ?? 0;
+    }
     category = json['category'];
     quantity = json['quantity'];
     image = json['image'];
@@ -73,9 +81,9 @@ class Data {
     totalrating = json['totalrating'];
     type = json['type'];
     if (json['ratings'] != null) {
-      ratings = <dynamic>[];  // Initialize ratings as a List<dynamic>
+      ratings = <dynamic>[]; // Initialize ratings as a List<dynamic>
       json['ratings'].forEach((v) {
-        ratings!.add(v);  // Directly add the rating value
+        ratings!.add(v); // Directly add the rating value
       });
     }
     createdAt = json['createdAt'];

@@ -3,6 +3,7 @@ import 'package:muztune/extension/media_query_extension.dart';
 import 'package:muztune/view/admin/add_category_screen.dart';
 import 'package:muztune/view/admin/create_article_screen.dart';
 import 'package:muztune/view/admin/create_product_screen.dart';
+import 'package:muztune/view/admin/get_order_screen.dart';
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
@@ -149,29 +150,37 @@ class AdminScreen extends StatelessWidget {
                     width: 10,
                   ),
                   Expanded(
-                      child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(12.0)),
-                    height: 100,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.delivery_dining,
-                              color: Colors.white),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text("Get Orders",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold))
-                        ],
+                      child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const GetAllAdminOrderScreen()));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(12.0)),
+                      height: 100,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.delivery_dining,
+                                color: Colors.white),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text("Get Orders",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold))
+                          ],
+                        ),
                       ),
                     ),
                   ))

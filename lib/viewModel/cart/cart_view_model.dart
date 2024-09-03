@@ -170,10 +170,10 @@ class CartViewModel with ChangeNotifier {
           .map((item) {
             // Check item type and construct the correct map
             if (item.type == 'product') {
-              return {
+              return {  
                 "product": item.productId,
                 "count": item.quantity,
-              };
+              }; 
             } else if (item.type == 'article') {
               return {
                 "article": item
@@ -187,19 +187,21 @@ class CartViewModel with ChangeNotifier {
           .toList() // Remove null values
     };
 
-    final placeOrderData = {
-      "products": cartList.map((item) {
-        return {
-          "product": item.productId,
-          "count": item.quantity,
-          "price": item.price
-        };
-      }).toList() //
-    };
+    // final placeOrderData = {
+    //   "products": cartList.map((item) {
+    //     return {
+    //       "product": item.productId,
+    //       "count": item.quantity,
+    //       "price": item.price
+    //     };
+    //   }).toList() //
+    // };
 
     await cartRepository.addToCart(jsonEncode(orderData)).then((data) async {
-      await deleteCart(); 
-      await context.read<OrderViewModel>().placeOrdersApi();
+      if (context.mounted) {
+        await context.read<OrderViewModel>().placeOrdersApi();
+      }
+      await deleteCart();
       clearCart();
       setCartLoading(false);
       if (context.mounted) {

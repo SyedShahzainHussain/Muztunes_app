@@ -14,8 +14,8 @@ abstract class BaseApiServices {
 
   Future<dynamic> getPostEmptyBodyApiResponse(String url,
       [Map<String, String>? headers]);
-  Future<dynamic> deletePostApiResponse(String url, dynamic body,
-      [Map<String, String>? headers]);
+  Future<dynamic> deletePostApiResponse(String url,
+      [ dynamic body,Map<String, String>? headers]);
 
   Future<dynamic> putPostApiResponse(String url, dynamic body,
       [Map<String, String>? headers]);
@@ -36,7 +36,7 @@ abstract class BaseApiServices {
     Map<String, dynamic>? headers,
   });
 
-  Future<dynamic> getPostSingleImageFormApiResponse({
+  Future<dynamic> getPostSingleImageFormApiResponse( {
     required String url,
     Map<String, dynamic>? fields,
     File? files, // List of multiple files

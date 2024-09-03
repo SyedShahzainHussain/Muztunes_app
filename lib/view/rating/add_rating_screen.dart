@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:muztune/common/button.dart';
 import 'package:muztune/config/colors.dart';
 import 'package:muztune/extension/flushbar_extension.dart';
+import 'package:muztune/utils/global_context.dart';
 import 'package:muztune/utils/utils.dart';
 import 'package:muztune/viewModel/rating/rating_view_model.dart';
 import 'package:provider/provider.dart';
@@ -43,16 +44,20 @@ class _AddRatingScreenState extends State<AddRatingScreen> {
           .read<RatingViewModel>()
           .putRatingApi(body, context)
           .then((data) async {
-        if (context.mounted) {
-          Navigator.pop(context);
+        // Check if the widget is still mounted before performing context operations
+        if (mounted) {
           final body = {"Id": widget.productId, "type": widget.type};
           await context.read<RatingViewModel>().getAllRating(body);
-          context.flushBarSuccessMessage(message: "Your Review Has Been Send");
+          Navigator.pop(context);
+          await Future.delayed(const Duration(seconds: 1));
+          ContextUtility.context
+              .flushBarSuccessMessage(message: "Your Review Has Been Sent");
+          if (mounted) {
+            setState(() {
+              messageController.clear();
+            });
+          }
         }
-
-        setState(() {
-          messageController.clear();
-        });
       }).catchError((error) {
         // Handle any errors if needed
         Utils.showToaster(message: "Failed to submit rating", context: context);

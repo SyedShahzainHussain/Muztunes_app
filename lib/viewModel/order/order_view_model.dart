@@ -35,6 +35,7 @@ class OrderViewModel with ChangeNotifier {
   placeOrdersApi() async {
     setPlaceOrderLoading(true);
     await orderRepository.placeOrdersApi().then((data) {
+      print(data);
       setPlaceOrderLoading(false);
       if (kDebugMode) {
         print("Order Place");

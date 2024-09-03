@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:muztune/common/t_rounded_container.dart';
 import 'package:muztune/config/colors.dart';
 import 'package:muztune/data/response/status.dart';
+import 'package:muztune/model/order_model.dart';
 import 'package:muztune/utils/utils.dart';
 import 'package:muztune/view/orders/order_preview_screen.dart';
 import 'package:muztune/viewModel/order/order_view_model.dart';
@@ -70,139 +71,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         itemCount: data.allOrderList.data!.length,
                         itemBuilder: (context, index) {
                           final orders = data.allOrderList.data![index];
-                          return TRoundedContainer(
-                            showBorder: true,
-                            backgroundColor: const Color(0xFFF6F6F6),
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // ! Row -> 1
-                                Row(
-                                  children: [
-                                    // ! Icon
-                                    const Icon(Iconsax.ship),
-                                    const SizedBox(
-                                      width: 16.0 / 2,
-                                    ),
-                                    // !  2 -  Status & Date
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            orders.orderStatus!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge!
-                                                .apply(
-                                                  color: AppColors.redColor,
-                                                  fontWeightDelta: 1,
-                                                ),
-                                          ),
-                                          Text(
-                                            orders.orderby!.name!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge,
-                                            maxLines: 1,
-                                          )
-                                        ],
-                                      ),
-                                  ),
-                                    // ! 3 - Icon
-                                    IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      OrderPreviewScreen(
-                                                        orderModel: orders,
-                                                      )));
-                                        },
-                                        icon: const Icon(
-                                          Iconsax.arrow_right_34,
-                                          size: 16.0,
-                                        ))
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 16.0,
-                                ),
-                                // ! Row -> 1
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          // ! Icon
-                                          const Icon(Iconsax.tag),
-                                          const SizedBox(
-                                            width: 16.0 / 2,
-                                          ),
-                                          // !  2 -  Status & Date
-                                          Expanded(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text("Order",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelMedium),
-                                                Text(
-                                                  "#${orders.sId!.substring(0, 6)}",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleMedium,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          // ! Icon
-                                          const Icon(Iconsax.calendar),
-                                          const SizedBox(
-                                            width: 16.0 / 2,
-                                          ),
-                                          // !  2 -  Status & Date
-                                          Expanded(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text("Shopping Date",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelMedium),
-                                                Text(
-                                                  Utils().formatDate(
-                                                      orders.createdAt!),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleMedium,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
+                          return OrderTile(orders: orders);
                         }));
           case Status.ERROR:
             return Center(
@@ -210,6 +79,152 @@ class _OrderScreenState extends State<OrderScreen> {
             );
         }
       }),
+    );
+  }
+}
+
+class OrderTile extends StatelessWidget {
+  const OrderTile({
+    super.key,
+    required this.orders,
+  });
+
+  final OrderModel orders;
+
+  @override
+  Widget build(BuildContext context) {
+    return TRoundedContainer(
+      showBorder: true,
+      backgroundColor: const Color(0xFFF6F6F6),
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // ! Row -> 1
+          Row(
+            children: [
+              // ! Icon
+              const Icon(Iconsax.ship),
+              const SizedBox(
+                width: 16.0 / 2,
+              ),
+              // !  2 -  Status & Date
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      orders.orderStatus!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .apply(
+                            color: AppColors.redColor,
+                            fontWeightDelta: 1,
+                          ),
+                    ),
+                    Text(
+                      orders.orderby!.name!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge,
+                      maxLines: 1,
+                    )
+                  ],
+                ),
+            ),
+              // ! 3 - Icon
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                OrderPreviewScreen(
+                                  orderModel: orders,
+                                )));
+                  },
+                  icon: const Icon(
+                    Iconsax.arrow_right_34,
+                    size: 16.0,
+                  ))
+            ],
+          ),
+          const SizedBox(
+            height: 16.0,
+          ),
+          // ! Row -> 1
+          Row(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    // ! Icon
+                    const Icon(Iconsax.tag),
+                    const SizedBox(
+                      width: 16.0 / 2,
+                    ),
+                    // !  2 -  Status & Date
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                        children: [
+                          Text("Order",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium),
+                          Text(
+                            "#${orders.sId!.substring(0, 6)}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    // ! Icon
+                    const Icon(Iconsax.calendar),
+                    const SizedBox(
+                      width: 16.0 / 2,
+                    ),
+                    // !  2 -  Status & Date
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                        children: [
+                          Text("Shopping Date",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium),
+                          Text(
+                            Utils().formatDate(
+                                orders.createdAt!),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

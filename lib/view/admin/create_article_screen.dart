@@ -62,45 +62,15 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
         "information": informationController.text,
         "category": selectedCategory!,
         "slug": titleController.text,
+        "quantity": 1
       };
-
       context
           .read<CreateProductViewModel>()
           .createArticleApi(fields, File(images!.path), context);
-      _formKey.currentState!.save();
     } else {
       Utils.showToaster(
           message: "Please fill out all required fields", context: context);
     } // Check if the form is valid
-    final validate = _formKey.currentState?.validate() ?? false;
-    if (!validate) {
-      return;
-    }
-
-    if (validate &&
-        images != null &&
-        selectedCategory != null &&
-        selectedCategory!.isNotEmpty) {
-      // Prepare form fields
-      final fields = {
-        "title": titleController.text,
-        "description": descriptionController.text,
-        "price": priceController.text,
-        "quantity": 1,
-        "tags": tagController.text,
-        "information": informationController.text,
-        "category": selectedCategory!,
-        "slug": titleController.text,
-      };
-
-      context
-          .read<CreateProductViewModel>()
-          .createArticleApi(fields, File(images!.path), context);
-    } else {
-      Utils.showToaster(
-          message: "Please fill out all required fields", context: context);
-      return;
-    }
   }
 
   @override

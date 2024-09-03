@@ -71,7 +71,14 @@ class Data {
     title = json['title'];
     slug = json['slug'];
     description = json['description'];
-    price = json['price'];
+    final priceValue = json['price'];
+    if (priceValue is int) {
+      price = priceValue;
+    } else if (priceValue is double) {
+      price = priceValue.toInt();
+    } else {
+      price = int.tryParse(priceValue.toString()) ?? 0;
+    }
     category = json['category'];
     information = json['information'];
     quantity = json['quantity'];

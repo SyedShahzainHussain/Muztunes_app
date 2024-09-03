@@ -25,6 +25,7 @@ class OrderHttpRepository extends OrderRepository {
     try {
       await baseApiServices.getPostEmptyBodyApiResponse(Urls.placeOrder);
     } catch (e) {
+      print("Error: $e");
       rethrow;
     }
   }

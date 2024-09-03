@@ -1,12 +1,7 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:muztune/utils/global_context.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
@@ -40,49 +35,86 @@ class Utils {
         )));
   }
 
+  // Future<XFile?> pickImage(
+  //   ImageSource imageSource,
+  // ) async {
+  //   // Show loading spinner
+  //   showDialog(
+
+  //     context: ContextUtility.context,
+  //     barrierDismissible: false, // Prevent user from dismissing the dialog
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+
+  //         content: showLoadingSpinner(Colors.blue), // Show the spinner
+  //       );
+  //     },
+  //   );
+
+  //   try {
+  //     final image = await _picker.pickImage(
+  //         source: imageSource,
+  //         maxHeight: 1080,
+  //         maxWidth: 1080,
+  //         imageQuality: 60);
+  //     if (image != null) {
+  //       // Check image extension
+  //       final extension = image.name.split('.').last.toLowerCase();
+  //       if (extension == 'png' || extension == 'jpeg' || extension == 'jpg') {
+  //         // Read the image file
+  //         final bytes = await image.readAsBytes();
+  //         final img.Image? decodedImage =
+  //             img.decodeImage(Uint8List.fromList(bytes));
+
+  //         if (decodedImage != null) {
+  //           // Convert image if necessary
+  //           img.Image convertedImage;
+  //           String newExtension;
+
+  //           if (extension == 'jpg' || extension == 'jpeg') {
+  //             // Convert JPG/JPEG to PNG
+  //             convertedImage = img.copyResize(decodedImage, width: 1080);
+  //             newExtension = 'png';
+  //           } else {
+  //             // No conversion needed
+  //             Navigator.pop(
+  //                 ContextUtility.context); // Dismiss the loading spinner
+  //             return image;
+  //           }
+
+  //           // Save the converted image
+  //           final convertedBytes = img.encodePng(convertedImage);
+  //           final tempDir = Directory.systemTemp;
+  //           final convertedImageFile = File(
+  //               '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.$newExtension');
+  //           await convertedImageFile.writeAsBytes(convertedBytes);
+
+  //           Navigator.pop(
+  //               ContextUtility.context); // Dismiss the loading spinner
+  //           return XFile(convertedImageFile.path);
+  //         }
+  //       } else {
+  //         // Show toaster if image is not PNG or JPEG
+  //         Navigator.pop(ContextUtility.context); // Dismiss the loading spinner
+  //         Utils.showToaster(
+  //           message: 'Only PNG and JPEG images are allowed',
+  //           context: ContextUtility.context,
+  //         );
+  //         return null;
+  //       }
+  //     }
+  //     Navigator.pop(ContextUtility.context); // Dismiss the loading spinner
+  //     return null;
+  //   } catch (e) {
+  //     Navigator.pop(ContextUtility.context); // Dismiss the loading spinner
+  //     rethrow; // Or handle the error as needed
+  //   }
+  // }
+
   Future<XFile?> pickImage(ImageSource imageSource) async {
-    final image = await _picker.pickImage(
-        source: imageSource, maxHeight: 1080, maxWidth: 1080, imageQuality: 60);
+    final image = await _picker.pickImage(source: imageSource);
     if (image != null) {
-      // Check image extension
-      final extension = image.name.split('.').last.toLowerCase();
-      if (extension == 'png' || extension == 'jpeg' || extension == 'jpg') {
-        // Read the image file
-        final bytes = await image.readAsBytes();
-        final img.Image? decodedImage =
-            img.decodeImage(Uint8List.fromList(bytes));
-
-        if (decodedImage != null) {
-          // Convert image if necessary
-          img.Image convertedImage;
-          String newExtension;
-
-          if (extension == 'jpg' || extension == 'jpeg') {
-            // Convert JPG/JPEG to PNG
-            convertedImage = img.copyResize(decodedImage, width: 1080);
-            newExtension = 'png';
-          } else {
-            // No conversion needed
-            return image;
-          }
-
-          // Save the converted image
-          final convertedBytes = img.encodePng(convertedImage);
-          final tempDir = Directory.systemTemp;
-          final convertedImageFile = File(
-              '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.$newExtension');
-          await convertedImageFile.writeAsBytes(convertedBytes);
-          
-          return XFile(convertedImageFile.path);
-        }
-      } else {
-        // Show toaster if image is not PNG or JPEG
-        Utils.showToaster(
-          message: 'Only PNG and JPEG images are allowed',
-          context: ContextUtility.context,
-        );
-        return null;
-      }
+      return image;
     }
     return null;
   }

@@ -129,16 +129,16 @@ class ProductTile extends StatelessWidget {
                         height: context.screenHeight * 0.01,
                       ),
                       Text.rich(TextSpan(children: [
-                        TextSpan(
-                          text: "\$22.99",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w500,
-                                  decoration: TextDecoration.lineThrough),
-                        ),
+                        // TextSpan(
+                        //   text: "\$22.99",
+                        //   style: Theme.of(context)
+                        //       .textTheme
+                        //       .bodySmall!
+                        //       .copyWith(
+                        //           color: Colors.grey,
+                        //           fontWeight: FontWeight.w500,
+                        //           decoration: TextDecoration.lineThrough),
+                        // ),
                         TextSpan(
                           text: " \$$price",
                           style:

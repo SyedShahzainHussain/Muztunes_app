@@ -159,8 +159,8 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
-  Future deletePostApiResponse(String url, dynamic body,
-      [Map<String, dynamic>? headers]) async {
+  Future deletePostApiResponse(String url,
+      [dynamic body, Map<String, dynamic>? headers]) async {
     dynamic returnReponse;
     try {
       final response = await _dio.delete(
@@ -210,12 +210,14 @@ class NetworkApiServices extends BaseApiServices {
       }
 
       // Add single file
-      String contentType = lookupMimeType(files!.path) ?? 'image/jpeg';
-      formData.files.add(MapEntry(
-        'image',
-        MultipartFile.fromFileSync(files.path,
-            contentType: MediaType.parse(contentType)),
-      ));
+      if (files != null) {
+        String contentType = lookupMimeType(files.path) ?? 'image/jpeg';
+        formData.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(files.path,
+              contentType: MediaType.parse(contentType)),
+        ));
+      }
 
       // Send the request
       final response = await _dio.post(
