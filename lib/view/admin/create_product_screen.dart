@@ -41,46 +41,44 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
     });
   }
 
-  saveProductApi() async {
+  Future<void> saveProductApi() async {
     // Check if the form is valid
     final validate = _formKey.currentState?.validate() ?? false;
     if (!validate) {
+      return;
+    }
+
+    bool allImagesSelected = images.every((image) => image != null);
+    if (validate &&
+        allImagesSelected &&
+        selectedCategory != null &&
+        selectedCategory!.isNotEmpty) {
+      // Prepare form fields
+      final fields = {
+        "title": titleController.text,
+        "description": descriptionController.text,
+        "price": priceController.text,
+        "quantity": 1,
+        "tags": tagController.text,
+        "information": informationController.text,
+        "category": selectedCategory!,
+        "slug": titleController.text,
+      };
+
+      // Prepare image files
+      final imageFiles = images
+          .where((image) => image != null)
+          .map((image) => File(image!.path))
+          .toList();
+
+      context
+          .read<CreateProductViewModel>()
+          .createProductApi(fields, imageFiles, context, _formKey);
+    } else {
       Utils.showToaster(
           message: "Please fill out all required fields", context: context);
       return;
     }
-
-
-    // Check if all images are selected
-    bool allImagesSelected = images.every((image) => image != null);
-    if (!allImagesSelected) {
-      Utils.showToaster(message: "Please select all images", context: context);
-      return;
-    }
-
-    // Check if a category is selected
-    if (selectedCategory == null || selectedCategory!.isEmpty) {
-      Utils.showToaster(message: "Please select a category", context: context);
-      return;
-    }
-    // Prepare form fields
-    final fields = {
-      "title": titleController.text,
-      "description": descriptionController.text,
-      "price": priceController.text,
-      "quantity": 1,
-      "tags": tagController.text,
-      "information": informationController.text,
-      "category": selectedCategory!,
-      "slug": titleController.text,
-    };
-
-    // Prepare image files
-    final imageFiles = images.map((image) => File(image!.path)).toList();
-
-    context
-        .read<CreateProductViewModel>()
-        .createProductApi(fields, imageFiles, context);
   }
 
   @override
@@ -91,7 +89,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         title: Text(
-          "Admin",
+          "Add Product",
           style: Theme.of(context)
               .textTheme
               .bodyMedium!
@@ -101,172 +99,159 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: SingleChildScrollView(
-            child: Consumer<CategoryViewModel>(builder: (context, data, _) {
-          switch (data.categoryList.status) {
-            case Status.LOADING:
-              return const Center(
-                child: TRoundedContainer(
-                  padding: EdgeInsets.all(12),
-                  width: 50,
-                  height: 50,
-                  backgroundColor: AppColors.redColor,
-                  showBorder: true,
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeCap: StrokeCap.round,
-                    strokeWidth: 3.0,
+          child: Consumer<CategoryViewModel>(builder: (context, data, _) {
+            switch (data.categoryList.status) {
+              case Status.LOADING:
+                return const Center(
+                  child: TRoundedContainer(
+                    padding: EdgeInsets.all(12),
+                    width: 50,
+                    height: 50,
+                    backgroundColor: AppColors.redColor,
+                    showBorder: true,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeCap: StrokeCap.round,
+                      strokeWidth: 3.0,
+                    ),
                   ),
-                ),
-              );
-            case Status.ERROR:
-              return Center(
-                child: Text(data.categoryList.message!),
-              );
-            case Status.COMPLETED:
-              final categories = data.categoryList.data!;
-              categoryItems = categories.map((e) {
-                return DropdownMenuItem<String>(
-                  value: e.title,
-                  child: Text(e.title!),
                 );
-              }).toList();
-              return Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Title is required";
-                        }
-                        return null;
-                      },
-                      controller: titleController,
-                      hintText: "Title",
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      controller: descriptionController,
-                      hintText: "Description",
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Description is required";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      controller: priceController,
-                      hintText: "Price",
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Price is required";
-                        }
-                        return null;
-                      },
-                    ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // CustomTextField(
-                    //   controller: quantityController,
-                    //   hintText: "Quantity",
-                    //   keyboardType: TextInputType.number,
-                    //   validator: (value) {
-                    //     if (value!.isEmpty) {
-                    //       return "Quantity is required";
-                    //     }
-                    //     return null;
-                    //   },
-                    // ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      controller: tagController,
-                      hintText: "Tag",
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Tag is required";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      controller: informationController,
-                      hintText: "Information",
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    DropdownButtonFormField<String>(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Category is required";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(
-                          left: 8,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                                color: Color(0xff83829A), width: 0.4)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                                color: Color(0xff83829A), width: 0.4)),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                                color: Color(0xff83829A), width: 0.4)),
-                      ),
-                      items: categoryItems,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedCategory = value;
-                        });
-                      },
-                      hint: const Text('Select Category'),
-                      value: selectedCategory,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // Display image pickers
-                    ...List.generate(5, (index) => buildImagePicker(index)),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Consumer<CreateProductViewModel>(
-                        builder: (context, data, _) {
-                      return Button(
-                        loading: data.productLoading,
-                        title: "Submit",
-                        onTap: () {
-                          saveProductApi();
+              case Status.ERROR:
+                return Center(
+                  child: Text(data.categoryList.message!),
+                );
+              case Status.COMPLETED:
+                final categories = data.categoryList.data!;
+                categoryItems = categories.map((e) {
+                  return DropdownMenuItem<String>(
+                    value: e.title,
+                    child: Text(e.title!),
+                  );
+                }).toList();
+                return Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Title is required";
+                          }
+                          return null;
                         },
-                        color: AppColors.redColor,
-                        titleColor: Colors.white,
-                        showRadius: true,
-                      );
-                    })
-                  ],
-                ),
-              );
-          }
-        })),
+                        controller: titleController,
+                        hintText: "Title",
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        controller: descriptionController,
+                        hintText: "Description",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Description is required";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        controller: priceController,
+                        hintText: "Price",
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Price is required";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        controller: tagController,
+                        hintText: "Tag",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Tag is required";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        controller: informationController,
+                        hintText: "Information",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Information is required";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      DropdownButtonFormField<String>(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Category is required";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(left: 8),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9),
+                            borderSide: const BorderSide(
+                              color: Color(0xff83829A),
+                              width: 0.4,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9),
+                            borderSide: const BorderSide(
+                              color: Color(0xff83829A),
+                              width: 0.4,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9),
+                            borderSide: const BorderSide(
+                              color: Color(0xff83829A),
+                              width: 0.4,
+                            ),
+                          ),
+                        ),
+                        items: categoryItems,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedCategory = value;
+                          });
+                        },
+                        hint: const Text('Select Category'),
+                        value: selectedCategory,
+                      ),
+                      const SizedBox(height: 10),
+                      // Display image pickers
+                      ...List.generate(5, (index) => buildImagePicker(index)),
+                      const SizedBox(height: 20),
+                      Consumer<CreateProductViewModel>(
+                        builder: (context, data, _) {
+                          return Button(
+                            loading: data.productLoading,
+                            title: "Submit",
+                            onTap: () {
+                              saveProductApi();
+                            },
+                            color: AppColors.redColor,
+                            titleColor: Colors.white,
+                            showRadius: true,
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                );
+            }
+          }),
+        ),
       ),
     );
   }
@@ -321,11 +306,13 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                       });
                     }
                   },
-                  child: Image.file(
-                    File(images[index]!.path),
-                    width: double.infinity,
-                    fit: BoxFit.contain,
-                  ),
+                  child: images[index] != null
+                      ? Image.file(
+                          File(images[index]!.path),
+                          width: double.infinity,
+                          fit: BoxFit.contain,
+                        )
+                      : const SizedBox(),
                 ),
         ),
         const SizedBox(height: 10),

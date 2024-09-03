@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:muztune/common/rating.dart';
 import 'package:muztune/config/colors.dart';
 import 'package:muztune/extension/media_query_extension.dart';
 import 'package:muztune/view/home/product_detail_screen.dart';
@@ -150,15 +151,8 @@ class ProductTile extends StatelessWidget {
                       SizedBox(
                         height: context.screenHeight * 0.01,
                       ),
-                      const Row(
-                        children: [
-                          Icon(Icons.star_border, size: 15),
-                          Icon(Icons.star_border, size: 15),
-                          Icon(Icons.star_border, size: 15),
-                          Icon(Icons.star_border, size: 15),
-                          Icon(Icons.star_border, size: 15),
-                        ],
-                      )
+                      RatingIndicator(
+                          rating: double.tryParse(totalrating.toString()) ?? 0)
                     ],
                   ),
                 )),

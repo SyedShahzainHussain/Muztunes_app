@@ -21,34 +21,36 @@ class NetworkApiServices extends BaseApiServices {
     Map<String, dynamic>? headers,
     dynamic body,
   ]) async {
+    dynamic responseJson;
     try {
       final response = await _dio.get(
-        data: body,
         url,
+        data: body,
         queryParameters: queryParameters,
+        options: Options(headers: headers),
       );
-      return _handleResponse(response);
-    } on DioException catch (_) {
+      responseJson = _handleResponse(response);
+    } on SocketException {
       throw FetchDataException("No Internet Connection");
-    } catch (e) {
-      rethrow;
     }
+    return responseJson;
   }
 
   @override
   Future getPostApiResponse(String url, dynamic body,
       [Map<String, dynamic>? headers]) async {
+    dynamic responseJson;
     try {
       final response = await _dio.post(
         url,
         data: body,
+        options: Options(headers: headers),
       );
-      return _handleResponse(response);
-    } on DioException catch (_) {
+      responseJson = _handleResponse(response);
+    } on SocketException {
       throw FetchDataException("No Internet Connection");
-    } catch (e) {
-      rethrow;
     }
+    return responseJson;
   }
 
   @override
@@ -60,6 +62,7 @@ class NetworkApiServices extends BaseApiServices {
     List<File>? files, // Optional multiple files
     Map<String, dynamic>? headers,
   }) async {
+    dynamic returnReponse;
     try {
       var formData = FormData();
 
@@ -96,14 +99,14 @@ class NetworkApiServices extends BaseApiServices {
       final response = await _dio.put(
         url,
         data: formData,
+        options: Options(headers: headers),
       );
 
-      return _handleResponse(response);
-    } on DioException catch (_) {
-      rethrow;
-    } catch (e) {
-      rethrow;
+      returnReponse = _handleResponse(response);
+    } on SocketException {
+      throw FetchDataException("No Internet Connection");
     }
+    return returnReponse;
   }
 
   @override
@@ -113,6 +116,7 @@ class NetworkApiServices extends BaseApiServices {
     List<File>? files, // List of multiple files
     Map<String, dynamic>? headers,
   }) async {
+    dynamic returnReponse;
     try {
       var formData = FormData();
 
@@ -147,61 +151,45 @@ class NetworkApiServices extends BaseApiServices {
         options: options,
       );
 
-      return _handleResponse(response);
-    } on DioException catch (_) {
+      returnReponse = _handleResponse(response);
+    } on SocketException {
       throw FetchDataException("No Internet Connection");
-    } catch (e) {
-      rethrow;
     }
+    return returnReponse;
   }
 
   @override
   Future deletePostApiResponse(String url, dynamic body,
       [Map<String, dynamic>? headers]) async {
+    dynamic returnReponse;
     try {
       final response = await _dio.delete(
         url,
         data: body,
+        options: Options(headers: headers),
       );
-      return _handleResponse(response);
-    } on DioException catch (_) {
+      returnReponse = _handleResponse(response);
+    } on SocketException {
       throw FetchDataException("No Internet Connection");
-    } catch (e) {
-      rethrow;
     }
-  }
-
-  dynamic _handleResponse(Response response) {
-    switch (response.statusCode) {
-      case 200:
-      case 201:
-        return response.data;
-      case 400:
-      case 401:
-      case 403:
-      case 404:
-      case 500:
-        throw FetchDataException(response.statusMessage ?? 'An error occurred');
-      default:
-        throw FetchDataException(
-            'Error occurred with status code ${response.statusCode}');
-    }
+    return returnReponse;
   }
 
   @override
   Future putPostApiResponse(String url, body,
       [Map<String, String>? headers]) async {
+    dynamic responseJson;
     try {
       final response = await _dio.put(
         url,
         data: body,
+        options: Options(headers: headers),
       );
-      return _handleResponse(response);
-    } on DioException catch (_) {
+      responseJson = _handleResponse(response);
+    } on SocketException {
       throw FetchDataException("No Internet Connection");
-    } catch (e) {
-      rethrow;
     }
+    return responseJson;
   }
 
   @override
@@ -210,6 +198,7 @@ class NetworkApiServices extends BaseApiServices {
       Map<String, dynamic>? fields,
       File? files,
       Map<String, dynamic>? headers}) async {
+    dynamic returnReponse;
     try {
       var formData = FormData();
 
@@ -232,13 +221,73 @@ class NetworkApiServices extends BaseApiServices {
       final response = await _dio.post(
         url,
         data: formData,
+        options: Options(headers: headers),
       );
 
-      return _handleResponse(response);
-    } on DioException catch (_) {
-      rethrow;
-    } catch (e) {
-      rethrow;
+      returnReponse = _handleResponse(response);
+    } on SocketException {
+      throw FetchDataException("No Internet Connection");
+    }
+    return returnReponse;
+  }
+
+  dynamic _handleResponse(Response response) {
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+        return response.data;
+      case 400:
+      case 401:
+      case 403:
+      case 404:
+      case 500:
+        // Extract message from response body if available
+        String errorMessage = response.data['message'] ??
+            response.statusMessage ??
+            'An error occurred';
+        throw errorMessage;
+      default:
+        throw FetchDataException(
+            'Error occurred with status code ${response.statusCode}');
     }
   }
+
+  @override
+  Future getPostEmptyBodyApiResponse(String url,
+      [Map<String, String>? headers]) async {
+    dynamic responseJson;
+    try {
+      final response = await _dio.post(
+        url,
+        options: Options(headers: headers),
+      );
+      responseJson = _handleResponse(response);
+    } on SocketException {
+      throw FetchDataException("No Internet Connection");
+    }
+    return responseJson;
+  }
+
+  // void _handleDioException(DioException e) {
+  //   // Handle DioException and extract more information
+  //   String errorMessage = 'An unexpected error occurred';
+  //   if (e.response != null) {
+  //     errorMessage =
+  //         'Error ${e.response?.statusCode}: ${e.response?.statusMessage}';
+  //   } else if (e.type == DioExceptionType.connectionTimeout) {
+  //     errorMessage = 'Connection timeout';
+  //   } else if (e.type == DioExceptionType.sendTimeout) {
+  //     errorMessage = 'Send timeout';
+  //   } else if (e.type == DioExceptionType.receiveTimeout) {
+  //     errorMessage = 'Receive timeout';
+  //   } else if (e.type == DioExceptionType.cancel) {
+  //     errorMessage = 'Request canceled';
+  //   } else if (e.type == DioExceptionType.badResponse) {
+  //     errorMessage = e.response?.statusMessage ?? "";
+  //   } else if (e.type == DioExceptionType.unknown) {
+  //     errorMessage = 'Unknown error occurred';
+  //   }
+  //   print(errorMessage);
+  //   throw errorMessage;
+  // }
 }

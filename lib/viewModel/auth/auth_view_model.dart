@@ -38,11 +38,10 @@ class AuthViewModel with ChangeNotifier {
       }
       setLoginLoading(false);
     }).onError((error, _) {
-      if (context.mounted) {
-        context.flushBarErrorMessage(
-            message: jsonDecode(error.toString())["message"]);
-      }
       setLoginLoading(false);
+      if (context.mounted) {
+        context.flushBarErrorMessage(message: error.toString());
+      }
     });
   }
 
@@ -63,8 +62,7 @@ class AuthViewModel with ChangeNotifier {
       }
     }).onError((error, _) {
       if (context.mounted) {
-        context.flushBarErrorMessage(
-            message: jsonDecode(error.toString())["message"]);
+        context.flushBarErrorMessage(message: error.toString());
       }
       setRegisterLoading(false);
     });
@@ -91,8 +89,7 @@ class AuthViewModel with ChangeNotifier {
       setForgotPasswordLoading(false);
     }).onError((error, _) {
       if (context.mounted) {
-        context.flushBarErrorMessage(
-            message: jsonDecode(error.toString())["message"]);
+        context.flushBarErrorMessage(message: error.toString());
       }
       setForgotPasswordLoading(false);
     });
@@ -117,8 +114,7 @@ class AuthViewModel with ChangeNotifier {
     }).onError((error, _) {
       setResetPasswordLoading(false);
       if (context.mounted) {
-        context.flushBarErrorMessage(
-            message: jsonDecode(error.toString())["message"]);
+        context.flushBarErrorMessage(message: error.toString());
       }
     });
   }

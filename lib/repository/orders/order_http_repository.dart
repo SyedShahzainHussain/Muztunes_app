@@ -19,4 +19,13 @@ class OrderHttpRepository extends OrderRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> placeOrdersApi() async {
+    try {
+      await baseApiServices.getPostEmptyBodyApiResponse(Urls.placeOrder);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

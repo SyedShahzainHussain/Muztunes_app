@@ -16,9 +16,7 @@ class RatingViewModel with ChangeNotifier {
   Future<void> putRatingApi(dynamic body, BuildContext context) async {
     setRatingLoading(true);
     await ratingRepository.postRating(body).then((data) {
-      if (context.mounted) {
-        context.flushBarSuccessMessage(message: "Your Review Has Been Send");
-      }
+    
       setRatingLoading(false);
     }).onError((error, _) {
       setRatingLoading(false);

@@ -86,7 +86,7 @@ class OrderPreviewScreen extends StatelessWidget {
                                 leading: ClipRRect(
                                   borderRadius: BorderRadius.circular(12.0),
                                   child: Image.network(
-                                    product.product!.images![0].url!,
+                                    product.product?.images?[0].url ?? "",
                                     width: 70,
                                     height: 80,
                                     fit: BoxFit.cover,
@@ -99,7 +99,7 @@ class OrderPreviewScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(product.product!.title!,
+                                        Text(product.product?.title ?? "",
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
@@ -110,7 +110,7 @@ class OrderPreviewScreen extends StatelessWidget {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                         Text(
-                                            "\$${product.product!.price!.toStringAsFixed(2)}",
+                                            "\$${product.product?.price?.toStringAsFixed(2)}",
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
@@ -126,7 +126,7 @@ class OrderPreviewScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(product.product!.category!,
+                                        Text(product.product?.category ?? "",
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
@@ -148,7 +148,7 @@ class OrderPreviewScreen extends StatelessWidget {
                                                         FontWeight.w700)),
                                       ],
                                     ),
-                                    Text(product.product!.description!,
+                                    Text(product.product?.description ?? "",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
@@ -191,7 +191,7 @@ class OrderPreviewScreen extends StatelessWidget {
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold)),
                           Text(
-                              "\$${orderModel.paymentIntent!.amount.toString()}",
+                              "\$${orderModel.paymentIntent?.amount.toString()}",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)

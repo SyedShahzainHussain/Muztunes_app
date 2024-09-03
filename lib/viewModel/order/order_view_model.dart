@@ -25,4 +25,25 @@ class OrderViewModel with ChangeNotifier {
       setOrderList(ApiResponse.error(error.toString()));
     });
   }
+
+  bool placeOrderloading = false;
+  setPlaceOrderLoading(bool loading) {
+    placeOrderloading = loading;
+    notifyListeners();
+  }
+
+  placeOrdersApi() async {
+    setPlaceOrderLoading(true);
+    await orderRepository.placeOrdersApi().then((data) {
+      setPlaceOrderLoading(false);
+      if (kDebugMode) {
+        print("Order Place");
+      }
+    }).onError((error, _) {
+      if (kDebugMode) {
+        print(error);
+      }
+      setPlaceOrderLoading(false);
+    });
+  }
 }

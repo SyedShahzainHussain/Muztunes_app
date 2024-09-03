@@ -6,7 +6,9 @@ import 'package:muztune/model/cart_model.dart';
 import 'package:muztune/repository/cart/cart_http_repository.dart';
 import 'package:muztune/repository/cart/cart_repository.dart';
 import 'package:muztune/utils/utils.dart';
+import 'package:muztune/viewModel/order/order_view_model.dart';
 import 'package:muztune/viewModel/storage/local_storage.dart';
+import 'package:provider/provider.dart';
 
 class CartViewModel with ChangeNotifier {
   List<CartItemModel> cartList = [];
@@ -185,16 +187,30 @@ class CartViewModel with ChangeNotifier {
           .toList() // Remove null values
     };
 
+    final placeOrderData = {
+      "products": cartList.map((item) {
+        return {
+          "product": item.productId,
+          "count": item.quantity,
+          "price": item.price
+        };
+      }).toList() //
+    };
+
     await cartRepository.addToCart(jsonEncode(orderData)).then((data) async {
-      await deleteCart();
+      await deleteCart(); 
+      await context.read<OrderViewModel>().placeOrdersApi();
       clearCart();
       setCartLoading(false);
       if (context.mounted) {
         context.flushBarSuccessMessage(message: "Your order has been placed");
       }
     }).onError((error, _) {
-      print(error);
       setCartLoading(false);
+      if (context.mounted) {
+        context.flushBarErrorMessage(message: error.toString());
+      }
+      print(error);
     });
   }
 

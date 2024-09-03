@@ -39,7 +39,7 @@ class UserRating extends StatelessWidget {
                 )
               ],
             ),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+            // IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
           ],
         ),
         const SizedBox(

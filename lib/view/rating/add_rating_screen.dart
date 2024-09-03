@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:muztune/common/button.dart';
 import 'package:muztune/config/colors.dart';
+import 'package:muztune/extension/flushbar_extension.dart';
 import 'package:muztune/utils/utils.dart';
 import 'package:muztune/viewModel/rating/rating_view_model.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,7 @@ class _AddRatingScreenState extends State<AddRatingScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final messageController = TextEditingController();
   double rating = 0.0;
-
-  saveRating() {
+  void saveRating() {
     final validate = _formKey.currentState!.validate();
 
     if (!validate) {
@@ -39,9 +39,23 @@ class _AddRatingScreenState extends State<AddRatingScreen> {
         "comment": messageController.text,
         "type": widget.type
       };
-      context.read<RatingViewModel>().putRatingApi(body, context).then((data) {
-        final body = {"Id": widget.productId, "type": widget.type};
-        context.read<RatingViewModel>().getAllRating(body);
+      context
+          .read<RatingViewModel>()
+          .putRatingApi(body, context)
+          .then((data) async {
+        if (context.mounted) {
+          Navigator.pop(context);
+          final body = {"Id": widget.productId, "type": widget.type};
+          await context.read<RatingViewModel>().getAllRating(body);
+          context.flushBarSuccessMessage(message: "Your Review Has Been Send");
+        }
+
+        setState(() {
+          messageController.clear();
+        });
+      }).catchError((error) {
+        // Handle any errors if needed
+        Utils.showToaster(message: "Failed to submit rating", context: context);
       });
     }
   }

@@ -14,68 +14,82 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      persistentFooterButtons: [
-        Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Column(
-            children: [
-              Consumer<CartViewModel>(
-                builder: (context, data, _) => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Total Amount",
-                        style: Theme.of(context).textTheme.labelLarge),
-                    Text("\$${data.calculatedTotalPrice.toStringAsFixed(2)}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelMedium!
-                            .copyWith(fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Consumer<CartViewModel>(
-                builder: (context, data, _) => Button(
-                  loading: data.cartLoading,
-                  onTap: data.cartList.isEmpty
-                      ? null
-                      : () {
-                          SessionController().userModel.user == null
-                              ? authenictate(context)
-                              : context
-                                  .read<CartViewModel>()
-                                  .placeOrder(context);
-                        },
-                  title: "Place Order",
-                  color:
-                      data.cartList.isEmpty ? Colors.grey : AppColors.redColor,
-                ),
-              ),
-              const SizedBox(height: 10),
-            ],
+    return Consumer<CartViewModel>(builder: (context, data, _) {
+      return Theme(
+        data: ThemeData(
+            dividerTheme: const DividerThemeData().copyWith(
+                color:
+                    data.cartList.isEmpty ? Colors.transparent : Colors.black)),
+        child: Scaffold(
+          persistentFooterButtons: [
+            Consumer<CartViewModel>(
+              builder: (context, data, _) {
+                if (data.cartList.isEmpty) {
+                  // Return an empty list if cart is empty
+                  return const SizedBox();
+                } else {
+                  // Return the footer buttons if cart is not empty
+                  return Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Total Amount",
+                                style: Theme.of(context).textTheme.labelLarge),
+                            Text(
+                                "\$${data.calculatedTotalPrice.toStringAsFixed(2)}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Button(
+                          loading: data.cartLoading,
+                          onTap: data.cartList.isEmpty
+                              ? null
+                              : () {
+                                  SessionController().userModel.user == null
+                                      ? authenictate(context)
+                                      : context
+                                          .read<CartViewModel>()
+                                          .placeOrder(context);
+                                },
+                          title: "Place Order",
+                          color: data.cartList.isEmpty
+                              ? Colors.grey
+                              : AppColors.redColor,
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+          appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.white),
+            backgroundColor: Colors.black,
+            title: Text(
+              "Cart",
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge!
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
           ),
-        )
-      ],
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.black,
-        title: Text(
-          "Cart",
-          style: Theme.of(context)
-              .textTheme
-              .labelLarge!
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          body: const Padding(
+            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+            child: CartListItem(),
+          ),
         ),
-        centerTitle: true,
-      ),
-      body: const Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
-        child: CartListItem(),
-      ),
-    );
+      );
+    });
   }
 
   authenictate(BuildContext context) {

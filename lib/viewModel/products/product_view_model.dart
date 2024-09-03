@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:muztune/data/response/api_response.dart';
 import 'package:muztune/model/product_model.dart';
@@ -61,8 +59,7 @@ class ProductViewModel with ChangeNotifier {
       final products = await productRepository.fetchAllProduct(queryParameters);
       setQueryData(ApiResponse.complete(products));
     } catch (error) {
-      final errors = jsonDecode(error.toString())["message"];
-      setQueryData(ApiResponse.error(errors));
+      setQueryData(ApiResponse.error(error.toString()));
     }
   }
 }

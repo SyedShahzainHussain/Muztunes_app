@@ -34,5 +34,10 @@ class Urls {
   static String postRatingUrl = "rating";
   // Todo Create Product  Urls
   static String createProduct = "product";
+  // Todo Order 
+  static String placeOrder = "order";
+  // Todo Category 
+  static String category = "category";
+
  
 }

@@ -36,22 +36,27 @@ class AuthInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (response.statusCode == 401) {
-      ContextUtility.context.flushBarErrorMessage(message: "Token Expired");
-      if (ContextUtility.context
-              .read<BottomNavigationProvider>()
-              .currentIndex ==
-          Menus.auth) {
-        ContextUtility.context
-            .read<BottomNavigationProvider>()
-            .setIndex(Menus.home);
+      if (response.data["message"] == "Invalid email or password") {
+        // ContextUtility.context
+        //     .flushBarErrorMessage(message: "Invalid email or password");
       } else {
-        ContextUtility.context
-            .read<BottomNavigationProvider>()
-            .setIndex(Menus.auth);
-      }
+        ContextUtility.context.flushBarErrorMessage(message: "Token Expired");
+        if (ContextUtility.context
+                .read<BottomNavigationProvider>()
+                .currentIndex ==
+            Menus.auth) {
+          ContextUtility.context
+              .read<BottomNavigationProvider>()
+              .setIndex(Menus.home);
+        } else {
+          ContextUtility.context
+              .read<BottomNavigationProvider>()
+              .setIndex(Menus.auth);
+        }
 
-      SessionController().logout();
-      SessionController().getUserPrefrences();
+        SessionController().logout();
+        SessionController().getUserPrefrences();
+      }
     }
     print('RESPONSE[${response.statusCode}] => PATH: ${response.data}');
     return handler.next(response);

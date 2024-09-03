@@ -41,7 +41,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
     });
   }
 
-  saveProductApi() async {
+  saveArticleApi() async {
     if (_formKey.currentState?.validate() ?? false) {
       if (images == null) {
         Utils.showToaster(message: "Please select an image", context: context);
@@ -71,6 +71,35 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
     } else {
       Utils.showToaster(
           message: "Please fill out all required fields", context: context);
+    } // Check if the form is valid
+    final validate = _formKey.currentState?.validate() ?? false;
+    if (!validate) {
+      return;
+    }
+
+    if (validate &&
+        images != null &&
+        selectedCategory != null &&
+        selectedCategory!.isNotEmpty) {
+      // Prepare form fields
+      final fields = {
+        "title": titleController.text,
+        "description": descriptionController.text,
+        "price": priceController.text,
+        "quantity": 1,
+        "tags": tagController.text,
+        "information": informationController.text,
+        "category": selectedCategory!,
+        "slug": titleController.text,
+      };
+
+      context
+          .read<CreateProductViewModel>()
+          .createArticleApi(fields, File(images!.path), context);
+    } else {
+      Utils.showToaster(
+          message: "Please fill out all required fields", context: context);
+      return;
     }
   }
 
@@ -82,7 +111,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         title: Text(
-          "Admin",
+          "Add Article",
           style: Theme.of(context)
               .textTheme
               .bodyMedium!
@@ -127,7 +156,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                   children: [
                     CustomTextField(
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return "Title is required";
                         }
                         return null;
@@ -142,7 +171,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       controller: descriptionController,
                       hintText: "Description",
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return "Description is required";
                         }
                         return null;
@@ -156,7 +185,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       hintText: "Price",
                       keyboardType: TextInputType.number,
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return "Price is required";
                         }
                         return null;
@@ -183,7 +212,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       controller: tagController,
                       hintText: "Tag",
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return "Tag is required";
                         }
                         return null;
@@ -195,13 +224,19 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                     CustomTextField(
                       controller: informationController,
                       hintText: "Information",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Information is required";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     DropdownButtonFormField<String>(
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return "Category is required";
                         }
                         return null;
@@ -305,7 +340,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                         loading: data.articleLoading,
                         title: "Submit",
                         onTap: () {
-                          saveProductApi();
+                          saveArticleApi();
                         },
                         color: AppColors.redColor,
                         titleColor: Colors.white,
