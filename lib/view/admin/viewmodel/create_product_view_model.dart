@@ -7,7 +7,6 @@ import 'package:muztune/extension/flushbar_extension.dart';
 import 'package:muztune/model/get_all_orders.dart';
 import 'package:muztune/providers/bottomnavigation/bottom_navigation_provider.dart';
 import 'package:muztune/utils/global_context.dart';
-import 'package:muztune/utils/utils.dart';
 import 'package:muztune/view/admin/repository/create_article.dart';
 import 'package:muztune/view/admin/repository/create_category.dart';
 import 'package:muztune/view/admin/repository/create_product.dart';
@@ -38,8 +37,10 @@ class CreateProductViewModel with ChangeNotifier {
       formKey.currentState!.save();
       if (context.mounted) {
         context.read<BottomNavigationProvider>().setIndex(Menus.home);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => const EntryPointScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const EntryPointScreen()),
+            (route) => false);
         context.flushBarSuccessMessage(message: "Product Create Successfully");
       }
       setProductLoading(false);
@@ -63,8 +64,10 @@ class CreateProductViewModel with ChangeNotifier {
     await createArticle.createArticleApi(fields, imageFiles).then((data) {
       if (context.mounted) {
         context.read<BottomNavigationProvider>().setIndex(Menus.home);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => const EntryPointScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const EntryPointScreen()),
+            (route) => false);
         context.flushBarSuccessMessage(message: "Article Create Successfully");
       }
       setArticleLoading(false);
@@ -86,7 +89,11 @@ class CreateProductViewModel with ChangeNotifier {
     setCategoryLoading(true);
     await createCategory.createCategory(body).then((data) {
       if (context.mounted) {
-        Navigator.pop(context);
+        context.read<BottomNavigationProvider>().setIndex(Menus.home);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const EntryPointScreen()),
+            (route) => false);
         context.flushBarSuccessMessage(message: "Category Create Successfully");
       }
       setCategoryLoading(false);

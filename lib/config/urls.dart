@@ -41,4 +41,7 @@ class Urls {
 
   // Todo Category Urls
   static String category = "category";
+
+  // Todo Contact Urls
+  static String craeateContact = "contact";
 }

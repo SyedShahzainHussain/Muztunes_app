@@ -189,6 +189,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                       ),
                       const SizedBox(height: 10),
                       DropdownButtonFormField<String>(
+                        dropdownColor: Colors.white,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Category is required";

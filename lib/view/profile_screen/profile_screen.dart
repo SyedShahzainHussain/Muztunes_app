@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:muztune/common/bottom_navigation_widget.dart';
 import 'package:muztune/common/t_rounded_container.dart';
@@ -99,77 +100,87 @@ class _ProfileScreenState extends State<ProfileScreen> {
             case Status.COMPLETED:
               return Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    // Todo Profile Picture
-                    Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.redColor,
-                              width: 2.0,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      // Todo Profile Picture
+                      Center(
+                        child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.redColor,
+                                  width: 2.0,
+                                )),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: FancyShimmerImage(
+                                boxDecoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                imageUrl: data.userProfile.data!.image!,
+                                width: double.infinity,
+                                boxFit: BoxFit.cover,
+                              ),
                             )),
-                        child: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(data.userProfile.data!.image!),
-                          radius: 60,
-                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(data.userProfile.data!.name!,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            )),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListTileWidget(
-                      icon: Icons.person,
-                      title: data.userProfile.data!.name!,
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListTileWidget(
-                      icon: Icons.email,
-                      title: data.userProfile.data!.email!,
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // ListTileWidget(
-                    //   icon: Icons.location_on,
-                    //   title: "Karachi, Pakistan",
-                    //   onTap: () {},
-                    // ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    ListTileWidget(
-                      icon: Icons.logout,
-                      title: "Logout",
-                      onTap: () async {
-                        await SessionController().logout().then((value) {
-                          if (context.mounted) {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const SplashScreen()),
-                                (route) => false);
-                            context
-                                .read<BottomNavigationProvider>()
-                                .setIndex(Menus.home);
-                          }
-                        });
-                      },
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(data.userProfile.data!.name!,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ListTileWidget(
+                        icon: Icons.person,
+                        title: data.userProfile.data!.name!,
+                        onTap: () {},
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ListTileWidget(
+                        icon: Icons.email,
+                        title: data.userProfile.data!.email!,
+                        onTap: () {},
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // ListTileWidget(
+                      //   icon: Icons.location_on,
+                      //   title: "Karachi, Pakistan",
+                      //   onTap: () {},
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      ListTileWidget(
+                        icon: Icons.logout,
+                        title: "Logout",
+                        onTap: () async {
+                          await SessionController().logout().then((value) {
+                            if (context.mounted) {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const SplashScreen()),
+                                  (route) => false);
+                              context
+                                  .read<BottomNavigationProvider>()
+                                  .setIndex(Menus.home);
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               );
             case Status.ERROR:

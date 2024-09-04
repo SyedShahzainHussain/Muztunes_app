@@ -4,7 +4,6 @@ import 'package:muztune/common/curved_widget.dart';
 import 'package:muztune/common/custom_app_bar.dart';
 import 'package:muztune/common/t_rounded_image.dart';
 import 'package:muztune/config/colors.dart';
-import 'package:muztune/model/product_model.dart';
 import 'package:muztune/viewModel/products/product_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -46,6 +45,7 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
                   child: Padding(
                     padding: const EdgeInsets.all(8 * 2),
                     child: CachedNetworkImage(
+                      width: double.infinity,
                       imageUrl: data.selectedImage,
                       errorWidget: (context, url, error) => const Icon(
                         Icons.error,

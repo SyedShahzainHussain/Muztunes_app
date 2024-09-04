@@ -10,6 +10,7 @@ import 'package:muztune/viewModel/article/article_view_model.dart';
 import 'package:muztune/viewModel/auth/auth_view_model.dart';
 import 'package:muztune/viewModel/cart/cart_view_model.dart';
 import 'package:muztune/viewModel/category/category_view_model.dart';
+import 'package:muztune/viewModel/contact/contact_view_model.dart';
 import 'package:muztune/viewModel/filter/filter_view_model.dart';
 import 'package:muztune/viewModel/order/order_view_model.dart';
 import 'package:muztune/viewModel/products/product_view_model.dart';
@@ -76,9 +77,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => CreateProductViewModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => ContactViewModel(),
+        ),
       ],
       child: MaterialApp(
-         navigatorKey: ContextUtility.navigatorKey,
+        navigatorKey: ContextUtility.navigatorKey,
         title: 'MUZTUNES',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

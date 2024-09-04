@@ -64,6 +64,7 @@ class ProfileViewModel with ChangeNotifier {
         context
             .read<ProfileViewModel>()
             .getProfileDetails(SessionController().userModel.user!.id!);
+        Navigator.pop(context);
         context.flushBarSuccessMessage(message: "User Updated Successfully");
       }
       setProfileLoading(false);

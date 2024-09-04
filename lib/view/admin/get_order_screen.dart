@@ -228,7 +228,6 @@ class _GetAllAdminOrderScreenState extends State<GetAllAdminOrderScreen> {
                                               orders.orderStatus,
                                           color: Colors.white,
                                           onSelected: (value) {
-                                            print(orders.sId);
                                             // Handle menu item selection
                                             setState(() {
                                               selectedType = value;
