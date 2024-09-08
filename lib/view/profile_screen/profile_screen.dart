@@ -68,7 +68,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (_) => EditProfileScreen(
-                                    image: data.userProfile.data!.image!,
+                                    image:  data.userProfile.data?.image ??
+                                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
                                     title: data.userProfile.data!.name!)));
                       },
                       child: const Text("Edit",
@@ -120,7 +121,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 boxDecoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
-                                imageUrl: data.userProfile.data!.image!,
+                                imageUrl: data.userProfile.data?.image ??
+                                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
                                 width: double.infinity,
                                 boxFit: BoxFit.cover,
                               ),

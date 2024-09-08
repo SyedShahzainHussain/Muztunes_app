@@ -24,7 +24,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    nameController.text = widget.title;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      nameController.text = widget.title;
+      context.read<ProfileViewModel>().clearSelectedImage();
+    });
   }
 
   void updateProfile() {

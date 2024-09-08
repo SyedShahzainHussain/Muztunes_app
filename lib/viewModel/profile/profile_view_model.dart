@@ -34,7 +34,7 @@ class ProfileViewModel with ChangeNotifier {
   }
 
   clearSelectedImage() {
-    // selectedImage = null;
+    selectedImage = null;
     notifyListeners();
   }
 
@@ -61,6 +61,7 @@ class ProfileViewModel with ChangeNotifier {
     )
         .then((data) {
       if (context.mounted) {
+        clearSelectedImage();
         context
             .read<ProfileViewModel>()
             .getProfileDetails(SessionController().userModel.user!.id!);
