@@ -233,7 +233,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                     tags: product.tags!,
                                     category: product.category.toString(),
                                     images: product.images ?? [],
-                                    totalrating: product.totalrating??"0",
+                                    totalrating: product.totalrating??"0",link: product.link!
                                   );
                                 },
                               );

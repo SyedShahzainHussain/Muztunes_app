@@ -18,6 +18,7 @@ class ProductTile extends StatelessWidget {
   final String category;
   final String? image;
   final String totalrating;
+  final String link;
   final bool? isProduct;
 
   const ProductTile({
@@ -33,6 +34,7 @@ class ProductTile extends StatelessWidget {
     this.images,
     required this.productId,
     required this.totalrating,
+    required this.link,
     this.image,
     this.isProduct = true,
   });
@@ -55,7 +57,7 @@ class ProductTile extends StatelessWidget {
                       title: title,
                       price: price.toString(),
                       isProduct: isProduct,
-                      totalRating: totalrating,
+                      link: link,
                     )));
       },
       child: Material(

@@ -13,6 +13,7 @@ class ProductHttpRepository extends ProductRepository {
     try {
       final response = await baseApiServices.getGetApiResponse(
           Urls.allProductsUrl, queryParameters);
+          print(response);
 
       return ProductModel.fromJson(response);
     } catch (e) {

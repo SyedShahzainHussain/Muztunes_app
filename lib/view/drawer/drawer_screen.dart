@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:muztune/extension/media_query_extension.dart';
 import 'package:muztune/utils/utils.dart';
 import 'package:muztune/view/admin/admin_screen.dart';
-import 'package:muztune/view/orders/order_screen.dart';
 import 'package:muztune/view/shop/shop_screen.dart';
 import 'package:muztune/viewModel/services/session_controller/session_controller.dart';
 
@@ -99,25 +98,25 @@ class _DrawerScreenState extends State<DrawerScreen>
                       ),
                 ),
               ),
-              SessionController().userModel.user != null
-                  ? ListTile(
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const OrderScreen()),
-                        );
-                      },
-                      title: Text(
-                        "Orders",
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                    )
-                  : const SizedBox(),
+              // SessionController().userModel.user != null
+              //     ? ListTile(
+              //         onTap: () {
+              //           Navigator.pop(context);
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //                 builder: (_) => const OrderScreen()),
+              //           );
+              //         },
+              //         title: Text(
+              //           "Orders",
+              //           style: Theme.of(context).textTheme.labelLarge!.copyWith(
+              //                 color: Colors.black,
+              //                 fontWeight: FontWeight.w500,
+              //               ),
+              //         ),
+              //       )
+              //     : const SizedBox(),
               SessionController().userModel.user?.role == "admin"
                   ? ListTile(
                       onTap: () {

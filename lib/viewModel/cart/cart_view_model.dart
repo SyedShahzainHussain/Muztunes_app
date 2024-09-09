@@ -5,7 +5,6 @@ import 'package:muztune/extension/flushbar_extension.dart';
 import 'package:muztune/model/cart_model.dart';
 import 'package:muztune/repository/cart/cart_http_repository.dart';
 import 'package:muztune/repository/cart/cart_repository.dart';
-import 'package:muztune/utils/utils.dart';
 import 'package:muztune/viewModel/order/order_view_model.dart';
 import 'package:muztune/viewModel/storage/local_storage.dart';
 import 'package:provider/provider.dart';
@@ -32,27 +31,25 @@ class CartViewModel with ChangeNotifier {
   void addToCart(CartItemModel cartItemModel, BuildContext context) {
     int index = cartList.indexWhere(
         (cartItem) => cartItem.productId == cartItemModel.productId);
-    if (index >= 0) {
-      if (cartList[index].quantity == cartItemModel.quantity) {
-        Utils.showToaster(
-            context: context,
-            message:
-                "This Product Quantity is already in the cart. \nPlease increase quantity");
-        return;
-      } else {
-        cartList[index].quantity += 1;
-        Utils.showToaster(
-            context: context, message: "Product quantity increased!");
-      }
-    } else {
-      cartList.add(cartItemModel);
-      Utils.showToaster(context: context, message: "Product Added!");
-    }
+   if(index>=0){
+    cartList[index] = cartItemModel;
+   }else{
+    cartList.add(cartItemModel);
+   }
+  //  Utils.showToaster(message: "Added", context: context);
+     saveCartItem(cartList);
+   notifyListeners();
+  }
+
+  void removeCart(String productId){
+  int index = cartList.indexWhere((item) => item.productId == productId);
+    cartList.removeAt(index);
     saveCartItem(cartList);
-    updateCartTotal(cartList);
-    noOfCartItem = 0;
     notifyListeners();
   }
+
+
+
 
   void addOneToCart(CartItemModel cartItemModel, BuildContext context) {
     int index = cartList.indexWhere(

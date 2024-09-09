@@ -25,7 +25,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
   final priceController = TextEditingController();
   final tagController = TextEditingController();
   final informationController = TextEditingController();
-
+  final linkController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   XFile? images;
@@ -62,7 +62,8 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
         "information": informationController.text,
         "category": selectedCategory!,
         "slug": titleController.text,
-        "quantity": 1
+        "quantity": 1,
+        "link": linkController.text,
       };
       context
           .read<CreateProductViewModel>()
@@ -204,6 +205,18 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                     const SizedBox(
                       height: 10,
                     ),
+                    CustomTextField(
+                      keyboardType: TextInputType.url,
+                      controller: linkController,
+                      hintText: "Article Link",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Article Link is required";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
                     DropdownButtonFormField<String>(
                       dropdownColor: Colors.white,
                       validator: (value) {

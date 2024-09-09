@@ -43,7 +43,7 @@ class Data {
       ratings; // Changed to List<dynamic> to accommodate any type of rating
   String? createdAt;
   String? updatedAt;
-
+  String? link;
   Data({
     this.sId,
     this.title,
@@ -59,6 +59,7 @@ class Data {
     this.ratings,
     this.createdAt,
     this.updatedAt,
+    this.link,
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -88,6 +89,7 @@ class Data {
     }
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    link = json['link'];
   }
 
   Map<String, dynamic> toJson() {
@@ -108,6 +110,7 @@ class Data {
     }
     jsonData['createdAt'] = createdAt;
     jsonData['updatedAt'] = updatedAt;
+    jsonData['link'] = link;
     return jsonData;
   }
 }

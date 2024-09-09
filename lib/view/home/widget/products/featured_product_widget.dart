@@ -74,6 +74,9 @@ class _FeaturedProductWidgetState extends State<FeaturedProductWidget> {
                 tags: product.tags!,
                 images: product.images!,
                 totalrating: product.totalrating ?? "0",
+                link: product.link!,
+                
+
               );
             },
             itemCount: displayedItems.length,

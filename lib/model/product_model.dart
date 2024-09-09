@@ -45,6 +45,7 @@ class Data {
   String? updatedAt;
   int? iV;
   String? image;
+  String? link;
 
   Data({
     this.sId,
@@ -64,6 +65,7 @@ class Data {
     this.updatedAt,
     this.iV,
     this.image,
+    this.link,
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -92,6 +94,7 @@ class Data {
     updatedAt = json['updatedAt'];
     iV = json['__v'];
     image = json['image'];
+    link = json['link'];
   }
 
   Map<String, dynamic> toJson() {
@@ -116,6 +119,7 @@ class Data {
     data['updatedAt'] = updatedAt;
     data['__v'] = iV;
     data['image'] = image;
+    data['link'] = link;
     return data;
   }
 }

@@ -66,7 +66,7 @@ class _HomeGridProductState extends State<HomeGridProduct> {
                           category: product.category!,
                           tags: product.tags!,
                           price: product.price.toString(),
-                          totalRating: product.totalrating??"0",
+                          link: product.link,
                         );
                       }));
                     },

@@ -25,6 +25,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   final priceController = TextEditingController();
   final tagController = TextEditingController();
   final informationController = TextEditingController();
+  final linkController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -63,6 +64,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         "information": informationController.text,
         "category": selectedCategory!,
         "slug": titleController.text,
+        "link": linkController.text,
       };
 
       // Prepare image files
@@ -183,6 +185,18 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Information is required";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        keyboardType: TextInputType.url,
+                        controller: linkController,
+                        hintText: "Product Link",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Product Link is required";
                           }
                           return null;
                         },

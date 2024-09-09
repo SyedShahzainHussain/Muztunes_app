@@ -70,6 +70,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                   category: product.category.toString(),
                   images: product.images!,
                   totalrating: product.totalrating??"0",
+                  link: product.link!
                 );
               },
             );

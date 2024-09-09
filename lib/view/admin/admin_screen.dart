@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:muztune/common/bottom_navigation_widget.dart';
 import 'package:muztune/extension/media_query_extension.dart';
+import 'package:muztune/providers/bottomnavigation/bottom_navigation_provider.dart';
 import 'package:muztune/view/admin/add_category_screen.dart';
 import 'package:muztune/view/admin/create_article_screen.dart';
 import 'package:muztune/view/admin/create_product_screen.dart';
-import 'package:muztune/view/admin/get_order_screen.dart';
+import 'package:muztune/view/splash/splash_screen.dart';
+import 'package:muztune/viewModel/services/session_controller/session_controller.dart';
+import 'package:provider/provider.dart';
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
@@ -151,11 +155,19 @@ class AdminScreen extends StatelessWidget {
                   ),
                   Expanded(
                       child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const GetAllAdminOrderScreen()));
+                    onTap: () async  {
+                        await SessionController().logout().then((value) {
+                            if (context.mounted) {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const SplashScreen()),
+                                  (route) => false);
+                              context
+                                  .read<BottomNavigationProvider>()
+                                  .setIndex(Menus.home);
+                            }
+                          });
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -167,12 +179,12 @@ class AdminScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Icon(Icons.delivery_dining,
+                            const Icon(Icons.logout,
                                 color: Colors.white),
                             const SizedBox(
                               height: 5,
                             ),
-                            Text("Get Orders",
+                            Text("Logout",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -184,6 +196,8 @@ class AdminScreen extends StatelessWidget {
                       ),
                     ),
                   ))
+                  
+       
                 ],
               ),
             )

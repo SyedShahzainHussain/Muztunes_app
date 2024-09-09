@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:muztune/common/button.dart';
-import 'package:muztune/common/t_circular_icon.dart';
 import 'package:muztune/common/t_rounded_container.dart';
 import 'package:muztune/config/colors.dart';
 import 'package:muztune/extension/media_query_extension.dart';
@@ -25,7 +23,7 @@ class ProductDetailScreen extends StatefulWidget {
   final String? image;
   final bool? isProduct;
   final String? type;
-  final String totalRating;
+  final String? link;
   const ProductDetailScreen({
     super.key,
     this.images,
@@ -36,7 +34,7 @@ class ProductDetailScreen extends StatefulWidget {
     required this.price,
     required this.productId,
     required this.type,
-    required this.totalRating,
+    required this.link,
     this.isProduct = true,
     this.image,
   });
@@ -173,33 +171,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   SizedBox(
                       width: context.screenWidth * .25,
                       child: Button(
-                        onTap: () {
-                          if (context.read<CartViewModel>().noOfCartItem == 0) {
-                            Utils.showToaster(
-                                context: context,
-                                message: "Selected the quantity");
-                          } else {
-                            final cartItemModel = CartItemModel(
-                              type: widget.type!,
-                              productId: widget.productId,
-                              description: widget.description,
-                              title: widget.title,
-                              category: widget.category,
-                              price: double.parse(widget.price),
-                              quantity:
-                                  context.read<CartViewModel>().noOfCartItem,
-                              image: context
-                                  .read<ProductViewModel>()
-                                  .selectedImage,
-                              tags: widget.tags,
-                            );
-                            context
-                                .read<CartViewModel>()
-                                .addToCart(cartItemModel, context);
-                          }
+                        onTap: () async {
+                          final cartItemModel = CartItemModel(
+                            type: widget.type!,
+                            productId: widget.productId,
+                            description: widget.description,
+                            title: widget.title,
+                            category: widget.category,
+                            price: double.parse(widget.price),
+                            quantity:
+                                context.read<CartViewModel>().noOfCartItem,
+                            image:
+                                context.read<ProductViewModel>().selectedImage,
+                            tags: widget.tags,
+                            images: widget.images ?? [],
+                            link: widget.link!
+                          );
+                          context
+                              .read<CartViewModel>()
+                              .addToCart(cartItemModel, context);
+                               await  Utils().launchUrls(widget.link!);
                         },
                         showRadius: true,
-                        title: "Add To Cart",
+                        title: "Buy Now",
                         color: AppColors.redColor,
                         borderColor: AppColors.redColor,
                       )),
@@ -240,24 +234,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       color: const Color(0xff2B161B),
                                       fontWeight: FontWeight.bold),
                             ),
-                            // Text(
-                            //   " T-Shirts,",
-                            //   style: Theme.of(context)
-                            //       .textTheme
-                            //       .labelSmall!
-                            //       .copyWith(
-                            //           color: const Color(0xff2B161B),
-                            //           fontWeight: FontWeight.bold),
-                            // ),
-                            // Text(
-                            //   " Shoes",
-                            //   style: Theme.of(context)
-                            //       .textTheme
-                            //       .labelSmall!
-                            //       .copyWith(
-                            //           color: const Color(0xff2B161B),
-                            //           fontWeight: FontWeight.bold),
-                            // ),
                           ],
                         )),
                   ),
@@ -305,48 +281,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Text("Additional information",
-                  //     maxLines: 1,
-                  //     overflow: TextOverflow.ellipsis,
-                  //     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  //           color: Colors.black,
-                  //           fontWeight: FontWeight.bold,
-                  //         )),
-                  // const SizedBox(
-                  //   height: 5,
-                  // ),
-                  // Container(
-                  //   height: 30,
-                  //   padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                  //   decoration: BoxDecoration(
-                  //     border: Border.all(
-                  //       color: Colors.grey,
-                  //     ),
-                  //   ),
-                  //   child: Row(
-                  //     mainAxisSize: MainAxisSize.min,
-                  //     children: [
-                  //       Text("size",
-                  //           style: Theme.of(context)
-                  //               .textTheme
-                  //               .labelLarge!
-                  //               .copyWith(fontWeight: FontWeight.w700)),
-                  //       const Padding(
-                  //         padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                  //         child: SizedBox(
-                  //           height: 30,
-                  //           width: 3,
-                  //           child: VerticalDivider(
-                  //             thickness: 1,
-                  //             color: Colors.grey,
-                  //             endIndent: 1,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       const Text("L, M, XL, S"),
-                  //     ],
-                  //   ),
-                  // ),
+
                   const Divider(
                     color: Colors.grey,
                   ),
@@ -396,75 +331,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             topRight: Radius.circular(16),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                TCircularIcons(
-                  icon: Iconsax.minus,
-                  backgroundColor: AppColors.redColor,
-                  width: 40,
-                  height: 40,
-                  color: Colors.white,
-                  onPressed: () {
-                    context.read<CartViewModel>().decreaseCount();
-                  },
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                Consumer<CartViewModel>(
-                  builder: (context, data, _) => Text(
-                    data.noOfCartItem.toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                TCircularIcons(
-                    icon: Iconsax.add,
-                    backgroundColor: AppColors.redColor,
-                    width: 40,
-                    height: 40,
-                    color: Colors.white,
-                    onPressed: () {
-                      context.read<CartViewModel>().increaseCount();
-                    }),
-              ],
-            ),
-            Button(
-              onTap: () {
-                if (context.read<CartViewModel>().noOfCartItem == 0) {
-                  Utils.showToaster(
-                      context: context, message: "Selected the quantity");
-                } else {
-                  final cartItemModel = CartItemModel(
-                    type: widget.type!,
-                    productId: widget.productId,
-                    description: widget.description,
-                    quantity: context.read<CartViewModel>().noOfCartItem,
-                    image: context.read<ProductViewModel>().selectedImage,
-                    tags: widget.tags,
-                    title: widget.title,
-                    category: widget.category,
-                    price: double.parse(widget.price),
-                  );
-                  context
-                      .read<CartViewModel>()
-                      .addToCart(cartItemModel, context);
-                }
-              },
-              showRadius: true,
-              title: "Add To Cart",
-              color: AppColors.redColor,
-              borderColor: AppColors.redColor,
-            ),
-          ],
+        child: Button(
+          onTap: ()async  {
+            final cartItemModel = CartItemModel(
+                type: widget.type!,
+                productId: widget.productId,
+                description: widget.description,
+                title: widget.title,
+                category: widget.category,
+                price: double.parse(widget.price),
+                quantity: context.read<CartViewModel>().noOfCartItem,
+                image: context.read<ProductViewModel>().selectedImage,
+                tags: widget.tags,
+                images: widget.images ?? [],link: widget.link!);
+            context.read<CartViewModel>().addToCart(cartItemModel, context);
+          await  Utils().launchUrls(widget.link!);
+          },
+          showRadius: true,
+          title: "Buy Now",
+          color: AppColors.redColor,
+          borderColor: AppColors.redColor,
         ),
       ),
     );

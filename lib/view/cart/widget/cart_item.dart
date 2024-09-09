@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muztune/common/t_rounded_image.dart';
 import 'package:muztune/config/colors.dart';
+import 'package:muztune/view/cart/widget/t_product_price_text.dart';
 import 'package:muztune/view/cart/widget/t_product_title.dart';
 
 class CartItem extends StatelessWidget {
@@ -8,12 +9,14 @@ class CartItem extends StatelessWidget {
   final String title;
   final String description;
   final String category;
+  final double price;
   const CartItem({
     super.key,
     required this.image,
     required this.title,
     required this.description,
     required this.category,
+    required this.price,
   });
 
   @override
@@ -59,6 +62,7 @@ class CartItem extends StatelessWidget {
             ],
           ),
         ),
+        TProductPriceText(price: price.toString()),
       ],
     );
   }

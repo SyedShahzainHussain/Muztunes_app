@@ -121,18 +121,18 @@ class _SearchScreenState extends State<SearchScreen> {
                           itemBuilder: (context, index) {
                             final product = queryProduct.data!.data![index];
                             return ProductTile(
-                              type: product.type!,
-                              imageUrl: product.images![0],
-                              title: product.title!,
-                              subTitle: product.description!,
-                              tags: product.tags!,
-                              price: double.parse(product.price.toString()),
-                              category: product.category!,
-                              productId: product.sId!,
-                              images: product.images ?? [],
-                              image: product.images?[0],
-                              totalrating: product.totalrating ?? "0",
-                            );
+                                type: product.type!,
+                                imageUrl: product.images![0],
+                                title: product.title!,
+                                subTitle: product.description!,
+                                tags: product.tags!,
+                                price: double.parse(product.price.toString()),
+                                category: product.category!,
+                                productId: product.sId!,
+                                images: product.images ?? [],
+                                image: product.images?[0],
+                                totalrating: product.totalrating ?? "0",
+                                link: product.link!);
                           },
                           itemCount: queryProduct.data!.data!.length,
                         )),

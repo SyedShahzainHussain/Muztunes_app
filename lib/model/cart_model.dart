@@ -8,7 +8,9 @@ class CartItemModel {
   String image;
   String category;
   String type;
+  String link;
   List<String>? tags;
+  List<String>? images;
 
   int quantity;
 
@@ -18,10 +20,12 @@ class CartItemModel {
     required this.quantity,
     required this.image,
     required this.tags,
+    required this.link,
     this.title = "",
     this.category = "",
     this.type = "",
     this.price = 0.0,
+    this.images,
   });
 
   // Convert a CartItemModel instance into a map (for serialization)
@@ -36,6 +40,8 @@ class CartItemModel {
       'type': type,
       'tags': tags,
       'quantity': quantity,
+      "images":images,
+      "link":link,
     };
   }
 
@@ -51,6 +57,8 @@ class CartItemModel {
       category: map['category'] ?? "",
       tags: List<String>.from(map['tags'] ?? []),
       quantity: map['quantity'],
+      link: map['link'],
+      images: List<String>.from(map['images'] ?? []),
     );
   }
 }

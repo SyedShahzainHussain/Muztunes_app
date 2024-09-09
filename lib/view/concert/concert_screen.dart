@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:muztune/view/concert/supoort_page.dart';
 class ConcertScreen extends StatelessWidget {
   const ConcertScreen({super.key});
 
@@ -17,6 +17,18 @@ class ConcertScreen extends StatelessWidget {
               .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+      ),
+      floatingActionButton: Container(
+        margin: const EdgeInsets.only(bottom: 87),
+        child: FloatingActionButton(
+          backgroundColor: Colors.black,
+        
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_)=>const SupoortPage()));
+          },
+          tooltip: "Chat Support",
+          child: const Icon(Icons.support_agent,color:Colors.white),
+        ),
       ),
     );
   }
