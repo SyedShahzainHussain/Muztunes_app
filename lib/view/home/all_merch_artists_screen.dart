@@ -67,7 +67,9 @@ class _AllMerchArtistsScreenState extends State<AllMerchArtistsScreen> {
                   image: product.image,
                   isProduct: false,
                   totalrating: product.totalrating??"0",
-                  link: product.link!
+                  link: product.link!,
+                  color:  const  [],
+                  
                 );
               },
             );

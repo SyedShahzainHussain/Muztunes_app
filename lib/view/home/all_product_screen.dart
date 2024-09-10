@@ -70,7 +70,9 @@ class _AllProductScreenState extends State<AllProductScreen> {
                   category: product.category??[],
                   images: product.images!,
                   totalrating: product.totalrating??"0",
-                  link: product.link!
+                  link: product.link!,
+                  color: product.colors?? [],
+                  information: product.information,
                 );
               },
             );

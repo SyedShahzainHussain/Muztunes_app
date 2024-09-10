@@ -6,7 +6,9 @@ class CartItemModel {
   String description;
   double price;
   String image;
-    List<String> category;
+  String? information;
+  List<String> category;
+  List<String>? colors;
   String type;
   String link;
   List<String>? tags;
@@ -21,8 +23,10 @@ class CartItemModel {
     required this.image,
     required this.tags,
     required this.link,
+    this.information,
     this.title = "",
     this.category = const [],
+    this.colors = const [],
     this.type = "",
     this.price = 0.0,
     this.images,
@@ -40,8 +44,10 @@ class CartItemModel {
       'type': type,
       'tags': tags,
       'quantity': quantity,
-      "images":images,
-      "link":link,
+      "images": images,
+      "link": link,
+      "information": information,
+      "color": colors,
     };
   }
 
@@ -54,11 +60,13 @@ class CartItemModel {
       description: map['description'],
       price: map['price'],
       image: map['image'],
-      category: map['category'] ?? "",
+      category: List<String>.from(map['category'] ?? []),
       tags: List<String>.from(map['tags'] ?? []),
       quantity: map['quantity'],
       link: map['link'],
+      information: map["information"],
       images: List<String>.from(map['images'] ?? []),
+      colors: List<String>.from(map['color'] ?? []),
     );
   }
 }

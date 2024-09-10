@@ -5,22 +5,25 @@ class ProductModel {
 
   ProductModel({this.status, this.results, this.data});
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
-      status: json['status'] as String?,
-      results: json['results'] as int?,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((item) => Data.fromJson(item as Map<String, dynamic>))
-          .toList(),
-    );
+  ProductModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    results = json['results'];
+    if (json['data'] != null) {
+      data = [];
+      json['data'].forEach((v) {
+        data!.add(Data.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'status': status,
-      'results': results,
-      'data': data?.map((item) => item.toJson()).toList(),
-    };
+    final Map<String, dynamic> data = {};
+    data['status'] = this.status;
+    data['results'] = this.results;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }
 
@@ -29,19 +32,20 @@ class Data {
   String? title;
   String? slug;
   String? description;
-  double? price;
+  dynamic price;
   List<String>? category;
+  List<String>? colors;
   String? information;
   int? quantity;
   List<String>? images;
+  String? link;
   List<String>? tags;
   String? totalrating;
   String? type;
-  List<Ratings>? ratings;
+  List<Ratings>? ratings; // Changed from List<Null> to List<Rating>
   String? createdAt;
   String? updatedAt;
   int? iV;
-  String? link;
   String? image;
 
   Data({
@@ -51,9 +55,11 @@ class Data {
     this.description,
     this.price,
     this.category,
+    this.colors,
     this.information,
     this.quantity,
     this.images,
+    this.link,
     this.tags,
     this.totalrating,
     this.type,
@@ -61,58 +67,63 @@ class Data {
     this.createdAt,
     this.updatedAt,
     this.iV,
-    this.link,
-    this.image,
+    this.image
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
-      sId: json['_id'] as String?,
-      title: json['title'] as String?,
-      slug: json['slug'] as String?,
-      description: json['description'] as String?,
-      price: (json['price'] as num?)?.toDouble(),
-      category: (json['category'] as List<dynamic>?)?.map((item) => item as String).toList(),
-      information: json['information'] as String?,
-      quantity: json['quantity'] as int?,
-      images: (json['images'] as List<dynamic>?)?.map((item) => item as String).toList(),
-      tags: (json['tags'] as List<dynamic>?)?.map((item) => item as String).toList(),
-      totalrating: json['totalrating'] as String?,
-      type: json['type'] as String?,
-      ratings: (json['ratings'] as List<dynamic>?)
-          ?.map((item) => Ratings.fromJson(item as Map<String, dynamic>))
-          .toList(),
-      createdAt: json['createdAt'] as String?,
-      updatedAt: json['updatedAt'] as String?,
-      iV: json['__v'] as int?,
-      link: json['link'] as String?,
-      image: json['image'] as String?,
-    );
+  Data.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    title = json['title'];
+    slug = json['slug'];
+    description = json['description'];
+    price = json['price'];
+    category = json['category']?.cast<String>();
+    colors = json['color']?.cast<String>();
+    information = json['information'];
+    quantity = json['quantity'];
+    images = json['images']?.cast<String>();
+    link = json['link'];
+    tags = json['tags']?.cast<String>();
+    totalrating = json['totalrating'];
+    type = json['type'];
+    if (json['ratings'] != null) {
+      ratings = [];
+      json['ratings'].forEach((v) {
+        ratings!.add(Ratings.fromJson(v));
+      });
+    }
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      '_id': sId,
-      'title': title,
-      'slug': slug,
-      'description': description,
-      'price': price,
-      'category': category,
-      'information': information,
-      'quantity': quantity,
-      'images': images,
-      'tags': tags,
-      'totalrating': totalrating,
-      'type': type,
-      'ratings': ratings?.map((item) => item.toJson()).toList(),
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-      '__v': iV,
-      'link': link,
-      'image': image,
-    };
+    final Map<String, dynamic> data = {};
+    data['_id'] = this.sId;
+    data['title'] = this.title;
+    data['slug'] = this.slug;
+    data['description'] = this.description;
+    data['price'] = this.price;
+    data['category'] = this.category;
+    data['color'] = this.colors;
+    data['information'] = this.information;
+    data['quantity'] = this.quantity;
+    data['images'] = this.images;
+    data['link'] = this.link;
+    data['tags'] = this.tags;
+    data['totalrating'] = this.totalrating;
+    data['type'] = this.type;
+    if (this.ratings != null) {
+      data['ratings'] = this.ratings!.map((v) => v.toJson()).toList();
+    }
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
+    data['image'] = this.image;
+    return data;
   }
 }
+
 
 class Ratings {
   int? star;

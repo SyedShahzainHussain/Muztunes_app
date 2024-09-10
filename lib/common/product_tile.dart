@@ -10,12 +10,14 @@ class ProductTile extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String subTitle;
+  final String? information;
   final String type;
   final double price;
   final bool isSale;
   final List<String>? images;
   final List<String> tags;
   final  List<String> category;
+  final  List<String> color;
   final String? image;
   final String totalrating;
   final String link;
@@ -29,9 +31,11 @@ class ProductTile extends StatelessWidget {
     required this.type,
     required this.tags,
     required this.price,
+    required this.color,
     this.isSale = false,
     required this.category,
     this.images,
+    this.information,
     required this.productId,
     required this.totalrating,
     required this.link,
@@ -58,6 +62,8 @@ class ProductTile extends StatelessWidget {
                       price: price.toString(),
                       isProduct: isProduct,
                       link: link,
+                      information:information ,
+                      colors:  color,
                     )));
       },
       child: Material(

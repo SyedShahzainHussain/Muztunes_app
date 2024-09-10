@@ -248,20 +248,22 @@ class _ShopScreenState extends State<ShopScreen> {
                                 itemBuilder: (context, index) {
                                   final product = snapshot.data!.data![index];
                                   return ProductTile(
-                                      image: product.image,
-                                      type: product.type!,
-                                      productId: product.sId!,
-                                      imageUrl:
-                                          product.images?[0] ?? product.image!,
-                                      price: double.parse(
-                                          product.price.toString()),
-                                      subTitle: product.description.toString(),
-                                      title: product.title.toString(),
-                                      tags: product.tags!,
-                                      category: product.category ?? [],
-                                      images: product.images ?? [],
-                                      totalrating: product.totalrating ?? "0",
-                                      link: product.link!);
+                                    image: product.image,
+                                    type: product.type!,
+                                    productId: product.sId!,
+                                    imageUrl:
+                                        product.images?[0] ?? product.image!,
+                                    price:
+                                        double.parse(product.price.toString()),
+                                    subTitle: product.description.toString(),
+                                    title: product.title.toString(),
+                                    tags: product.tags!,
+                                    category: product.category ?? [],
+                                    images: product.images ?? [],
+                                    totalrating: product.totalrating ?? "0",
+                                    link: product.link!,
+                                    color: product.colors ?? [],
+                                  );
                                 },
                               );
                       } else {

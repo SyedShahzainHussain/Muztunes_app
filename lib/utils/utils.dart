@@ -36,6 +36,31 @@ class Utils {
         )));
   }
 
+   final List<Color> colors = [
+    Colors.red,
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
+    Colors.purple,
+    Colors.teal,
+    Colors.indigo,
+    Colors.yellow,
+    // Add more colors as needed
+  ];
+
+   String colorToName(Color color) {
+    if (color == Colors.red) return 'Red';
+    if (color == Colors.blue) return 'Blue';
+    if (color == Colors.green) return 'Green';
+    if (color == Colors.orange) return 'Orange';
+    if (color == Colors.purple) return 'Purple';
+    if (color == Colors.teal) return 'Teal';
+    if (color == Colors.indigo) return 'Indigo';
+    if (color == Colors.yellow) return 'Yellow';
+    // Add more mappings if needed
+    return 'Unknown';
+  }
+
   // Future<XFile?> pickImage(
   //   ImageSource imageSource,
   // ) async {

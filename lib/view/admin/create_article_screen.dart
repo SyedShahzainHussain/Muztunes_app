@@ -26,13 +26,12 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
   final tagController = TextEditingController();
   final informationController = TextEditingController();
   final linkController = TextEditingController();
+  final skuController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-    // List of selected categories
+  // List of selected categories
   final Set<String> selectedCategories = Set();
 
   XFile? images;
-
- 
 
   @override
   void initState() {
@@ -51,7 +50,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
 
       if (selectedCategories.isEmpty) {
         Utils.showToaster(
-            message: "Please select a category", context: context);
+            message: "At least one category is required ", context: context);
         return;
       }
 
@@ -65,6 +64,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
         "slug": titleController.text,
         "quantity": 1,
         "link": linkController.text,
+        "sku": skuController.text
       };
       context
           .read<CreateProductViewModel>()
@@ -115,10 +115,11 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                 child: Text(data.categoryList.message!),
               );
             case Status.COMPLETED:
-                final categories = data.categoryList.data!;
+              final categories = data.categoryList.data!;
               return Form(
                 key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTextField(
                       validator: (value) {
@@ -130,19 +131,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       controller: titleController,
                       hintText: "Title",
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      controller: descriptionController,
-                      hintText: "Description",
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Description is required";
-                        }
-                        return null;
-                      },
-                    ),
+
                     const SizedBox(
                       height: 10,
                     ),
@@ -176,7 +165,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                     ),
                     CustomTextField(
                       controller: tagController,
-                      hintText: "Tag",
+                      hintText: "Tag (Cat,Mobile,Electronic)",
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Tag is required";
@@ -189,7 +178,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                     ),
                     CustomTextField(
                       controller: informationController,
-                      hintText: "Information",
+                      hintText: "Information (L,S,M,EL)",
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Information is required";
@@ -212,43 +201,85 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       },
                     ),
                     const SizedBox(height: 10),
-                     Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Cateogries",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(
-                                  color: Colors.black,
+                    const Text(
+                      " (Optional)",
+                      style: TextStyle(color: Colors.grey, fontSize: 10),
+                    ),
+                    const SizedBox(height: 5),
+                    CustomTextField(
+                      controller: descriptionController,
+                      hintText: "Description",
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      " (Optional)",
+                      style: TextStyle(color: Colors.grey, fontSize: 10),
+                    ),
+                    const SizedBox(height: 5),
+                    CustomTextField(
+                      controller: skuController,
+                      hintText: "SKU",
+                      keyboardType: TextInputType.number,
+                    ),
+
+                    const SizedBox(height: 10),
+                    Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Cateogries",
+                          style:
+                              Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        )),
+                    SizedBox(
+                      height: 65,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Wrap(
+                          runSpacing: 8.0,
+                          spacing: 8.0,
+                          children: categories.map((category) {
+                            return SizedBox(
+                              height: 60,
+                              child: FilterChip(
+                                label: Text(category.title!),
+                                labelStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
-                          )),
-                      ...categories.map((category) {
-                        return CheckboxListTile(
-                          title: Text(category.title!),
-                          value: selectedCategories.contains(category.title),
-                          activeColor: AppColors.redColor,
-                          onChanged: (bool? checked) {
-                            setState(() {
-                              if (checked == true) {
-                                // Add category if less than 3 are selected
-                                if (selectedCategories.length < 3) {
-                                  selectedCategories.add(category.title!);
-                                } else {
-                                  Utils.showToaster(
-                                      message:
-                                          'You can select a maximum\n of 3 categories',
-                                      context: context);
-                                }
-                              } else {
-                                // Remove category
-                                selectedCategories.remove(category.title);
-                              }
-                            });
-                          },
-                        );
-                      }),
+                                selected:
+                                    selectedCategories.contains(category.title),
+                                selectedColor: AppColors.redColor,
+                                backgroundColor: Colors.black,
+                                checkmarkColor: Colors.white,
+                                onSelected: (bool selected) {
+                                  setState(() {
+                                    if (selected) {
+                                      // Add category if less than 3 are selected
+                                      if (selectedCategories.length < 3) {
+                                        selectedCategories.add(category.title!);
+                                      } else {
+                                        Utils.showToaster(
+                                            message:
+                                                'You can select a maximum of 3 categories',
+                                            context: context);
+                                      }
+                                    } else {
+                                      // Remove category
+                                      selectedCategories.remove(category.title);
+                                    }
+                                  });
+                                },
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+
+                   
                     const SizedBox(
                       height: 10,
                     ),

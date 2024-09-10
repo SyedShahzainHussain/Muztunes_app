@@ -72,6 +72,8 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
                 isProduct: false,
                 totalrating: product.totalrating ?? "0",
                 link: product.link!,
+                color: const  [],
+                
               );
             },
             itemCount: displayedItems.length,

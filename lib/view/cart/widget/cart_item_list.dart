@@ -141,6 +141,8 @@ class CartListItem extends StatelessWidget {
                                     isProduct:
                                         cart.type == "product" ? true : false,
                                            link: cart.link,
+                                           information: cart.information??"",
+                                           colors: cart.colors??[],
                                   )));
                     },
                     child: CartItem(
