@@ -30,6 +30,7 @@ class Utils {
             child: Text(
               message,
               style: Theme.of(context).textTheme.labelLarge,
+              textAlign: TextAlign.justify,
             ),
           ),
         )));

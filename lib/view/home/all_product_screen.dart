@@ -67,7 +67,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                   subTitle: product.description.toString(),
                   title: product.title.toString(),
                   tags: product.tags!,
-                  category: product.category.toString(),
+                  category: product.category??[],
                   images: product.images!,
                   totalrating: product.totalrating??"0",
                   link: product.link!

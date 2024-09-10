@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:muztune/common/product_tile.dart';
 import 'package:muztune/config/colors.dart';
 import 'package:muztune/data/response/status.dart';
+import 'package:muztune/model/category_model.dart';
 import 'package:muztune/repository/products/product_http_repository.dart';
 import 'package:muztune/repository/products/product_repository.dart';
 import 'package:muztune/shimmers/product_tile_shimmer.dart';
@@ -15,7 +16,8 @@ import 'package:provider/provider.dart';
 import '../../common/filter_price_widget.dart';
 
 class ShopScreen extends StatefulWidget {
-  const ShopScreen({super.key});
+  final String? category;
+  const ShopScreen({super.key, this.category});
 
   @override
   State<ShopScreen> createState() => _ShopScreenState();
@@ -27,9 +29,13 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CategoryViewModel>().getCategory();
-    });
+    if (widget.category == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final categoryViewModel = context.read<CategoryViewModel>();
+        categoryViewModel.getCategory();
+        // If there's a category parameter, set it in the view model
+      });
+    }
   }
 
   @override
@@ -64,92 +70,111 @@ class _ShopScreenState extends State<ShopScreen> {
             const SizedBox(
               height: 10,
             ),
-            Consumer<CategoryViewModel>(builder: (context, data, _) {
-              switch (data.categoryList.status) {
-                case Status.LOADING:
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: SizedBox(
-                      height: 50,
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) => const SizedBox(
-                          width: 12, // Width of the separator
-                          height: 50, // Height of the separator
+            if (widget.category == null)
+              Consumer<CategoryViewModel>(builder: (context, data, _) {
+                switch (data.categoryList.status) {
+                  case Status.LOADING:
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: SizedBox(
+                        height: 50,
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => const SizedBox(
+                            width: 12, // Width of the separator
+                            height: 50, // Height of the separator
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: const ShimmerEffect(
+                                  width: 100, // Width of the item
+                                  height: 40, // Height of the item
+                                  radius: 20, // Radius for the item
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: 5,
                         ),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: const ShimmerEffect(
-                                width: 100, // Width of the item
-                                height: 40, // Height of the item
-                                radius: 20, // Radius for the item
-                                color: Colors.white,
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: 5,
                       ),
-                    ),
-                  );
+                    );
 
-                case Status.COMPLETED:
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: SizedBox(
-                      height: 50,
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            const Padding(padding: EdgeInsets.only(right: 12)),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              if (data.category ==
-                                  data.categoryList.data![index]) {
-                                data.setCategory = null;
-                              } else {
-                                data.setCategory =
-                                    data.categoryList.data![index];
-                              }
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: data.category ==
-                                          data.categoryList.data![index]
-                                      ? AppColors.redColor
-                                      : Colors.black,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                child: Center(
-                                    child: Text(
-                                  data.categoryList.data![index].title!,
-                                  style: TextStyle(
-                                      color: data.category ==
-                                              data.categoryList.data![index]
-                                          ? Colors.white
-                                          : Colors.white,
-                                      fontSize: 13),
-                                )),
+                  case Status.COMPLETED:
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: SizedBox(
+                        height: 50,
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => const Padding(
+                              padding: EdgeInsets.only(right: 12)),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                if (data.category ==
+                                    data.categoryList.data![index]) {
+                                  data.setCategory = null;
+                                } else {
+                                  data.setCategory =
+                                      data.categoryList.data![index];
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: data.category ==
+                                            data.categoryList.data![index]
+                                        ? AppColors.redColor
+                                        : Colors.black,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  child: Center(
+                                      child: Text(
+                                    data.categoryList.data![index].title!,
+                                    style: TextStyle(
+                                        color: data.category ==
+                                                data.categoryList.data![index]
+                                            ? Colors.white
+                                            : Colors.white,
+                                        fontSize: 13),
+                                  )),
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        itemCount: data.categoryList.data!.length,
+                            );
+                          },
+                          itemCount: data.categoryList.data!.length,
+                        ),
                       ),
-                    ),
-                  );
-                case Status.ERROR:
-                  return Center(
-                    child: Text(data.categoryList.message!),
-                  );
-              }
-            }),
+                    );
+                  case Status.ERROR:
+                    return Center(
+                      child: Text(data.categoryList.message!),
+                    );
+                }
+              }),
+            if (widget.category != null)
+              Center(
+                child: Container(
+                  height: 50,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: AppColors.redColor,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Center(
+                        child: Text(
+                      widget.category!,
+                      style: const TextStyle(color: Colors.white, fontSize: 13),
+                    )),
+                  ),
+                ),
+              ),
             const SizedBox(
               height: 10,
             ),
@@ -158,7 +183,9 @@ class _ShopScreenState extends State<ShopScreen> {
                   Consumer<CategoryViewModel>(builder: (context, data, _) {
                 // Construct query parameters
                 final Map<String, String> queryParams = {
-                  "category": data.category?.title ?? ""
+                  "category": widget.category != null
+                      ? widget.category!
+                      : data.category?.title ?? ""
                 };
                 if (data1.sortOption.isNotEmpty) {
                   queryParams["sort"] = data1.sortOption;
@@ -221,20 +248,20 @@ class _ShopScreenState extends State<ShopScreen> {
                                 itemBuilder: (context, index) {
                                   final product = snapshot.data!.data![index];
                                   return ProductTile(
-                                    image: product.image,
-                                    type: product.type!,
-                                    productId: product.sId!,
-                                    imageUrl:
-                                        product.images?[0] ?? product.image!,
-                                    price:
-                                        double.parse(product.price.toString()),
-                                    subTitle: product.description.toString(),
-                                    title: product.title.toString(),
-                                    tags: product.tags!,
-                                    category: product.category.toString(),
-                                    images: product.images ?? [],
-                                    totalrating: product.totalrating??"0",link: product.link!
-                                  );
+                                      image: product.image,
+                                      type: product.type!,
+                                      productId: product.sId!,
+                                      imageUrl:
+                                          product.images?[0] ?? product.image!,
+                                      price: double.parse(
+                                          product.price.toString()),
+                                      subTitle: product.description.toString(),
+                                      title: product.title.toString(),
+                                      tags: product.tags!,
+                                      category: product.category ?? [],
+                                      images: product.images ?? [],
+                                      totalrating: product.totalrating ?? "0",
+                                      link: product.link!);
                                 },
                               );
                       } else {

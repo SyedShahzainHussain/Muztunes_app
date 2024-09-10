@@ -6,7 +6,7 @@ class CartItemModel {
   String description;
   double price;
   String image;
-  String category;
+    List<String> category;
   String type;
   String link;
   List<String>? tags;
@@ -22,7 +22,7 @@ class CartItemModel {
     required this.tags,
     required this.link,
     this.title = "",
-    this.category = "",
+    this.category = const [],
     this.type = "",
     this.price = 0.0,
     this.images,

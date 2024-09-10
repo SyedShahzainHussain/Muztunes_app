@@ -31,8 +31,8 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
 
   List<XFile?> images = List.generate(5, (_) => null);
 
-  String? selectedCategory;
-  List<DropdownMenuItem<String>> categoryItems = [];
+  // List of selected categories
+  final Set<String> selectedCategories = Set();
 
   @override
   void initState() {
@@ -50,10 +50,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
     }
 
     bool allImagesSelected = images.every((image) => image != null);
-    if (validate &&
-        allImagesSelected &&
-        selectedCategory != null &&
-        selectedCategory!.isNotEmpty) {
+    if (validate && allImagesSelected && selectedCategories.isNotEmpty) {
       // Prepare form fields
       final fields = {
         "title": titleController.text,
@@ -62,7 +59,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         "quantity": 1,
         "tags": tagController.text,
         "information": informationController.text,
-        "category": selectedCategory!,
+        "category": selectedCategories.toList(),
         "slug": titleController.text,
         "link": linkController.text,
       };
@@ -124,12 +121,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                 );
               case Status.COMPLETED:
                 final categories = data.categoryList.data!;
-                categoryItems = categories.map((e) {
-                  return DropdownMenuItem<String>(
-                    value: e.title,
-                    child: Text(e.title!),
-                  );
-                }).toList();
+             
                 return Form(
                   key: _formKey,
                   child: Column(
@@ -202,47 +194,44 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                         },
                       ),
                       const SizedBox(height: 10),
-                      DropdownButtonFormField<String>(
-                        dropdownColor: Colors.white,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Category is required";
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(left: 8),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                              color: Color(0xff83829A),
-                              width: 0.4,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                              color: Color(0xff83829A),
-                              width: 0.4,
-                            ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                              color: Color(0xff83829A),
-                              width: 0.4,
-                            ),
-                          ),
-                        ),
-                        items: categoryItems,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCategory = value;
-                          });
-                        },
-                        hint: const Text('Select Category'),
-                        value: selectedCategory,
-                      ),
+                      Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Cateogries",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          )),
+                      ...categories.map((category) {
+                        return CheckboxListTile(
+                          title: Text(category.title!),
+                          value: selectedCategories.contains(category.title),
+                          activeColor: AppColors.redColor,
+                          onChanged: (bool? checked) {
+                            setState(() {
+                              if (checked == true) {
+                                // Add category if less than 3 are selected
+                                if (selectedCategories.length < 3) {
+                                  selectedCategories.add(category.title!);
+                                } else {
+                                  Utils.showToaster(
+                                      message:
+                                          'You can select a maximum\n of 3 categories',
+                                      context: context);
+                                }
+                              } else {
+                                // Remove category
+                                selectedCategories.remove(category.title);
+                              }
+                              print(selectedCategories.toList().toString());
+                            });
+                          },
+                        );
+                      }),
                       const SizedBox(height: 10),
                       // Display image pickers
                       ...List.generate(5, (index) => buildImagePicker(index)),

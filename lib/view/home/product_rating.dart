@@ -83,8 +83,8 @@ class _ProductRatingState extends State<ProductRating> {
                             children:
                                 data.ratingListModel.data!.ratings!.map((e) {
                               return UserRating(
-                                comment: e.comment!,
-                                imageurl: e.postedby!.image!,
+                                comment: e.comment??"",
+                                imageurl: e.postedby?.image??"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
                                 rating: e.star!.toDouble(),
                                 name: e.postedby!.name!,
                               );

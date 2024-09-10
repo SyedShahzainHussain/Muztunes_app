@@ -27,11 +27,12 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
   final informationController = TextEditingController();
   final linkController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+    // List of selected categories
+  final Set<String> selectedCategories = Set();
 
   XFile? images;
 
-  String? selectedCategory;
-  List<DropdownMenuItem<String>> categoryItems = [];
+ 
 
   @override
   void initState() {
@@ -48,7 +49,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
         return;
       }
 
-      if (selectedCategory == null || selectedCategory!.isEmpty) {
+      if (selectedCategories.isEmpty) {
         Utils.showToaster(
             message: "Please select a category", context: context);
         return;
@@ -60,7 +61,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
         "price": priceController.text,
         "tags": tagController.text,
         "information": informationController.text,
-        "category": selectedCategory!,
+        "category": selectedCategories.toList(),
         "slug": titleController.text,
         "quantity": 1,
         "link": linkController.text,
@@ -114,13 +115,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                 child: Text(data.categoryList.message!),
               );
             case Status.COMPLETED:
-              final categories = data.categoryList.data!;
-              categoryItems = categories.map((e) {
-                return DropdownMenuItem<String>(
-                  value: e.title,
-                  child: Text(e.title!),
-                );
-              }).toList();
+                final categories = data.categoryList.data!;
               return Form(
                 key: _formKey,
                 child: Column(
@@ -217,40 +212,43 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       },
                     ),
                     const SizedBox(height: 10),
-                    DropdownButtonFormField<String>(
-                      dropdownColor: Colors.white,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Category is required";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(
-                          left: 8,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                                color: Color(0xff83829A), width: 0.4)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                                color: Color(0xff83829A), width: 0.4)),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: const BorderSide(
-                                color: Color(0xff83829A), width: 0.4)),
-                      ),
-                      items: categoryItems,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedCategory = value;
-                        });
-                      },
-                      hint: const Text('Select Category'),
-                      value: selectedCategory,
-                    ),
+                     Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Cateogries",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          )),
+                      ...categories.map((category) {
+                        return CheckboxListTile(
+                          title: Text(category.title!),
+                          value: selectedCategories.contains(category.title),
+                          activeColor: AppColors.redColor,
+                          onChanged: (bool? checked) {
+                            setState(() {
+                              if (checked == true) {
+                                // Add category if less than 3 are selected
+                                if (selectedCategories.length < 3) {
+                                  selectedCategories.add(category.title!);
+                                } else {
+                                  Utils.showToaster(
+                                      message:
+                                          'You can select a maximum\n of 3 categories',
+                                      context: context);
+                                }
+                              } else {
+                                // Remove category
+                                selectedCategories.remove(category.title);
+                              }
+                            });
+                          },
+                        );
+                      }),
                     const SizedBox(
                       height: 10,
                     ),

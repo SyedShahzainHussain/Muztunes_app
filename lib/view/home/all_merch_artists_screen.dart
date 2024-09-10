@@ -63,7 +63,7 @@ class _AllMerchArtistsScreenState extends State<AllMerchArtistsScreen> {
                   subTitle: product.description.toString(),
                   title: product.title.toString(),
                   tags: product.tags!,
-                  category: product.category.toString(),
+                  category: product.category??[],
                   image: product.image,
                   isProduct: false,
                   totalrating: product.totalrating??"0",

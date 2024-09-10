@@ -7,6 +7,7 @@ import 'package:muztune/model/cart_model.dart';
 import 'package:muztune/utils/utils.dart';
 import 'package:muztune/view/home/product_rating.dart';
 import 'package:muztune/view/home/widget/products/product_image_slider_widget.dart';
+import 'package:muztune/view/shop/shop_screen.dart';
 import 'package:muztune/viewModel/cart/cart_view_model.dart';
 import 'package:muztune/viewModel/products/product_view_model.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class ProductDetailScreen extends StatefulWidget {
   final List<String>? images;
   final String title;
   final String description;
-  final String category;
+  final List<String> category;
   final String price;
   final List<String> tags;
   final String? image;
@@ -56,6 +57,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+     // Process the category data
+    List<String> categories = _processCategoryString(widget.category);
+
     // final testData = [
     //   "Solid colors: 100% Cotton; Heather Grey: 90% Cotton, 10% Polyester; All Other Heathers: 50% Cotton, 50% Polyester",
     //   "Imported",
@@ -173,24 +177,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       child: Button(
                         onTap: () async {
                           final cartItemModel = CartItemModel(
-                            type: widget.type!,
-                            productId: widget.productId,
-                            description: widget.description,
-                            title: widget.title,
-                            category: widget.category,
-                            price: double.parse(widget.price),
-                            quantity:
-                                context.read<CartViewModel>().noOfCartItem,
-                            image:
-                                context.read<ProductViewModel>().selectedImage,
-                            tags: widget.tags,
-                            images: widget.images ?? [],
-                            link: widget.link!
-                          );
+                              type: widget.type!,
+                              productId: widget.productId,
+                              description: widget.description,
+                              title: widget.title,
+                              category: widget.category,
+                              price: double.parse(widget.price),
+                              quantity:
+                                  context.read<CartViewModel>().noOfCartItem,
+                              image: context
+                                  .read<ProductViewModel>()
+                                  .selectedImage,
+                              tags: widget.tags,
+                              images: widget.images ?? [],
+                              link: widget.link!);
                           context
                               .read<CartViewModel>()
                               .addToCart(cartItemModel, context);
-                               await  Utils().launchUrls(widget.link!);
+                          await Utils().launchUrls(widget.link!);
                         },
                         showRadius: true,
                         title: "Buy Now",
@@ -225,15 +229,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   .labelMedium!
                                   .copyWith(color: const Color(0xff453E3E)),
                             ),
-                            Text(
-                              widget.category,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(
-                                      color: const Color(0xff2B161B),
-                                      fontWeight: FontWeight.bold),
-                            ),
+                            ...categories.expand((e) =>
+                                e.split(" ").map((word) => GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => ShopScreen(
+                                                      category: word,
+                                                    )));
+                                      },
+                                      child: Text(
+                                        "$word, ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .copyWith(
+                                                color: const Color(0xff2B161B),
+                                                fontWeight: FontWeight.bold),
+                                      ),
+                                    ))),
                           ],
                         )),
                   ),
@@ -332,7 +347,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ),
         child: Button(
-          onTap: ()async  {
+          onTap: () async {
             final cartItemModel = CartItemModel(
                 type: widget.type!,
                 productId: widget.productId,
@@ -343,9 +358,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 quantity: context.read<CartViewModel>().noOfCartItem,
                 image: context.read<ProductViewModel>().selectedImage,
                 tags: widget.tags,
-                images: widget.images ?? [],link: widget.link!);
+                images: widget.images ?? [],
+                link: widget.link!);
             context.read<CartViewModel>().addToCart(cartItemModel, context);
-          await  Utils().launchUrls(widget.link!);
+            await Utils().launchUrls(widget.link!);
           },
           showRadius: true,
           title: "Buy Now",
@@ -355,4 +371,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
     );
   }
+  List<String> _processCategoryString(List<String> categoryList) {
+    // Check if there's any data
+    if (categoryList.isEmpty) return [];
+
+    // The category data is a single item list with a JSON array string
+    final String jsonString = categoryList.first;
+
+    // Remove outer brackets and parse
+    final String cleanedString = jsonString
+        .replaceAll('[', '')
+        .replaceAll(']', '')
+        .trim();
+
+    // Split by comma and return as a list
+    List<String> categories = cleanedString.split(',').map((e) => e.trim()).toList();
+    return categories;
+  }
+
+
 }

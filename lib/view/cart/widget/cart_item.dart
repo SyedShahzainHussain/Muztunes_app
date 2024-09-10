@@ -8,7 +8,7 @@ class CartItem extends StatelessWidget {
   final String image;
   final String title;
   final String description;
-  final String category;
+  final   List<String> category;
   final double price;
   const CartItem({
     super.key,
@@ -55,7 +55,7 @@ class CartItem extends StatelessWidget {
               ),
               Flexible(
                 child: TProductTitle(
-                  title: category,
+                  title: category[0],
                   maxLines: 1,
                 ),
               ),

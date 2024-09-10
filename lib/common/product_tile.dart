@@ -15,7 +15,7 @@ class ProductTile extends StatelessWidget {
   final bool isSale;
   final List<String>? images;
   final List<String> tags;
-  final String category;
+  final  List<String> category;
   final String? image;
   final String totalrating;
   final String link;

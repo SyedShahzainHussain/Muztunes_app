@@ -5,25 +5,22 @@ class ArticleModel {
 
   ArticleModel({this.status, this.results, this.data});
 
-  ArticleModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    results = json['results'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
-      });
-    }
+  factory ArticleModel.fromJson(Map<String, dynamic> json) {
+    return ArticleModel(
+      status: json['status'] as String?,
+      results: json['results'] as int?,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((item) => Data.fromJson(item as Map<String, dynamic>))
+          .toList(),
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> jsonData = <String, dynamic>{};
-    jsonData['status'] = status;
-    jsonData['results'] = results;
-    if (data != null) {
-      jsonData['data'] = data!.map((v) => v.toJson()).toList();
-    }
-    return jsonData;
+    return {
+      'status': status,
+      'results': results,
+      'data': data?.map((item) => item.toJson()).toList(),
+    };
   }
 }
 
@@ -33,17 +30,17 @@ class Data {
   String? slug;
   String? description;
   int? price;
-  String? category;
+  List<String>? category;
   int? quantity;
   String? image;
+  String? link;
   List<String>? tags;
   String? totalrating;
   String? type;
-  List<dynamic>?
-      ratings; // Changed to List<dynamic> to accommodate any type of rating
+  List<Rating>? ratings; // Assuming a Rating class or similar
   String? createdAt;
   String? updatedAt;
-  String? link;
+
   Data({
     this.sId,
     this.title,
@@ -53,64 +50,85 @@ class Data {
     this.category,
     this.quantity,
     this.image,
+    this.link,
     this.tags,
     this.totalrating,
     this.type,
     this.ratings,
     this.createdAt,
     this.updatedAt,
-    this.link,
   });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    title = json['title'];
-    slug = json['slug'];
-    description = json['description'];
-    final priceValue = json['price'];
-    if (priceValue is int) {
-      price = priceValue;
-    } else if (priceValue is double) {
-      price = priceValue.toInt();
-    } else {
-      price = int.tryParse(priceValue.toString()) ?? 0;
-    }
-    category = json['category'];
-    quantity = json['quantity'];
-    image = json['image'];
-    tags = json['tags']?.cast<String>();
-    totalrating = json['totalrating'];
-    type = json['type'];
-    if (json['ratings'] != null) {
-      ratings = <dynamic>[]; // Initialize ratings as a List<dynamic>
-      json['ratings'].forEach((v) {
-        ratings!.add(v); // Directly add the rating value
-      });
-    }
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    link = json['link'];
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      sId: json['_id'] as String?,
+      title: json['title'] as String?,
+      slug: json['slug'] as String?,
+      description: json['description'] as String?,
+      price: json['price'] as int?,
+      category: (json['category'] as List<dynamic>?)
+          ?.map((item) => item as String)
+          .toList(),
+      quantity: json['quantity'] as int?,
+      image: json['image'] as String?,
+      link: json['link'] as String?,
+      tags: (json['tags'] as List<dynamic>?)
+          ?.map((item) => item as String)
+          .toList(),
+      totalrating: json['totalrating'] as String?,
+      type: json['type'] as String?,
+      ratings: (json['ratings'] as List<dynamic>?)
+          ?.map((item) => Rating.fromJson(item as Map<String, dynamic>))
+          .toList(),
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> jsonData = <String, dynamic>{};
-    jsonData['_id'] = sId;
-    jsonData['title'] = title;
-    jsonData['slug'] = slug;
-    jsonData['description'] = description;
-    jsonData['price'] = price;
-    jsonData['category'] = category;
-    jsonData['quantity'] = quantity;
-    jsonData['image'] = image;
-    jsonData['tags'] = tags;
-    jsonData['totalrating'] = totalrating;
-    jsonData['type'] = type;
-    if (ratings != null) {
-      jsonData['ratings'] = ratings;
-    }
-    jsonData['createdAt'] = createdAt;
-    jsonData['updatedAt'] = updatedAt;
-    jsonData['link'] = link;
-    return jsonData;
+    return {
+      '_id': sId,
+      'title': title,
+      'slug': slug,
+      'description': description,
+      'price': price,
+      'category': category,
+      'quantity': quantity,
+      'image': image,
+      'link': link,
+      'tags': tags,
+      'totalrating': totalrating,
+      'type': type,
+      'ratings': ratings?.map((item) => item.toJson()).toList(),
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+    };
+  }
+}
+
+class Rating { // Define this class according to your needs
+  int? star;
+  String? comment;
+  String? postedBy;
+  String? sId;
+
+  Rating({this.star, this.comment, this.postedBy, this.sId});
+
+  factory Rating.fromJson(Map<String, dynamic> json) {
+    return Rating(
+      star: json['star'] as int?,
+      comment: json['comment'] as String?,
+      postedBy: json['postedby'] as String?,
+      sId: json['_id'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'star': star,
+      'comment': comment,
+      'postedby': postedBy,
+      '_id': sId,
+    };
   }
 }
