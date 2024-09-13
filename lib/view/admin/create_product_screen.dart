@@ -33,7 +33,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
 
   // List of selected categories
   final Set<String> selectedCategories = Set();
-    // List of selected color
+  // List of selected color
   List<String> selectedColors = [];
 
   @override
@@ -63,6 +63,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
       Utils.showToaster(message: "Please select a category", context: context);
       return;
     }
+  
 
     // Prepare form fields
     final fields = {
@@ -72,10 +73,10 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
       "quantity": 1,
       "tags": tagController.text,
       "information": informationController.text,
-      "category": selectedCategories.toList(),
+      "category": selectedCategories.last,
       "slug": titleController.text,
       "link": linkController.text,
-      "color":selectedColors.toList()
+      "color": selectedColors.toList()
     };
 
     // Prepare image files
@@ -145,7 +146,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                         hintText: "Title",
                       ),
                       const SizedBox(height: 10),
-                     
+
                       CustomTextField(
                         controller: priceController,
                         hintText: "Price",
@@ -191,17 +192,17 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                           return null;
                         },
                       ),
-                         const SizedBox(height: 10),
-                       const Text(
+                      const SizedBox(height: 10),
+                      const Text(
                         " (Optional)",
-                        style: TextStyle(color: Colors.grey,fontSize: 10),
+                        style: TextStyle(color: Colors.grey, fontSize: 10),
                       ),
                       const SizedBox(height: 5),
                       CustomTextField(
                         controller: descriptionController,
                         hintText: "Description",
                       ),
-                   
+
                       const SizedBox(height: 10),
                       Align(
                           alignment: Alignment.topLeft,
@@ -262,72 +263,75 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                           ),
                         ),
                       ),
-                       Align(
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Colors " ,
-                              style:
-                                  Theme.of(context).textTheme.labelMedium!.copyWith(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                            ),
-                              const Text(
-                        " (Optional)",
-                        style: TextStyle(color: Colors.grey,fontSize: 10),
-                      ),
-                          ],
-                        )),
-                    SizedBox(
-                      height: 65,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Wrap(
-                          runSpacing: 8.0,
-                          spacing: 8.0,
-                          children: Utils().colors.map((color) {
-                            return SizedBox(
-                              height: 60,
-                              child: FilterChip(
-                                label: Text(Utils().colorToName(color)),
-                                labelStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                                selected: selectedColors
-                                    .contains(Utils().colorToName(color)),
-                                selectedColor: AppColors.redColor,
-                                backgroundColor: Colors.black,
-                                checkmarkColor: Colors.white,
-                                onSelected: (bool selected) {
-                                  setState(() {
-                                    if (selected) {
-                                      // Add category if less than 3 are selected
-                                      if (selectedColors.length < 3) {
-                                        selectedColors
-                                            .add(Utils().colorToName(color));
-                                      } else {
-                                        Utils.showToaster(
-                                            message:
-                                                'You can select a maximum of 3 categories',
-                                            context: context);
-                                      }
-                                    } else {
-                                      // Remove category
-                                      selectedColors
-                                          .remove(Utils().colorToName(color));
-                                    }
-                                    print(selectedColors.toList());
-                                  });
-                                },
+                      Align(
+                          alignment: Alignment.topLeft,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Colors ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                               ),
-                            );
-                          }).toList(),
+                              const Text(
+                                " (Optional)",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 10),
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 65,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Wrap(
+                            runSpacing: 8.0,
+                            spacing: 8.0,
+                            children: Utils().colors.map((color) {
+                              return SizedBox(
+                                height: 60,
+                                child: FilterChip(
+                                  label: Text(Utils().colorToName(color)),
+                                  labelStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  selected: selectedColors
+                                      .contains(Utils().colorToName(color)),
+                                  selectedColor: AppColors.redColor,
+                                  backgroundColor: Colors.black,
+                                  checkmarkColor: Colors.white,
+                                  onSelected: (bool selected) {
+                                    setState(() {
+                                      if (selected) {
+                                        // Add category if less than 3 are selected
+                                        if (selectedColors.length < 3) {
+                                          selectedColors
+                                              .add(Utils().colorToName(color));
+                                        } else {
+                                          Utils.showToaster(
+                                              message:
+                                                  'You can select a maximum of 3 categories',
+                                              context: context);
+                                        }
+                                      } else {
+                                        // Remove category
+                                        selectedColors
+                                            .remove(Utils().colorToName(color));
+                                      }
+                                      print(selectedColors.toList());
+                                    });
+                                  },
+                                ),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
-                    ),
                       const SizedBox(height: 10),
                       // Display image pickers
                       ...List.generate(5, (index) => buildImagePicker(index)),
@@ -373,10 +377,10 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                     style: TextStyle(color: Colors.red),
                   ),
             if (index != 0 && images[index] == null)
-               const Text(
-                        " (Optional)",
-                        style: TextStyle(color: Colors.grey,fontSize: 10),
-                      ),
+              const Text(
+                " (Optional)",
+                style: TextStyle(color: Colors.grey, fontSize: 10),
+              ),
           ],
         ),
         const SizedBox(height: 10),

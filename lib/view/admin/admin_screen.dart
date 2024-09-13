@@ -3,6 +3,7 @@ import 'package:muztune/common/bottom_navigation_widget.dart';
 import 'package:muztune/extension/media_query_extension.dart';
 import 'package:muztune/providers/bottomnavigation/bottom_navigation_provider.dart';
 import 'package:muztune/view/admin/add_category_screen.dart';
+import 'package:muztune/view/admin/add_stream_id_screen.dart';
 import 'package:muztune/view/admin/create_article_screen.dart';
 import 'package:muztune/view/admin/create_product_screen.dart';
 import 'package:muztune/view/splash/splash_screen.dart';
@@ -155,19 +156,11 @@ class AdminScreen extends StatelessWidget {
                   ),
                   Expanded(
                       child: GestureDetector(
-                    onTap: () async  {
-                        await SessionController().logout().then((value) {
-                            if (context.mounted) {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const SplashScreen()),
-                                  (route) => false);
-                              context
-                                  .read<BottomNavigationProvider>()
-                                  .setIndex(Menus.home);
-                            }
-                          });
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const AddStreamIdScreen()));
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -179,8 +172,53 @@ class AdminScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Icon(Icons.logout,
+                            const Icon(Icons.stream,
                                 color: Colors.white),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text("Add Stream",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                      ),
+                    ),
+                  )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: GestureDetector(
+                    onTap: () async {
+                      await SessionController().logout().then((value) {
+                        if (context.mounted) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const SplashScreen()),
+                              (route) => false);
+                          context
+                              .read<BottomNavigationProvider>()
+                              .setIndex(Menus.home);
+                        }
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(12.0)),
+                      height: 100,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.logout, color: Colors.white),
                             const SizedBox(
                               height: 5,
                             ),
@@ -196,8 +234,6 @@ class AdminScreen extends StatelessWidget {
                       ),
                     ),
                   ))
-                  
-       
                 ],
               ),
             )

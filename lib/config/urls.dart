@@ -44,4 +44,6 @@ class Urls {
 
   // Todo Contact Urls
   static String craeateContact = "contact";
+  static String craeateStream = "/live";
+
 }

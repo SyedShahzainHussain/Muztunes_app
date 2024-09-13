@@ -18,7 +18,7 @@ class ProductDetailScreen extends StatefulWidget {
   final List<String>? images;
   final String title;
   final String description;
-  final List<String> category;
+  final String category;
   final List<String> colors;
   final String price;
   final List<String> tags;
@@ -62,7 +62,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     // Process the category data
-    List<String> categories = _processCategoryString(widget.category);
+    // List<String> categories = _processCategoryString(widget.category);
     print(widget.colors);
     List<String> colors = _processCategoryString(widget.colors);
     // final testData = [
@@ -215,50 +215,68 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  if (categories.isNotEmpty)
-                    Material(
-                      elevation: 4,
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Container(
-                          padding: const EdgeInsets.all(6.0),
-                          decoration: BoxDecoration(
-                            color: const Color(0xffEEEEED),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "Categories: ",
+                  Material(
+                    elevation: 4,
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Container(
+                        padding: const EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffEEEEED),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Categories: ",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(color: const Color(0xff453E3E)),
+                            ),
+                            // ...categories.expand((e) =>
+                            //     e.split(" ").map((word) => GestureDetector(
+                            //           onTap: () {
+                            //             Navigator.push(
+                            //                 context,
+                            //                 MaterialPageRoute(
+                            //                     builder: (_) => ShopScreen(
+                            //                           category: word,
+                            //                         )));
+                            //           },
+                            //           child: Text(
+                            //             "$word, ",
+                            //             style: Theme.of(context)
+                            //                 .textTheme
+                            //                 .labelSmall!
+                            //                 .copyWith(
+                            //                     color:
+                            //                         const Color(0xff2B161B),
+                            //                     fontWeight: FontWeight.bold),
+                            //           ),
+                            //         ))),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ShopScreen(
+                                              category: widget.category,
+                                            )));
+                              },
+                              child: Text(
+                                widget.category,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .labelMedium!
-                                    .copyWith(color: const Color(0xff453E3E)),
+                                    .labelSmall!
+                                    .copyWith(
+                                        color: const Color(0xff2B161B),
+                                        fontWeight: FontWeight.bold),
                               ),
-                              ...categories.expand((e) =>
-                                  e.split(" ").map((word) => GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) => ShopScreen(
-                                                        category: word,
-                                                      )));
-                                        },
-                                        child: Text(
-                                          "$word, ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!
-                                              .copyWith(
-                                                  color:
-                                                      const Color(0xff2B161B),
-                                                  fontWeight: FontWeight.bold),
-                                        ),
-                                      ))),
-                            ],
-                          )),
-                    ),
+                            )
+                          ],
+                        )),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -369,46 +387,47 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     height: 10,
                   ),
 
-                 widget.information != null?
-                    Container(
-                        height: 30,
-                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey,
+                  widget.information != null
+                      ? Container(
+                          height: 30,
+                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
                           ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text("Size",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge!
-                                    .copyWith(fontWeight: FontWeight.w700)),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                              child: SizedBox(
-                                height: 30,
-                                width: 3,
-                                child: VerticalDivider(
-                                  thickness: 1,
-                                  color: Colors.grey,
-                                  endIndent: 1,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text("Size",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge!
+                                      .copyWith(fontWeight: FontWeight.w700)),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                                child: SizedBox(
+                                  height: 30,
+                                  width: 3,
+                                  child: VerticalDivider(
+                                    thickness: 1,
+                                    color: Colors.grey,
+                                    endIndent: 1,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              widget.information ?? "",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(
-                                      color: const Color(0xff2B161B),
-                                      fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        )):SizedBox(),
+                              Text(
+                                widget.information ?? "",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .copyWith(
+                                        color: const Color(0xff2B161B),
+                                        fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ))
+                      : SizedBox(),
                   const SizedBox(
                     height: 10,
                   ),

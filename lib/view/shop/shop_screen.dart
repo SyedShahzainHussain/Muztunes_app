@@ -184,8 +184,8 @@ class _ShopScreenState extends State<ShopScreen> {
                 // Construct query parameters
                 final Map<String, String> queryParams = {
                   "category": widget.category != null
-                      ? widget.category!
-                      : data.category?.title ?? ""
+                      ? widget.category!.toLowerCase()
+                      : data.category?.title?.toLowerCase() ?? ""
                 };
                 if (data1.sortOption.isNotEmpty) {
                   queryParams["sort"] = data1.sortOption;
@@ -258,7 +258,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                     subTitle: product.description.toString(),
                                     title: product.title.toString(),
                                     tags: product.tags!,
-                                    category: product.category ?? [],
+                                    category: product.category??"",
                                     images: product.images ?? [],
                                     totalrating: product.totalrating ?? "0",
                                     link: product.link!,

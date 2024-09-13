@@ -60,7 +60,7 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
         "price": priceController.text,
         "tags": tagController.text,
         "information": informationController.text,
-        "category": selectedCategories.toList(),
+       "category": selectedCategories.last,
         "slug": titleController.text,
         "quantity": 1,
         "link": linkController.text,
@@ -257,17 +257,11 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                                 onSelected: (bool selected) {
                                   setState(() {
                                     if (selected) {
-                                      // Add category if less than 3 are selected
-                                      if (selectedCategories.length < 3) {
-                                        selectedCategories.add(category.title!);
-                                      } else {
-                                        Utils.showToaster(
-                                            message:
-                                                'You can select a maximum of 3 categories',
-                                            context: context);
-                                      }
+                                      // Clear previously selected categories and add the new one
+                                      selectedCategories.clear();
+                                      selectedCategories.add(category.title!);
                                     } else {
-                                      // Remove category
+                                      // If the category is deselected, remove it from the selected categories
                                       selectedCategories.remove(category.title);
                                     }
                                   });
@@ -279,7 +273,6 @@ class _CreateArticleScreenState extends State<CreateArticleScreen> {
                       ),
                     ),
 
-                   
                     const SizedBox(
                       height: 10,
                     ),

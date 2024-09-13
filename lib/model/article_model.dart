@@ -30,7 +30,7 @@ class Data {
   String? slug;
   String? description;
   int? price;
-  List<String>? category;
+  String? category;
   int? quantity;
   String? image;
   String? link;
@@ -66,9 +66,7 @@ class Data {
       slug: json['slug'] as String?,
       description: json['description'] as String?,
       price: json['price'] as int?,
-      category: (json['category'] as List<dynamic>?)
-          ?.map((item) => item as String)
-          .toList(),
+      category: json['category'],
       quantity: json['quantity'] as int?,
       image: json['image'] as String?,
       link: json['link'] as String?,
@@ -106,7 +104,8 @@ class Data {
   }
 }
 
-class Rating { // Define this class according to your needs
+class Rating {
+  // Define this class according to your needs
   int? star;
   String? comment;
   String? postedBy;

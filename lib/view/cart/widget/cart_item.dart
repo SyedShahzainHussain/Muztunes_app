@@ -8,7 +8,7 @@ class CartItem extends StatelessWidget {
   final String image;
   final String title;
   final String description;
-  final   List<String> category;
+  final   String category;
   final double price;
   const CartItem({
     super.key,

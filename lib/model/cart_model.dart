@@ -7,7 +7,7 @@ class CartItemModel {
   double price;
   String image;
   String? information;
-  List<String> category;
+  final  String category;
   List<String>? colors;
   String type;
   String link;
@@ -25,7 +25,7 @@ class CartItemModel {
     required this.link,
     this.information,
     this.title = "",
-    this.category = const [],
+    this.category = "",
     this.colors = const [],
     this.type = "",
     this.price = 0.0,
@@ -60,7 +60,7 @@ class CartItemModel {
       description: map['description'],
       price: map['price'],
       image: map['image'],
-      category: List<String>.from(map['category'] ?? []),
+      category: map["category"],
       tags: List<String>.from(map['tags'] ?? []),
       quantity: map['quantity'],
       link: map['link'],

@@ -59,7 +59,7 @@ dependencies:
   url_launcher: ^6.3.0
   image: ^4.2.0
   flutter_tawkto: ^0.0.4
-  
+  youtube_player_iframe: ^5.1.5
 dev_dependencies:
 
   flutter_test:

@@ -63,13 +63,12 @@ class _HomeGridProductState extends State<HomeGridProduct> {
                           images: product.images!,
                           title: product.title!,
                           description: product.description!,
-                          category: product.category!,
+                          category: product.category??"",
                           tags: product.tags!,
                           price: product.price.toString(),
                           link: product.link,
-                          information: product.information??"",
+                          information: product.information ?? "",
                           colors: product.colors!,
-                          
                         );
                       }));
                     },
@@ -89,12 +88,12 @@ class _HomeGridProductState extends State<HomeGridProduct> {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Image.network(
-                            product.images![0],
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: double.infinity,
-                          ),
+                       Image.network(
+                               product.images![0],
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
                           Opacity(
                             opacity: 0.3, // Adjust the opacity as needed
                             child: Container(

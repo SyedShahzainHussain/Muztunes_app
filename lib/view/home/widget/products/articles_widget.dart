@@ -47,37 +47,42 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
           final products = data.articleList.data!.data!;
           final displayedItems =
               products.length > 6 ? products.sublist(0, 6) : products;
-          return GridView.builder(
-            padding: const EdgeInsets.all(8.0),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 25,
-              mainAxisSpacing: 25,
-              childAspectRatio: 0.52,
-            ),
-            itemBuilder: (context, index) {
-              final product = displayedItems[index];
-              return ProductTile(
-                type: product.type!,
-                productId: product.sId!,
-                imageUrl: product.image!,
-                price: double.parse(product.price.toString()),
-                subTitle: product.description!,
-                title: product.title!,
-                category: product.category!,
-                tags: product.tags!,
-                image: product.image!,
-                isProduct: false,
-                totalrating: product.totalrating ?? "0",
-                link: product.link!,
-                color: const  [],
-                
-              );
-            },
-            itemCount: displayedItems.length,
-          );
+          return displayedItems.isEmpty
+              ?  const Center(
+                  child: Center(
+                    child: Text("No Articles Found!"),
+                  ),
+                )
+              : GridView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 25,
+                    mainAxisSpacing: 25,
+                    childAspectRatio: 0.52,
+                  ),
+                  itemBuilder: (context, index) {
+                    final product = displayedItems[index];
+                    return ProductTile(
+                      type: product.type!,
+                      productId: product.sId!,
+                      imageUrl: product.image!,
+                      price: double.parse(product.price.toString()),
+                      subTitle: product.description!,
+                      title: product.title!,
+                      category: product.category??"",
+                      tags: product.tags!,
+                      image: product.image!,
+                      isProduct: false,
+                      totalrating: product.totalrating ?? "0",
+                      link: product.link!,
+                      color: const [],
+                    );
+                  },
+                  itemCount: displayedItems.length,
+                );
 
         case Status.ERROR:
           return Center(child: Text(data.articleList.message.toString()));

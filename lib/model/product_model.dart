@@ -33,7 +33,7 @@ class Data {
   String? slug;
   String? description;
   dynamic price;
-  List<String>? category;
+  String? category;
   List<String>? colors;
   String? information;
   int? quantity;
@@ -76,7 +76,7 @@ class Data {
     slug = json['slug'];
     description = json['description'];
     price = json['price'];
-    category = json['category']?.cast<String>();
+    category = json['category'];
     colors = json['color']?.cast<String>();
     information = json['information'];
     quantity = json['quantity'];
@@ -104,7 +104,7 @@ class Data {
     data['slug'] = this.slug;
     data['description'] = this.description;
     data['price'] = this.price;
-    data['category'] = this.category;
+    data['category'] = category;
     data['color'] = this.colors;
     data['information'] = this.information;
     data['quantity'] = this.quantity;

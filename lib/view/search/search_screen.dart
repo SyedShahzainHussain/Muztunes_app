@@ -127,7 +127,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               subTitle: product.description!,
                               tags: product.tags!,
                               price: double.parse(product.price.toString()),
-                              category: product.category ?? [],
+                              category: product.category ?? "",
                               productId: product.sId!,
                               images: product.images ?? [],
                               image: product.images?[0],

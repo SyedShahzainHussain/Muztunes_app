@@ -10,8 +10,10 @@ import 'package:muztune/utils/global_context.dart';
 import 'package:muztune/view/admin/repository/create_article.dart';
 import 'package:muztune/view/admin/repository/create_category.dart';
 import 'package:muztune/view/admin/repository/create_product.dart';
+import 'package:muztune/view/admin/repository/create_stream_id.dart';
 import 'package:muztune/view/admin/repository/delete_order.dart';
 import 'package:muztune/view/admin/repository/get_admin_orders.dart';
+import 'package:muztune/view/admin/repository/get_stram_id.dart';
 import 'package:muztune/view/admin/repository/put_order_type.dart';
 import 'package:muztune/view/entry_point_screen.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +25,8 @@ class CreateProductViewModel with ChangeNotifier {
   GetAdminOrders getAdminOrders = GetAdminOrders();
   PutOrderType putOrderType = PutOrderType();
   DeleteOrder deleteOrder = DeleteOrder();
-
+  CreateStreamId createStreamId = CreateStreamId();
+  GetStreamId getStreamId = GetStreamId();
   bool productLoading = false;
   setProductLoading(bool loading) {
     productLoading = loading;
@@ -153,6 +156,41 @@ class CreateProductViewModel with ChangeNotifier {
     }).onError((error, _) {
       print(error);
       setOrderDeleteLoading(false);
+    });
+  }
+
+  bool createStreamLoading = false;
+  setcreateStreamLoading(bool createStreamLoading) {
+    this.createStreamLoading = createStreamLoading;
+    notifyListeners();
+  }
+
+  Future createStream(dynamic body, BuildContext context) async {
+    setcreateStreamLoading(true);
+    await createStreamId.createStreamApi(body).then((value) {
+      Navigator.pop(context);
+      ContextUtility.context
+          .flushBarSuccessMessage(message: "Stream has been Created");
+      setcreateStreamLoading(false);
+    }).onError((error, _) {
+      ContextUtility.context.flushBarSuccessMessage(message: error.toString());
+      setcreateStreamLoading(false);
+    });
+  }
+
+ ApiResponse<List<dynamic>> getStreams = ApiResponse.loading();
+
+  setGetStream(ApiResponse<List<dynamic>> getStreams) {
+    this.getStreams = getStreams;
+    notifyListeners();
+  }
+
+  getStreamApi() async {
+    setGetStream(ApiResponse.loading());
+    await getStreamId.getStreamApi().then((value) {
+      setGetStream(ApiResponse.complete(value));
+    }).onError((error, _) {
+      setGetStream(ApiResponse.error(error.toString()));
     });
   }
 }
