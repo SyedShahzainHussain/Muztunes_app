@@ -13,6 +13,15 @@ class GetStreamScreen extends StatefulWidget {
 }
 
 class _GetStreamScreenState extends State<GetStreamScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CreateProductViewModel>().getStreamApi();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

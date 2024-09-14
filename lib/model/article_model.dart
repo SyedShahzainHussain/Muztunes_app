@@ -29,9 +29,9 @@ class Data {
   String? title;
   String? slug;
   String? description;
-  int? price;
+  dynamic? price;
   String? category;
-  int? quantity;
+  dynamic quantity;
   String? image;
   String? link;
   List<String>? tags;
@@ -65,7 +65,7 @@ class Data {
       title: json['title'] as String?,
       slug: json['slug'] as String?,
       description: json['description'] as String?,
-      price: json['price'] as int?,
+      price: json['price'] as dynamic?,
       category: json['category'],
       quantity: json['quantity'] as int?,
       image: json['image'] as String?,
