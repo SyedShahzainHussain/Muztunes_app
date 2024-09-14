@@ -199,7 +199,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           context
                               .read<CartViewModel>()
                               .addToCart(cartItemModel, context);
-                          await Utils().launchUrls(widget.link!);
+                          await Utils().launchUrls(widget.link!, context);
                         },
                         showRadius: true,
                         title: "Buy Now",
@@ -497,7 +497,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 link: widget.link!,
                 colors: widget.colors);
             context.read<CartViewModel>().addToCart(cartItemModel, context);
-            await Utils().launchUrls(widget.link!);
+            await Utils().launchUrls(widget.link!, context);
           },
           showRadius: true,
           title: "Buy Now",

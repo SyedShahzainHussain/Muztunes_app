@@ -110,7 +110,7 @@ class _EntryPointScreenState extends State<EntryPointScreen>
                 children: muztunesPlatform
                     .map((data) => InkWell(
                           onTap: () async {
-                            await Utils().launchUrls(data["url"]);
+                            await Utils().launchUrls(data["url"], context);
                             setState(() {
                               _isListVisible = false;
                             });

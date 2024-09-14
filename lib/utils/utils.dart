@@ -36,7 +36,7 @@ class Utils {
         )));
   }
 
-   final List<Color> colors = [
+  final List<Color> colors = [
     Colors.red,
     Colors.blue,
     Colors.green,
@@ -48,7 +48,7 @@ class Utils {
     // Add more colors as needed
   ];
 
-   String colorToName(Color color) {
+  String colorToName(Color color) {
     if (color == Colors.red) return 'Red';
     if (color == Colors.blue) return 'Blue';
     if (color == Colors.green) return 'Green';
@@ -266,7 +266,7 @@ class Utils {
   //   return File(result.path);
   // }
 
-  Future<void> launchUrls(String url) async {
+  Future<void> launchUrls(String url, BuildContext context) async {
     final Uri uri = Uri.parse(url);
 
     if (await canLaunchUrl(uri)) {
@@ -274,6 +274,9 @@ class Utils {
     } else {
       // Handle the error when the URL can't be launched
       debugPrint('Could not launch $url');
+      if (context.mounted) {
+        Utils.showToaster(message: "Could not launch $url", context: context);
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
+import 'package:floating_bottom_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:muztune/data/response/status.dart';
+import 'package:muztune/utils/utils.dart';
 import 'package:muztune/view/admin/viewmodel/create_product_view_model.dart';
 import 'package:muztune/view/concert/supoort_page.dart';
 import 'package:provider/provider.dart';
@@ -41,23 +41,25 @@ class _ConcertScreenState extends State<ConcertScreen> {
       body: Consumer<CreateProductViewModel>(builder: (context, data, _) {
         switch (data.getStreams.status) {
           case Status.LOADING:
-            return const Center(
-              child: CircularProgressIndicator(),
+            return  Center(
+              child:Utils.showLoadingSpinner(AppColors.cherryRed),
             );
           case Status.COMPLETED:
             return Container(
               margin: const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
               child: ListView.separated(
-                separatorBuilder: (context, index) => const  SizedBox(
+                separatorBuilder: (context, index) => const SizedBox(
                   height: 20,
                 ),
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: YoutubePlayer(
-                     
+                      backgroundColor: AppColors.cherryLightPink,
+                      enableFullScreenOnVerticalDrag: false,
                       controller: YoutubePlayerController.fromVideoId(
-                        videoId: data.getStreams.data![index],
+
+                        videoId: data.getStreams.data![index].videoId!,
                         autoPlay: false,
                         params: const YoutubePlayerParams(
                             showFullscreenButton: false),

@@ -155,7 +155,7 @@ class _DrawerScreenState extends State<DrawerScreen>
                   children: muztunesPlatform
                       .map((data) => InkWell(
                             onTap: () async {
-                              await Utils().launchUrls(data["url"]);
+                              await Utils().launchUrls(data["url"], context);
                               if (context.mounted) {
                                 Navigator.pop(context);
                               }
