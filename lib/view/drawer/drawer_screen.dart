@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:muztune/common/bottom_navigation_widget.dart';
 import 'package:muztune/extension/media_query_extension.dart';
+import 'package:muztune/providers/bottomnavigation/bottom_navigation_provider.dart';
 import 'package:muztune/utils/utils.dart';
 import 'package:muztune/view/admin/admin_screen.dart';
 import 'package:muztune/view/shop/shop_screen.dart';
 import 'package:muztune/viewModel/services/session_controller/session_controller.dart';
+import 'package:provider/provider.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -155,7 +158,13 @@ class _DrawerScreenState extends State<DrawerScreen>
                   children: muztunesPlatform
                       .map((data) => InkWell(
                             onTap: () async {
-                              await Utils().launchUrls(data["url"], context);
+                              if (data["title"] == "MUZCONCERT") {
+                                context
+                                    .read<BottomNavigationProvider>()
+                                    .setIndex(Menus.concert);
+                              } else {
+                                await Utils().launchUrls(data["url"], context);
+                              }
                               if (context.mounted) {
                                 Navigator.pop(context);
                               }
@@ -204,6 +213,10 @@ List<Map<String, dynamic>> muztunesPlatform = [
   {
     "title": "MUZCHAT",
     "url": "https://chat.muztunes.co/#",
+  },
+  {
+    "title": "MUZCONCERT",
+    "url": "",
   },
   {
     "title": "MUZCOM",
